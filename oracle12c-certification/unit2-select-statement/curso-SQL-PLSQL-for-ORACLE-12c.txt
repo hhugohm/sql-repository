@@ -1,0 +1,3136 @@
+Ing Jose Domingo aAzaldo Bibiano
+
+
+curso
+Oracle Database 12c: SQL Workshop I
+
+Horario:
+Sabados de 8:00am - 15:00pm
+
+---------------------------
+select ROUND(TO_DATE ('22/08/03'),'DAY') from dual;
+select ROUND(TO_DATE ('06/05/2015'),'DAY') from dual;
+25/08/03  ? como funciona 
+
+Idioma fecha :Mexican Spanish
+idioma : Mexican spanish to Mexico
+148.215.12.253 --University
+
+
+Areas principales
+
+Infrastructure grids: Tener conexion de varios nodos entre si, enfocado al performance de los servicios de la base de datos
+Informarmation Management: Manejo, administración de  objetos muy grandes de información (almacenamiento de datos)
+Application developer: se ajusta al desarrollo de diferentes lenguajes
+Oracle Cloud: Servicios en la nube como infraestructura,performance, aplicaciones finales, hardware (minimizar costo y tiempo de respuesta) (lugar seguro , cableado, infraestructura)
+			-->
+			
+Caracteristicas y Ventajas de Oracle: -->El procesamiento de la informacion la hace en memoria.
+
+Manejabilidad: 		 facil de uso
+Alta disponibilidad: no se cae la base de dtaos
+Performance: 		 rendimiento mayor en memoria
+Seguridad:   		 integridad de datos (no copia y funciona)
+Integracion de información. (manejo de datos viejos y nuevos)
+
+Oracle fusion Middleware: Toda la gama de productos oracle para dar servicio al cliente.
+
+Oracle Enterprise Manager Cloud Control: adminstra vaiso productos de oracle -->consola de admisntracion
+
+Oracle Cloud : pagamos por lo que neecesitamos (por servicio)
+	-servico bajo demanda
+	-pool de recursos (infraestrucura etec)
+	-rapid elasticidad (temporada y demanda de recursos)
+	-basado en servico
+	-Acceso a red
+	
+Servicios de cloud:
+	Software as a Service (aplicaciones finales)
+	Platform as Service (jdk, etc)
+	Infrastructure as Service (fierros)
+
+Cloud Deployment Models
+	-cloud publico: todos tienen acceso
+	-cloud privado: exclusivo para una empresa o cliente
+	-Cloud comunity: grupo de personas especificos con una afinidad
+	-cloud hibrido: una mescla de varios tipos (tener diferentes cloud)
+	
+
+Conceptos de base de datos	
+	base de datos relacionales
+		muktimdeia, alta calidad, etc.
+	base de datos orientada a objetos
+	
+Formas de gurdar informacion
+
+
+SQL Estandar.
+conceptos
+savepoit: transacciones grandes y (hace guardados parciales) puntos de salvacion
+
+HR (esquemas de prueba)
+
+SELECT * FROM EMPLOYEES
+SELECT * FROM JOB_HISTORY
+SELECT * FROM JOBS
+SELECT * FROM DEPARTMENTS
+SELECT * FROM LOCATIONS
+SELECT * FROM COUNTRIES
+SELECT * FROM REGIONS
+
+SELECT FIRST_NAME AS NAME FROM EMPLOYEES
+
+SELECT COUNTRY_ID, COUNTRY_NAME, REGION_ID FROM COUNTRIES
+SELECT REGION_ID,REGION_NAME FROM REGIONS
+SELECT COUNTRIES.COUNTRY_ID,COUNTRIES.COUNTRY_NAME,REGIONS.REGION_NAME
+FROM  COUNTRIES,REGIONS
+WHERE COUNTRIES.REGION_ID = REGIONS.REGION_ID
+
+
+
+Microsoft Windows [Versión 6.2.9200]
+(c) 2012 Microsoft Corporation. Todos los derechos reservados.
+
+C:\Users\hhugo_000.SHAKA>sqlplus / as sysdba
+
+SQL*Plus: Release 12.1.0.2.0 Production on Sßb Abr 18 14:12:59 2015
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 12c Enterprise Edition Release 12.1.0.2.0 - 64bit Production
+With the Partitioning, OLAP, Advanced Analytics and Real Application Testing options
+
+SQL> alter user hr identified by hr account unlock;
+
+User altered.
+
+SQL> conn hr
+Enter password:
+Connected.
+SQL> select table_name from user_tables;
+
+TABLE_NAME
+--------------------------------------------------------------------------------
+COUNTRIES
+JOB_HISTORY
+EMPLOYEES
+JOBS
+DEPARTMENTS
+LOCATIONS
+REGIONS
+
+7 rows selected.
+
+SQL>
+
+######################################################################################################################################
+######################################################### UNIDAD 2 Retrieving Data Using The SQL SELECT Statement ###################################################################
+
+
+-- Capacidades de las Sentencias SQL - keywords
+PROJECTION: SELECT es requerido y deberia mostrar un resultado. Selecciona columnas en una tabla que seran retornados por un query
+SELECTION : WHERE no es requerido.Selecciona renglones en una tabla que sera regresados por un query.
+JOINING	  : FROM es requerido . Selecciona la informacion almacenada en diferentes tablas.
+		  : ORDER BY
+	
+
+--DISTINCT (para rows duplicados)
+Suprime los duplicados. En este caso la sentencia aplica en todas las columnas
+SELECT DISTINCT EMPLOYEE_ID,FIRST_NAME,LAST_NAME,EMAIL,PHONE_NUMBER,HIRE_DATE,JOB_ID,SALARY,COMMISSION_PCT,MANAGER_ID,DEPARTMENT_ID FROM EMPLOYEES;
+SELECT DISTINCT DEPARTMENT_ID,JOB_ID FROM EMPLOYEES order by DEPARTMENT_ID
+SELECT DISTINCT DEPARTMENT_ID FROM EMPLOYEES order by DEPARTMENT_ID
+SELECT DISTINCT JOB_ID FROM EMPLOYEES order by DEPARTMENT_ID
+
+
+--Selecciona ALL information
+SELECT * FROM EMPLOYEES;
+
+--Seleciona informacion especifica
+SELECT DEPARTMENT_ID,LOCATION_ID FROM DEPARTMENTS;
+
+--la sintaxis correcta para palabras reservadas en mayuscula y tablas y campos en minisculas. se muestran en mayussculas las cabeceras 
+SELECT last_name,hire_date,salary  FROM EMPLOYEES;
+
+--operadores aritmeticos (se pueden usar en cualquier clausula sql excepto  en la clausula FROM
++, -, *, /
+--Para DATE y TIMESTAMP solo se puede usar suma y resta
+SELECT last_name,salary, salary +300  FROM EMPLOYEES;
+SELECT last_name,salary, salary +300 / (300*2) resultado FROM EMPLOYEES;
+
+--Multiplicacion y division se ejecutan primero ( si hay la misma jerarquia se ejecuta de izquierda a derecha)
+--El uso de parentesis es mandatorio
+SELECT LAST_NAME,SALARY, 12*SALARY+100 FROM EMPLOYEES;
+SELECT LAST_NAME,SALARY, 12*(SALARY+100) FROM EMPLOYEES;
+
+--NULL es un valor no disponible, no asignado, desconocido o no aplicable. (coloca NULL en la columna)
+--Una llave primaria no puede ser null pero otro campo si puede. Pero si se realiza una operacion matematica con un null siempre sera NULL
+SELECT last_name,job_id, salary, commission_pct FROM employees;
+
+--Operaciones aritmeticas con NULL (Si tiene NULL no realizara ninguna operacion en dicho campo por lo cual regresa NULL)
+SELECT last_name,job_id, salary, 12*salary*commission_pct FROM employees;
+
+--ALIAS (Se puede dar a las columnas  con la palabra reservada AS o bien solo con el nombre ya que no es mandatorio
+--En caso de querer caracteres espciales es necesario utilizar ""
+SELECT DISTINCT EMPLOYEE_ID,FIRST_NAME,LAST_NAME FROM EMPLOYEES;
+SELECT DISTINCT EMPLOYEE_ID,FIRST_NAME AS NOMBBRE,LAST_NAME  APELLIDO FROM EMPLOYEES;
+SELECT last_name,job_id, salary as "-SALARio EMpleado", 12*salary*commission_pct "$- COMISION" FROM employees;
+SELECT last_name apellido,job_id, salary as "-SALARio EMpleado", 12*salary*commission_pct "$- COMISION" FROM employees;
+
+--operador de concatenacion ||
+SELECT last_name||job_id AS "++EMPLEADO++" from employees;
+SELECT last_name||'-'||job_id AS "++EMPLEADO++" from employees;
+--si se concatena un null a una cadena se omite el null
+SELECT last_name||'-'||job_id||NULL  "++EMPLEADO++" from employees;
+
+--Literales es un caracter o un numero o una fecha incluida en un SELECT (comillas simples)
+SELECT last_name||' is a '||job_id||NULL  AS "EMPLOYEE Details" from employees;
+SELECT last_name||': 1 MONTH Salary '|| salary as "MONTHY Details" from employees;
+
+--ALTERNATIVE Quote (q) Operator. en pareja <>
+SELECT last_name||q'{: 1 MONTH's Salary }'|| salary as "MONTHY's Details" from employees;
+SELECT last_name||q'[: 1 MONTH's Salary ]'|| salary as "MONTHY's Details" from employees;
+SELECT last_name||q'*: 1 MONTH's Salary *'|| salary as "MONTHY's Details" from employees;
+SELECT last_name||q'$ ! month salary $'|| salary as "Month" from employees;
+SELECT last_name||q'< ! month salary >'|| salary as "Month" from employees;
+SELECT last_name||q'< ! month salary <'|| salary as "Month" from employees; --MARCA ERROR "quoted string not properly terminated"
+
+--DESCRIBE describe la estructura de la tabla.
+DESCRIBE EMPLOYEES;
+DESC EMPLOYEES;
+
+
+######################################################################################################################################
+######################################################### UNIDAD 3 RESTRICTING AND SORTING DATA ###################################################################
+
+--LIMITING THE ROWS THAT ARE DELECTED
+--WHERE  (realiza una comparación Y regresa un true o false), compara valores en columnas literales, expresiones aritmeticas o funciones
+--no se puede utilizar alias en la clausula where
+select EMPLOYEE_ID,LAST_NAME,JOB_ID,DEPARTMENT_ID from EMPLOYEES WHERE DEPARTMENT_ID=90;
+select EMPLOYEE_ID,LAST_NAME,JOB_ID,DEPARTMENT_ID from EMPLOYEES WHERE DEPARTMENT_ID=60;
+
+--String deben ir entre comilas simples y es sentsitiva a mayusculas y minusculas
+select LAST_NAME,JOB_ID,DEPARTMENT_ID  from EMPLOYEES where LAST_NAME='WHALEN';
+select LAST_NAME,JOB_ID,DEPARTMENT_ID  from EMPLOYEES where LAST_NAME='Whalen';
+
+--Dates deben ir entre comillas simples
+select LAST_NAME,JOB_ID,DEPARTMENT_ID,HIRE_DATE  from EMPLOYEES where HIRE_DATE='07-06-2002' order by HIRE_DATE
+
+--operadores =, >, >=, <, <=, BETWEEN AND, IN , LIKE, is NULL;
+--Ejemplo <>
+select LAST_NAME,JOB_ID,DEPARTMENT_ID,HIRE_DATE,salary  from EMPLOYEES where salary<> 4800 and HIRE_DATE<='07-06-2002'
+select LAST_NAME,JOB_ID,DEPARTMENT_ID,HIRE_DATE,salary  from EMPLOYEES where salary!= 4800 and HIRE_DATE<='07-06-2002'
+select LAST_NAME,JOB_ID,DEPARTMENT_ID,HIRE_DATE,salary  from EMPLOYEES where salary ^= 4800 and HIRE_DATE<='07-06-2002'
+
+--BETWEEN valor_minimo AND valor_maximo;
+select last_name, salary from EMPLOYEES where salary between 2500 and 3500;
+select last_name, salary from EMPLOYEES where salary between 3500 and 2500; -- NO MARCA ERROR PERO NO TRAE NADA
+select last_name, salary from EMPLOYEES where last_name between 'King' and 'Smith'; --trae varios resultados conforme el abcedario
+select last_name, salary from EMPLOYEES where last_name between 'K' and 'S';--trae varios resultados conforme el abcedario
+select last_name, salary from EMPLOYEES where last_name between 'Smith' and 'King';-- NO MARCA ERROR PERO NO TRAE NADA
+
+--IN (lista de datos) ? importa el orden
+select last_name, salary,manager_id from EMPLOYEES where manager_id in (100,102,103,105);
+select last_name, salary,manager_id from EMPLOYEES where manager_id in (105,102,103,100);
+select last_name, salary from EMPLOYEES where last_name in ('King' , 'Chen'); --trae resultados solo en coincidencia
+
+--LIKE %denota cero o mas caracteres, _ denota un solo caracter
+select last_name, salary from EMPLOYEES where last_name like 'S%';
+select last_name, salary from EMPLOYEES where last_name like '%S%';
+select LAST_NAME from EMPLOYEES where LAST_NAME like '_o%' order by LAST_NAME;
+select LAST_NAME from EMPLOYEES where LAST_NAME like '__o%' order by LAST_NAME
+
+--ESCAPE
+select * from EMPLOYEES where JOB_ID like '%SA\_%' ESCAPE '\';
+
+--NULL
+select * from  EMPLOYEES where MANAGER_ID is NULL;
+select * from  EMPLOYEES where MANAGER_ID is not NULL;
+
+--Operadores logicos AND (retorna tru si las dos condiciones son verdaderas), OR (retorna tru si alguna condicion es verdadera, NOT (retorna true si la condicion es falsa)
+--AND
+select employee_id, last_name, job_id, salary from employees where salary >=100 and job_id like '%MAN%';
+
+--OR
+select employee_id, last_name, job_id, salary from employees where salary >=100 or job_id like '%MAN%';
+
+--NOT se usa en IN, BETWEEN, LIKE and NULL
+select employee_id, last_name, job_id, salary from employees where job_id not in('IT_PROG','AD_VP');
+
+--Reglas de precedencia (operadores aritmeticos, operador de concatenacion, operadores de comparacion, is not null, is null, like not in
+--not between, not equal, not, and , or los parentesis sobreescriben la precedencia.
+select last_name, job_id,salary from EMPLOYEES where JOB_ID = 'SA_REP' OR JOB_ID= 'AD_PRES' and salary;
+select last_name, job_id,salary from EMPLOYEES where (JOB_ID = 'SA_REP' OR JOB_ID= 'AD_PRES') and salary;
+
+--ORDER BY ASC (default menor a mayor) DESC / column, expresion, numeric_posicion. No ordena NULL 	
+select last_name, job_id,salary from EMPLOYEES where JOB_ID = 'SA_REP' OR JOB_ID= 'AD_PRES' and salary > 15000 order by salary;
+select last_name, job_id,salary from EMPLOYEES where (JOB_ID = 'SA_REP' OR JOB_ID= 'AD_PRES') and salary > 15000 order by salary;
+select last_name, job_id,salary from EMPLOYEES where JOB_ID = 'SA_REP' OR JOB_ID= 'AD_PRES' and salary > 15000 order by salary DESC;
+select last_name, job_id,salary from EMPLOYEES where JOB_ID = 'SA_REP' OR JOB_ID= 'AD_PRES' and salary > 15000 order by 4 DESC; --marcara error
+select last_name, job_id,salary from EMPLOYEES where JOB_ID = 'SA_REP' OR JOB_ID= 'AD_PRES' and salary > 15000 order by 2 DESC; --ordena por salario
+
+
+--SQL row limiting clause
+OFFSET { integer-literal | ? } {ROW | ROWS}
+FETCH { FIRST | NEXT } [integer-literal | ? ] {ROW | ROWS} ONLY
+--Fetch (traer primeras 5 registros)
+select * from EMPLOYEES order by EMPLOYEE_ID fetch FIRST 5 ROWS only;
+select * from EMPLOYEES order by EMPLOYEE_ID fetch FIRST 5 ROW only;
+
+--Fetch (traer primer registro)
+SELECT * FROM EMPLOYEES FETCH FIRST ROW ONLY
+
+--se salta los primeros 10 registros y despues trae los 10 registros
+SELECT * FROM EMPLOYEES ORDER BY  EMPLOYEE_ID OFFSET 10 ROWS FETCH NEXT 10 ROWS ONLY;
+
+
+--[ OFFSET offset { ROW | ROWS } ]
+--[ FETCH { FIRST | NEXT } [ { rowcount | percent PERCENT } ]
+ --   { ROW | ROWS } { ONLY | WITH TIES } ]
+ SELECT * FROM  EMPLOYEES ORDER BY DEPARTMENT_ID FETCH FIRST 5 ROWS WITH TIES
+
+select * from EMPLOYEES order by DEPARTMENT_ID fetch FIRST 15 ROWs only;
+
+SELECT * FROM   EMPLOYEES ORDER BY DEPARTMENT_ID  FETCH FIRST 6 ROWS WITH TIES;
+
+SELECT * FROM  EMPLOYEES ORDER BY DEPARTMENT_ID FETCH FIRST 20 percent  ROWS only  
+
+--Substitution of variables (soportado en SQLDeveloper y SSQL * plus
+--temporarily store values con & and && for substitucion para que no pregunte mas
+--where conditions
+--order by clauses
+--column expressions
+--tables names
+--Select enteros
+
+SELECT EMPLOYEE_ID,LAST_NAME,SALARY,DEPARTMENT_ID FROM EMPLOYEES WHERE EMPLOYEE_ID= &EMPLOYEE_ID; --9
+SELECT EMPLOYEE_ID,LAST_NAME,SALARY,DEPARTMENT_ID FROM EMPLOYEES WHERE EMPLOYEE_ID= &EMPLOYEE_ID order by &ORDER_ID; --EMPLOYEES, 9 ,EMPLOYEE_ID
+SELECT &EMPLOYEE_ID,LAST_NAME,SALARY,DEPARTMENT_ID FROM &TABLE_NAME WHERE EMPLOYEE_ID= &EMPLOYEE_ID order by &EMPLOYEE_ID; --
+SELECT &&EMPLOYEE_ID,LAST_NAME,SALARY,DEPARTMENT_ID FROM &TABLE_NAME WHERE EMPLOYEE_ID= &EMPLOYEE_ID order by &EMPLOYEE_ID;--EMPLOYEE_ID,EMPLOYEES, 9
+
+--Sustitucion para cadenas Y DATES
+SELECT * FROM EMPLOYEES WHERE JOB_ID='&DESCRIPCION_JOB'; --IT_PROG
+
+--CONDITION
+SELECT LAST_NAME,SALARY,&COLUM_NAME FROM EMPLOYEES WHERE &CONDITION ORDER BY &ORDER_COLUMN; --FIRST_NAME, JOB_ID='IT_PROG',LAST_NAME
+
+
+--BORRAR LA VARIABLE 
+UNDEFINE EMPLOYEE_ID
+SELECT &&EMPLOYEE_ID,LAST_NAME,SALARY,DEPARTMENT_ID FROM &TABLE_NAME WHERE EMPLOYEE_ID= &EMPLOYEE_ID_VALUE order by &EMPLOYEE_ID;--EMPLOYEE_ID,EMPLOYEES, 100
+
+--UNDEFINE AND DEFINE
+DEFINE EMPLOYEE_ID = EMPLOYEE_ID
+SELECT &&EMPLOYEE_ID,LAST_NAME,SALARY,DEPARTMENT_ID FROM &TABLE_NAME WHERE EMPLOYEE_ID= &EMPLOYEE_ID_VALUE order by &EMPLOYEE_ID;
+
+--SET VERYFY ON , COLOCA EL QUERY ANTES Y DESPUES DE LA SUBSTITUCION
+SET VERYFY ON
+DEFINE EMPLOYEE_ID = EMPLOYEE_ID
+SELECT &&EMPLOYEE_ID,LAST_NAME,SALARY,DEPARTMENT_ID FROM &TABLE_NAME WHERE EMPLOYEE_ID= &EMPLOYEE_ID_VALUE order by &EMPLOYEE_ID;
+
+######################################################################################################################################
+######################################################### UNIDAD 4 Using Single-Row Functions to Customize Output ###################################################################
+
+--CHARACTER Functions
+--Case conversion functions (LOWER, UPPER, INITCAP)
+--Manipulacion de caracteres.(CONCAT, SUBSTR,LENGTH,INSTR, LPAD | RPAD, TRIM, REPLACE
+
+--LOWER regresa una cadena con todas las letras en minusculas.
+LOWER( string1 )
+select EMPLOYEE_ID,LOWER(FIRST_NAME) nombre from EMPLOYEES;
+select EMPLOYEE_ID,LOWER(FIRST_NAME) as nombre from EMPLOYEES;
+select LOWER('MR. SCOTT MCMILLAN') from dual;
+select LOWER(EMPLOYEE_ID),FIRST_NAME from EMPLOYEES; -- No manda error/si regresa la consulta
+select LOWER(EMPLOYEE_ID) id_empleado ,FIRST_NAME from EMPLOYEES order by id_empleado; --No manda error/si regresa la consulta
+select * from EMPLOYEES where LOWER(LAST_NAME)='higgins';
+
+
+--UPPER regresa una cadena con todas las letras en minusculas.
+UPPER( string1 )
+SELECT UPPER(LAST_NAME),JOB_ID,SALARY FROM EMPLOYEES;
+SELECT UPPER(LAST_NAME) "APELLIDO DEL TRABAJADOR",JOB_ID,SALARY FROM EMPLOYEES;
+SELECT UPPER(LAST_NAME) "APELLIDO DEL TRABAJADOR",JOB_ID,UPPER(SALARY) FROM EMPLOYEES; --No manda error /regresa el resultado
+select * from EMPLOYEES where UPPER(LAST_NAME)= UPPER('higgins');
+
+--INITCAP convierte la primera letra en mayuscula de cada palabra de la cadena
+INITCAP( string1 )
+SELECT DEPARTMENT_ID,INITCAP(DEPARTMENT_NAME),MANAGER_ID,LOCATION_ID FROM DEPARTMENTS;
+SELECT DEPARTMENT_ID,INITCAP(DEPARTMENT_NAME),MANAGER_ID,initcap(LOCATION_ID) FROM DEPARTMENTS; --no manda error /regresa el resultado
+select EMPLOYEE_ID as "id del empleado",initcap(FIRST_NAME||'-'||LAST_NAME||'  trabaja en el departamento de'||' - '||lower(JOB_ID)) trabajador from EMPLOYEES;
+
+--CONCAT concatena el primer valor con el segundo valor equivalente a || 
+CONCAT( string1, string2 )
+SELECT DEPARTMENT_ID,CONCAT(CONCAT(INITCAP(DEPARTMENT_NAME),'-'),MANAGER_ID),LOCATION_ID FROM DEPARTMENTS;
+SELECT DEPARTMENT_ID,CONCAT(CONCAT(INITCAP(DEPARTMENT_NAME),'-'),MANAGER_ID) "DEPARTAMENTO-MANAGER",LOCATION_ID FROM DEPARTMENTS;
+SELECT DEPARTMENT_ID,CONCAT(CONCAT(INITCAP(DEPARTMENT_NAME),'-'),MANAGER_ID) AS "DEPARTAMENTO-MANAGER",LOCATION_ID FROM DEPARTMENTS;
+select CONCAT(CONCAT(last_name, '''s job category is '), job_id) as JOB from EMPLOYEES where EMPLOYEE_ID=152;
+select CONCAT(CONCAT(last_name, "'s job category is "), job_id) as JOB from EMPLOYEES where EMPLOYEE_ID=152; --mandara error
+select last_name||'''s job category is '||job_id as JOB from EMPLOYEES where EMPLOYEE_ID=152;
+select EMPLOYEE_ID, INITCAP('EL EMPLEADO'||'-'||CONCAT(CONCAT(FIRST_NAME,LAST_NAME),' FUE CONTRADADO EN '||HIRE_DATE)) from EMPLOYEES;
+select EMPLOYEE_ID, INITCAP('EL EMPLEADO'||'-'||CONCAT(CONCAT(FIRST_NAME,LAST_NAME),' FUE CONTRADADO EN '||HIRE_DATE)) empleado from EMPLOYEES;
+
+--SUBSTR(string,position,[substring_lenght])  Retorna una porcion de una cadena mediante una posicion inicial y la longitud de una subcadena
+SUBSTR( string, start_position [, length ] )
+--reglas
+--si la posicion es 0 sera tratada como 1
+--si la posicion es positiva entonces oracle db contara del inicio de la cadena hasta encontrar el caracter
+--si la posicion es  negativa oracle comenzara a contar desde el final de la cadena.
+--si la posicion sale del rango entonce retorna NULL
+--si la longitud de la cadena es omitida oracle regresara todos los caracteres hasta el final de la cadena en base a la posicion
+--si la longitud de la cadena es 0 entonces oracle regresara un NULL
+--si la longitud de la subcadena es mayor a lo que tiene la cadena retornara la cadena original
+select SUBSTR('ABCDEFGHIJ',-7,4) subcadena from DUAL; --DEFG
+select SUBSTR('ABCDEFGHIJ',0,7) subcadena from DUAL;--ABCDEFG
+select SUBSTR('ABCDEFGHIJ',2,3) subcadena from DUAL; --BCD
+select SUBSTR('ABCDEFGHIJ',3) subcadena from DUAL; --CDEFGHIJ
+select SUBSTR('ABCDEFGHIJ',3,-3) subcadena from DUAL;--null
+select SUBSTR('ABCDEFGHIJ',3,0) subcadena from DUAL;--null
+select SUBSTR('ABCDEFGHIJ',3,1) subcadena from DUAL;--C
+select SUBSTR('ABCDEFGHIJ',-11,1) subcadena from DUAL; --NULL
+
+--LENGTH(string)  retorna la longitud de una cadena 
+LENGTH( string1 )
+--Si una columna contiene NULL su longitud sera NULL
+--Si la longitud de un numero es el numero de caracteres que tenga
+--para una fecha 
+select LENGTH('candide') "LONGITUD" from dual;
+select LENGTH(EMAIL) "LONGITUD DE una cadena",LENGTH(COMMISSION_PCT) "LONGITUD DE UN NUMERO" from EMPLOYEES; --la longitud de un numero sera el numero de digitos que tenga
+select FIRST_NAME,salary,LENGTH(salary) from EMPLOYEES where EMPLOYEE_ID=146; --devuelve 5 porque su salario es 13500
+select FIRST_NAME,salary,LENGTH(salary),HIRE_DATE,LENGTH(HIRE_DATE) from EMPLOYEES where EMPLOYEE_ID=146; --devuelve 8 porq tiene 05/01/05
+select FIRST_NAME,salary,LENGTH(salary),HIRE_DATE,LENGTH(HIRE_DATE),COMMISSION_PCT,LENGTH(COMMISSION_PCT) from EMPLOYEES where EMPLOYEE_ID=151;--devuleve 3 porque tiene 0.25
+
+--INSTR(substring,[position,ocurrencia]) retorna un entero con la coincidencia encontrada (la buscqueda de la subqcadena es siempre de izquierda a derecha)
+INSTR( string, substring [, start_position [,  nth_appearance ] ] )
+-- si posicion y ocurrencia no vienen entonces por default son 1
+-- si la posicion es diferente de 0 entonces comenzara la busqueda desde ahi
+-- si la posicion es negativa comenzara a contar desde el final de la cadena
+-- la ocurrencia debe ser mayor a cero SINO marcara un error fuera de rango
+-- si la ocurrencia es mayor a 1 entonces buscara la segunda coincidencia y asi sucesivamente en caso de no encontrar regresara 0
+select INSTR('COORPORATE FLOOR','OR',10) as "INSTR FUNCTION" from dual;--Encuentra en la posicion 15
+select INSTR('COORPORATE FLOOR','OR',2) as "INSTR FUNCTION" from dual; --Encuentra en la posicion 3
+select INSTR('COORPORATE FLOOR','X',1) as "INSTR FUNCTION" from dual; --regresa 0 porque no encontro la cadena
+select INSTR('COORPORATE FLOOR','OR',-5) as "INSTR FUNCTION" from dual; --regresa un 6 (empieza a buscar contanto al final de la cadena)
+select INSTR('COORPORATE FLOOR','OR',-16,1) as "INSTR FUNCTION" from dual; --regresa 0
+select INSTR('COORPORATE FLOOR','OR',-14,1) as "INSTR FUNCTION" from dual; --regresa un 3
+select INSTR('COORPORATE FLOOR','OR',-5,-1) as "INSTR FUNCTION" from dual --marca error fuera de rngo
+select INSTR('COORPORATE FLOOR','OR',-5,0) as "INSTR FUNCTION" from dual --marc a error fuera de rango
+
+
+LPAD( string1, padded_length [, pad_string] )
+--LPAD (column|expression1,n,'expression2') retorna una expresion a la izquierda rellenada con N caracteres de una cadena especifica
+--Si expression2 no se especifica entonces por default es un blanco
+--Si expression1 es mayor que N entonces retornara la cadena rellenada con la expression2 hasta completar la longitud de expression1
+--Si N es el valor de la lungitud de la expression1 entonces retornara la expression2 con la longitud que tenia la expression1
+select LPAD('PAGE 1',15)  from dual; -- la expression2 se toma como default en blanco.  
+select LPAD('PAGE 1',15,'*.')  from dual; -- rellena la expression1 a 15 caracteres
+select LPAD('PAGE 1',6,'*')  from dual; --coloca la misma cadena de entrada
+select LPAD('PAGE 1',7,'*')  from dual; --coloca un asterico al inicio de la expression1
+select LPAD('PAGE 1',4,'*')  from dual; --coloca las primeras 4 letras de la expression1
+select LPAD('PAGE 1',0,'*')  from dual; --manda un null
+select LPAD('PAGE 1',-1,'*')  from dual; --manda null
+select LPAD('PAGE 1',7,2)  from dual;  --rellena con el numero 2 ya que to toma como cadena
+select LPAD(8,30)  from dual; -- el numero 8 lo toma como cadena y rellena con blanco a 30 posiciones
+
+RPAD( string1, padded_length [, pad_string] ) retorna una expresion a la derecha rellenada con N caracteres de una cadena especifica
+--RPAD retorna una expresion a la derecha rellenada con N caracteres de una cadena especifica
+select RPAD('HECTOR HUGO',15,'@') from dual --completa la cadena hasta obtener 15 posiciones con @
+select RPAD('HECTOR HUGO',1,'@') from dual --corta la cadena a un solo caracter H
+select RPAD('HECTOR HUGO',0,'@') from dual --devuelve un null
+select RPAD('HECTOR HUGO',-1,'@') from dual --devuelve null
+select RPAD('HECTOR HUGO',15) from dual --completa la cadena a 15 caracteres con blanco a la cadena
+select RPAD(10,15) from dual --toma como string1 a 10 (como 2 caracteres) y completa a 15 posiciones con blancos
+
+--TRIM  remueve todos los caracteres especificados al inicio o al final de una cadena.
+TRIM( [ [ LEADING | TRAILING | BOTH ] trim_character FROM ] string1 )
+---LEADING The function will remove trim_character from the front of string1.
+---TRAILING The function will remove trim_character from the end of string1.
+---BOTH The function will remove trim_character from the front and end of string1.
+---trim_character: The character that will be removed from string1. If this parameter is omitted, the TRIM function will remove space characters from string1.
+---string1 The string to trim.
+select TRIM('   tech   ') COLUMNA from dual; --Elimina los espacios a izquierda y derecha de la cadena.
+select TRIM(' '  FROM  '   tech   ') COLUMNA from dual; --eliminara los valores vacios de la cadena '   tech   '
+select TRIM('e'  FROM  'eeetecheee') COLUMNA from dual; --elimina los caracteres e de izquierda y derecha 
+select TRIM(LEADING '0' FROM '000123') COLUMNA from dual; --elimina los caracteres 0 de la izquierda de la cadena
+select TRIM(TRAILING '1' FROM 'Tech1') COLUMNA from dual; --elimina los caracteres 1 de la derecha de la cadena
+select TRIM(BOTH '1' FROM '1231Tech11') COLUMNA from dual; --elimina los caracteres 1 de derecha e izquierda
+
+--REPLACE
+REPLACE( text, string_to_replace [, replacement_string] )
+select REPLACE('123123tech', '123') reemplazar from dual; --la primer cadena es la original y la segunda le indica elimina
+select REPLACE('123tech123', '123') reemplazar from dual; --remplaza 123 de izq y derecha de la cadena principal
+select REPLACE('222tech', '2', '3') reemplazar from dual; --reemplaza el numero 2 por el 3 en la cadena
+select REPLACE('0000123', '0', ' ') reemplazar from dual; --reemplaza el numero 0 por un espacio.
+select REPLACE(12345, 1) reemplazar from dual; --elimina el valor 1 de la cadena
+
+################################
+--NESTING FUNCTIONS: Anidamiento de funciones
+##############################
+select  LAST_NAME,CONCAT(SUBSTR(LAST_NAME,1,8),'_US') from EMPLOYEES;
+select  LAST_NAME,LENGTH(CONCAT(SUBSTR(LAST_NAME,1,8),'_US')) from EMPLOYEES;
+select EMPLOYEE_ID,FIRST_NAME ,HIRE_DATE,TO_CHAR(NEXT_DAY(ADD_MONTHS(HIRE_DATE,6),'VIERNES'),'fmDAY,MONTH,ddth,YYYY') from EMPLOYEES;
+
+--funciones numericas
+--round Se redondea un numero tanto la parte decimal como la entera
+ROUND( number [, decimal_places] )
+--si decimal_places no se coloca entonces no se colocaran decimales
+select ROUND(15326.2569) redondeo from dual; --no coloca decimales.
+select ROUND(15326.2569,1) redondeo from dual; --redondea a 15326.3 --5 hacia arriba sube siguiente si es 4 baja
+select ROUND(15326.2369,1) redondeo from dual; --redondea a 15326.2
+select ROUND(15326.2369,3) redondeo from dual;
+select ROUND(15326.236444,0) redondeo from dual; --coloca solo la parte entera
+select ROUND(15326.236444,-1) redondeo from dual; --redonde la parte entera 
+select ROUND(15326.236444,-2) redondeo from dual;
+--round (n+1)    3+0 no hay valor por eso es igual
+SELECT round(34.6666,1) from dual
+SELECT round(34.666,3) from dual --(n+1)    3+0 no hay valor por eso es igual
+SELECT round(5647.236) from dual --mismo valor
+SELECT round(5647.236,-2) from dual --     	 	-n
+SELECT round(5647.236,-3) from dual   (sube o baja dependien
+
+
+--trunc Trunca el numero
+TRUNC( number [, decimal_places] )
+--si no aparece el numero de posiciones truncara a 0 decimales (ningun decimal)
+select TRUNC(125.815) trunca from dual;--no coloca decimales
+select TRUNC(125.815, 0) trunca from dual; --cero decimales
+select TRUNC(125.815, 1) trunca from dual; --a 1 decimal
+select TRUNC(125.815, 3) from dual; --a tres decimales
+select TRUNC(1666.815, -1) from dual;
+SELECT trunc(5647.236,2) from dual --truncala en el decimal 2
+SELECT trunc(5647.236) from dual -- solo la parta entera
+SELECT trunc(5647.236,-2) from dual  -- lo baja a a CERO
+
+
+--mod residuo de la division
+MOD( m, n ) regresa el restante de la division.
+--Si n es 0 regresa m
+--Se calcula m - n * floor(m/n)
+SELECT mod(15,2) from dual --obtiene el residuo de la division
+select LAST_NAME,SALARY,mod(salary,500) from EMPLOYEES; --se obtiene el residuo de la division
+SELECT mod(15,2) from dual --obtiene el residuo de la division
+select LAST_NAME,SALARY,mod(salary,500) from EMPLOYEES; --se obtiene el residuo de la division
+
+
+#############################################
+##########TRABAJO CON FECHAS#################
+#############################################
+--default  display DD-MON-RR    --FORMATO YY a RR  (DIA ; MES; AÑO)  
+--RR para trabajar fechas del siglo 20 y siglo 21
+
+--SYSDATE   fecha y hora actual
+DD/MM/RR HH24:MI:SS
+select sysdate from dual
+select last_name, hire_date from EMPLOYEES where hire_date>'17-09-03' order by HIRE_DATE
+select sysdate as "FECHA sistema bd", CURRENT_DATE as "formato horario" from dual --es la misma hora ya qye sysdate trae valor del 
+																					--sistema operativo y current_date trae de la zona horaria
+--resta y suma numero de dias
+date + number = date --agrega numero de dias a una fecha
+date-number = date --resta numero de dias a la fecha
+date - date = numero de dias
+date + numbre/24 = date --agrega hora a la fecha
+
+select sysdate as "FECHA ACTUAL",sysdate+1 as "Fecha nueva"  from dual; --suma 1 dia a la fecha actual
+select sysdate as "FECHA ACTUAL",sysdate-1 as "Fecha nueva"  from dual;--resta 1 dia a la fecha actual
+select (sysdate+5)-sysdate as "FECHA ACTUAL"   from dual;  --regresa 5
+select sysdate + 5/24  as fecha from dual; agrega 5 horas a la fecha actual
+select sysdate, sysdate -1 from dual;
+select last_name, hire_date,(sysdate-hire_date)   from EMPLOYEES where department_id=90 --regresa los dias contratado
+select last_name, hire_date,(sysdate-hire_date)/7   from EMPLOYEES where department_id=90 --regresa las semanas trabajadas
+select last_name, hire_date,(sysdate-hire_date)/30   from EMPLOYEES where department_id=90 --regresa los meses trabajados
+select last_name,hire_date,ROUND((sysdate-hire_date)/30,2) from EMPLOYEES where department_id=90 --redondea a 2 decimales
+
+---******DATE FUNCTIONS*****-----DD/MM/RR HH24:MI:SS
+MONTHS_BETWEEN(date1,date2) = Regresa los meses entre dos fechas  (Numero) puede ser positivo o negativo
+ADD_MONTHS(date,n)     		= Agregar meses a una fechas		  (fecha) el valor de n puede ser negativo pero debe ser ENTERO
+NEXT_DAY(date,'char')       = Dia de la semana especificada		  (fecha) char puede ser un numero o bien una cadena de caracteres
+LAST_DAY(date)      		=Ultimo dia del mes					  (fecha) encuenta la fecha con el ultimo dia del mes
+ROUND(date [,'fmt'])        = Redondea una fecha				  (fecha) regresa una fecha redondeada en base al fmt si es omitido entonces redondeara al dia mas proximo
+TRUNC(date [,'fmt'])		= Truca una fecha					  (fecha) regresa una fecha con una porcion del dia truncada  formateada en base a fmt
+																	si fmt es omitida se redondeara al dia mas cercano.
+																	
+select last_name,hire_date,sysdate,MONTHS_BETWEEN(sysdate,hire_date) from EMPLOYEES where department_id=90 --regresa los meses en forma positiva
+select last_name,hire_date,sysdate,MONTHS_BETWEEN(hire_date,sysdate) from EMPLOYEES where department_id=90 --regresa los mese en forma negativa
+select last_name,hire_date,sysdate,round(MONTHS_BETWEEN(sysdate,hire_date),2) as "meses trabajados" from EMPLOYEES where department_id=90 --regresa los meses trabajados redondeado a 2 decimales
+select last_name,hire_date,sysdate,ADD_MOnTHS(sysdate,5) from EMPLOYEES where department_id=90 --agrega 5 meses a la fecha actual
+select EMPLOYEE_ID,FIRST_NAME,LAST_NAME,HIRE_DATE,NEXT_DAY(sysdate,'DOMINGO') from EMPLOYEES order by FIRST_NAME; --regresa el siguiente domingo en fecha
+select EMPLOYEE_ID,FIRST_NAME,LAST_NAME,HIRE_DATE,LAST_DAY(sysdate) from EMPLOYEES order by FIRST_NAME; --ultimo dea del mes
+select round(sysdate,'month') from dual; --redondea el mes en base al dia
+select round(to_date('25/07/03'),'month') from dual; --sube al mes de agosto porque el dia es 25 y el dia lo pone en 1 del mes de Agosto
+select round(to_date('25/07/03'),'year') from dual; --sube el año a 04 porq el mes es 7
+select round(to_date('25/05/03'),'year') from dual; --baja a 03 por que el mes es 05
+select round(to_date('25/06/03'),'year') from dual;--baja a 03 por que el mes es 06
+select trunc(to_date('25/07/03'),'month') from dual; --baja el dia a 1 de 07-06-2002
+select trunc(to_date('25/07/03'),'year') from dual; --baja el dia a 1 y el mes a 01 y el año lo deja en 03
+
+
+--months_between  meses entre meses
+select months_between('25/04/15','25/03/15') from dual  positivo
+select months_between('25/03/15','25/04/15') from dual negativo
+
+select months_between('30/04/15','28/02/15') from dual;  2
+
+
+--add_month suma meses a la fecha
+select add_months('30/04/15',2) from dual;
+
+--next_day dia de la semana sera
+select next_day('27/04/15','LUNES') from dual;
+select next_day( sysdate,5) from dual;  --trae el valor de 5=Viernes
+
+--last_day ultimo dia del mes
+select last_day('02/02/15') from dual;
+
+--round (sysdate,month)  
+--trunc
+
+
+
+--------------------------------------------------------------
+
+--@@@@@@@@@@@@@@@@@@@@@@@@Practica unidad 4@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+--1.- Mostrar la decha del sistema conla etiqueta de columna DATE
+
+select sysdate AS "DATE" from dual;
+
+--2.- El departamento de HR necesita un reporte que muestre el NUMERO DE EMPLEADO
+--el apellido, el salario, y el salario incrementado en 15.5% (expresado en un solo numero)
+--para cada empleado la etiqueta de la columna sera New Salary.
+
+select EMPLOYEE_ID,LAST_NAME,SALARY,ROUND(((SALARY*15.5)/100+salary),0) AS "New Salary" from EMPLOYEES;
+
+--3.- Modificar el query anterior para expresar el nuevo salary. cuanto incremento? y colocarlo en una columna Increase
+
+select EMPLOYEE_ID,LAST_NAME,SALARY,ROUND(((SALARY*15.5)/100+salary),0) AS "New Salary",ROUND(((SALARY*15.5)/100+salary)-salary,0) AS Increase from EMPLOYEES;
+
+--4.-Mejorar lo siguiente:
+--a) Escribir un query que muestre el apellido (con la primer letra en Mayuscula y las otras en minusculas)
+   -- asi como la longitud del apellido de todos los empleados que su primer letra comience con "J", "A" o "M"
+   --ordenar los resultados de los apellidos de los empleados
+   
+select INITCAP(LAST_NAME) ,LENGTH(LAST_NAME) AS "LENGTH" from EMPLOYEES where LAST_NAME like('J%') or LAST_NAME like('M%') or LAST_NAME like('A%')  order by LAST_NAME;
+
+--b) Reescribir el query  que use un prompt para que pueda introducir ñla letra de apellido que comience. 
+--por ejemplo el usuario introducira el valor H  Capitalizado por lo tanto mostrara los nombres que comiencen con H
+
+select INITCAP(LAST_NAME) ,LENGTH(LAST_NAME) AS "LENGTH" from EMPLOYEES where LAST_NAME like ('&START_LETTER%') order by LAST_NAME;
+
+--c) MOdificar el query de manera que cuando se introduzca la letra no afecte en la busqueda ya que en automatico debera capitalizar
+--la letra introducida antes de realizar la busqueda
+select INITCAP(LAST_NAME) ,LENGTH(LAST_NAME) AS "LENGTH" from EMPLOYEES where LAST_NAME like INITCAP('&START_LETTER%') order by LAST_NAME;
+
+
+--6.- El departamento de RH quiere encontrar la duracion de empleo de cada empleado . Por cada empleado mostrar 
+ --apellido y calcular el numero de meses entre la fecha de hoy y en que fue contratado. A la columna le llamara
+ --MONTHS_WORKED. ordenar en base a los meses trabajados. El numero de meses debera ser redondeado al numero entero mas cercano
+ 
+ select LAST_NAME,ROUND(MONTHS_BETWEEN(sysdate, HIRE_DATE),0) AS "MONTHS_WORKED" from EMPLOYEES order by "MONTHS_WORKED";
+ 
+ --7.- Crear un query que muestre el apellido y el salario de todos los empleados
+ select LAST_NAME,LPAD(SALARY,15,'$') as "SALARY" from EMPLOYEES;
+ 
+ --8.- Crear un query que muestre los primeros 8 caracter del apellido e indicar el monto de su salario con asteriscos
+ --cada asterisco significa mil dolares. ordenar la informacion mediante el salario en forma desendente y con etiqueta de columna
+ -- EMPLOYEES_AND_THEIR_SALARIES
+ 
+ select RPAD(last_name,8)||' '||  rpad(' ',salary/1000+1,'*') as "EMPLOYEES_AND_THEIR_SALARIES", salary from EMPLOYEES order by salary DESC;
+
+ --9.- Crear un query que muestre el apellido y el numero de semanas trabajadas por todos los empleados del departamento 90
+ --la etiqueta de dicha columna dira TENURE. Trucar el numero de Semanas a 0 decimales . Mostrar la infomacion en orden desendente respecto de TENURE
+ 
+
+ 
+ select LAST_NAME,trunc((sysdate-HIRE_DATE)/7,0) AS TENURE from EMPLOYEES where DEPARTMENT_ID=90 order by TENURE DESC;
+
+
+
+######################################################################################################################################
+###################################### UNIDAD 5 Using Conversion Functions and Conditional Expressions################################3
+															
+						--Implicit data type conversion
+Data type Conversion															
+						--Explicit dat type conversion
+Implicit Data type conversion
+FROM 						TO
+Varchar2 or Char			Number
+Varchar2 or Char			Date
+
+FROM						TO
+Number						Varchar2 or Char
+Date						Varchar2 or Char
+
+TO_CHAR(number|date[,fmt [,nlsparams]  ] ) Convierte una numero o fecha a varchar2 character String with de format model fmt
+										Number conversion: The nlsparams parameter specifies the following characters 
+										which returned by number format elements.
+										-Decimal character.
+										-Group Separator.
+										-Local currency symbol
+										-Internacional currency symbol
+										If nlsparameters or select EMPLOYEE_ID, HIRE_DATE,TO_CHAR(hire_date,'FMMON DDth, YYYY') as "MONTH_HIRED" from EMPLOYEES;any other parameter is omitted. this function uses the default parameter values 
+										
+TO_CHAR( value [, format_mask] [, nls_language] )
+	-value
+			A number or date that will be converted to a string.
+	-format_mask
+			Optional. This is the format that will be used to convert value to a string.
+	-nls_language
+	Optional. This is the nls language used to convert value to a string.
+
+select EMPLOYEE_ID, HIRE_DATE,TO_CHAR(HIRE_DATE,'MM/YY') as "MONTH_HIRED" from EMPLOYEES; --devuelve la fecha en caracter 05/15
+select EMPLOYEE_ID, HIRE_DATE,TO_CHAR(HIRE_DATE,'DD/MM/YY') as "MONTH_HIRED" from EMPLOYEES; --devuelve la fecha en caracter 01/05/15
+select EMPLOYEE_ID, HIRE_DATE,TO_CHAR(HIRE_DATE,'DD-MM-YY') as "MONTH_HIRED" from EMPLOYEES;--devuelve la fecha en caracter 01-05-15
+select EMPLOYEE_ID, HIRE_DATE,TO_CHAR(HIRE_DATE,'DD-MM-YYYY') as "MONTH_HIRED" from EMPLOYEES;--devuelve la fecha en caracter 01-05-2015
+select EMPLOYEE_ID, HIRE_DATE,TO_CHAR(HIRE_DATE,'DAY MONTH YEAR') as "MONTH_HIRED" from EMPLOYEES; --VIERNES   MAYO       TWENTY FIFTEEN
+select EMPLOYEE_ID, HIRE_DATE,TO_CHAR(hire_date,'DD/MM/rrrr') as "MONTH_HIRED" from EMPLOYEES; --01/05/2015
+select EMPLOYEE_ID, HIRE_DATE,TO_CHAR(hire_date,'fmday  dd "de" fmmonth fmrrrr') as "MONTH_HIRED" from EMPLOYEES; --viernes  1 de mayo       2015	
+select EMPLOYEE_ID, HIRE_DATE,TO_CHAR(hire_date,'yyyy/mm/dd') as "MONTH_HIRED" from EMPLOYEES; --2003/07/09
+select EMPLOYEE_ID, HIRE_DATE,TO_CHAR(hire_date,'Month DD, YYYY') as "MONTH_HIRED" from EMPLOYEES;--Mayo 1, 2015
+select EMPLOYEE_ID, HIRE_DATE,TO_CHAR(hire_date,'FMMON DDth, YYYY') as "MONTH_HIRED" from EMPLOYEES; --MAY 1ST, 2015
+select EMPLOYEE_ID, HIRE_DATE,TO_CHAR(hire_date,'FMMonth DD, YYYY') as "MONTH_HIRED" from EMPLOYEES; --Mayo 1, 2015
+select EMPLOYEE_ID, HIRE_DATE,TO_CHAR(hire_date,'fmDAY  dd "de" month rrrr') as "MONTH_HIRED" from EMPLOYEES; --fm elimina espacios o ceros
+select EMPLOYEE_ID, HIRE_DATE,TO_CHAR((hire_date),'fmD') as "MONTH_HIRED" from EMPLOYEES;  --regresa el dia de la semana
+
+Elementos de del formato fecha
+HH24 :MI:SS AM/PM
+DD "of" MONTH 
+ddspth --suffixes
+HH or HH12
+HH24 
+SSSSS --Segundos
+/.; 
+TH  --Ordinal  number
+SP  --SPELLED-OUT DDSP for FOUR
+SPTH o THSP   -- Spelled ordinal numbers.
+
+
+Select last_name, TO_CHAR(hire_date,'fmDD "de" MONTH YYYY') from EMPLOYEES;  --1 de MAYO 2015
+Select last_name, TO_CHAR(hire_date,'fmDdspth "of" MONTH YYYY fmHH:MI::SS PM') from EMPLOYEES; --First of MAYO 2015 07:42::01 PM
+Select last_name, TO_CHAR(hire_date,'fmDDth "of" MONTH YYYY fmHH:MI::SS PM') from EMPLOYEES;  --1ST of MAYO 2015 07:42::01 PM	
+Select last_name, TO_CHAR(hire_date,'fmddSP "of" MONTH YYYY fmHH:MI::SS PM') from EMPLOYEES; --one of MAYO 2015 07:42::01 PM
+Select last_name, TO_CHAR(hire_date,'fmDDSP "of" MONTH YYYY fmHH:MI::SS PM') from EMPLOYEES; ONE of MAYO 2015 07:42::01 PM	
+Select last_name, TO_CHAR(hire_date,'fmddSPTH "of" MONTH YYYY fmHH:MI::SS PM') from EMPLOYEES; first of MAYO 2015 07:42::01 PM			
+select to_char(hire_date) from EMPLOYEES;
+select to_char(hire_date,'dd mon rrrr') from EMPLOYEES; -- 01 may 2015
+select to_char(hire_date,'d mon rrrr') from EMPLOYEES; --5 may 2015
+select to_char(hire_date,'day month rrrr') from EMPLOYEES;  --viernes   mayo       2015
+select to_char(hire_date,'fmday dd "de" month "de" rrrr') from EMPLOYEES;viernes 1 de mayo de 2015
+select to_char(hire_date,'day "DE" month rrrr') from EMPLOYEES;
+select to_char(hire_date,'dd "DE" month rrrr') from EMPLOYEESM;
+select to_char(hire_date,'dd "DE" fmmonth rrrr') from EMPLOYEES;
+select to_char(hire_date,'dd "DE" fmMONTH rrrr') from EMPLOYEES;
+select hire_date,to_char(hire_date,'dd "DE" fmMONTH rrrr') from EMPLOYEES;--01 DE MAYO 2015
+select to_char(hire_date,'dd "DE" MONTH yyyy') from EMPLOYEES; --01 DE MAYO       2015
+select to_char(hire_date,'FMdd "DE" MONTH yyyy') from EMPLOYEES;--1 DE MAYO 2015
+
+
+------Using TO_CHAR Functions with numbers (Un numero a caracter)
+9 			Representa un Numero
+0 			Forza al cero a ser mostrado
+$			Lugar para punto flotante del signo de dolar
+L			Se usa para simbolo local de la moneda
+.			Imprime un punto decimal
+,			Imprime un coma como indicador de separacion de miles
+
+
+
+
+select salary,to_char(salary,'$99,999.00') from EMPLOYEES; -- $30,000.00
+select salary,to_char(salary,'fmL99,999.00') from EMPLOYEES;--$30,000.00
+select salary,to_char(salary,'L99,999.00') from EMPLOYEES;          $30,000.00 (le pone espacios en blanco)
+select salary,to_char(salary,'L99,999.00') from EMPLOYEES --         $030,000.00
+select salary,to_char(salary,'fmL099,999.00') from EMPLOYEES; --$030,000.00
+
+--TO_NUMBER(char [,'format_model'])  (Convierte un caracter a Numero)
+--TO_DATE(char [,format_model']) Convierte un caracter a Fecha
+-fx modifier especifica especificamente el match entre los caracteres de argumento y el formato de TO_DATE
+
+select LAST_NAME,HIRE_DATE  from EMPLOYEES where HIRE_DATE=TO_DATE('MAYO 24, 2007','Month DD, YYYY'); --24/05/07
+select LAST_NAME,HIRE_DATE  from EMPLOYEES where HIRE_DATE=TO_DATE('MAYO 24, 2007','fxMonth DD, YYYY'); --24/05/07(todo que debe respetar exactamente la mascara)
+select LAST_NAME,HIRE_DATE  from EMPLOYEES where HIRE_DATE=TO_DATE('MAYO 24,  2007','fxMonth DD, YYYY');--ORA-01841: el valor (completo) del año debe estar entre -4713 y +9999, y no debe ser igual a 0
+
+--Usando TO_CHAR y TO_DATE functions con RR Date FORMATO
+select LAST_NAME,TO_CHAR(HIRE_DATE,'DD-Mon-YYYY')  from EMPLOYEES where HIRE_DATE>TO_DATE('01-Ene-90','DD-Mon-RR');
+select LAST_NAME,TO_DATE(HIRE_DATE,'DD-MM-RRRR')  from EMPLOYEES where TO_DATE(HIRE_DATE,'DD-MM-RRRR')<'01-04-2015';--King	17/06/03
+select TO_DATE('17/06/03','DD/MM/RR') from dual;
+select TO_DATE('17/06/03','DD/Mon/RR') from dual; --error
+select TO_DATE('17/June/03','DD/Month/RR') from dual;
+
+
+select to_number('$24,000.06') from dual --marca error
+select to_number('$24,000.06','$99,999.99') from dual -- como viene lo indica en la segunda parte
+select to_date('lunes abril de 1997','day month "de" RRRR') from dual;
+select to_date('05 abril de 1997','dd month "de" RRRR') from dual;
+select to_date('05 abril de 1997','dd month "de" RRRR') as fecha from dual;
+select to_date('lunes 13 abril de 2015','day dd month "de" RRRR') as fecha from dual;
+
+
+--fx q venga exactamente
+select to_date('lunes 13 abril de 2015','day dd fxmon "de" RRRR') as fecha from dual; marca error
+select to_date('lunes 13 abril de 2015','day dd fxmonth "de" RRRR') as fecha from dual;
+
+
+--GENERAL FUNCTIONS (FUNCIONES GENERALES)
+NVL(expr1,expr2) Convierte un valor nullo a un valor actual. -- el valor retornado sera del tipo de expr1
+NVL2(expr1,expr2,exp3) if expr1 is not null, NVL2 return expr2. if expr1 es nulla NVL2 retorna expr3. The argumen expr1 puede tener cualquier tipo  de dato.
+NULLIF(expr1,expr2) Compara 2 expresiones y regresa nullo si dichas expresiones son iguales. Regresa la expr1 si son diferentes
+COALESCE(expr1,expr2,exp3,n...)Regresa el primer valor NOT-NULL en la lista de expresiones.
+
+--nvl  manipula nullos NVL( string1, replace_with )
+select LAST_NAME,COMMISSION_PCT,nvl(COMMISSION_PCT,0) as nulo from EMPLOYEES --regresa 0 si encuentra null en COMMISSION_PCT
+select LAST_NAME,COMMISSION_PCT,nvl(COMMISSION_PCT,'0') as nulo from EMPLOYEES --regresa 0 si encuentra null en COMMISSION_PCT (hace una conversion de 0 de cadena a o numerico)
+select LAST_NAME,COMMISSION_PCT,nvl(COMMISSION_PCT,'1') as nulo from EMPLOYEES --regresa 1 si encuentra null en COMMISSION_PCT
+select DESC_ENCUESTA,FEC_LIMITE,NVL(FROM_MAIL,'Eamil desconocido') as "EMAIL ACTUAL",CC_MAIL,NVL(CC_MAIL,'SIN EMAIL') as "CC Email" from ADEN_CAT_ENCUESTAS; si es null el primer valor regresara la leyenda puesta
+select DESC_ENCUESTA,NVL(FEC_LIMITE,sysdate) as "Fecha limite"  from ADEN_CAT_ENCUESTAS; --si la fecha es nula le pondra la fecha actul de BD
+select DESC_ENCUESTA,NVL(FEC_LIMITE,to_char(sysdate,'DD MM RR')) as "Fecha limite"  from ADEN_CAT_ENCUESTAS; --si la fecha es nula pone la fecha de hoy como cadena
+select DESC_ENCUESTA,NVL(FEC_LIMITE,'01/May/15') as "Fecha limite"  from ADEN_CAT_ENCUESTAS; -- le pone 01/May/15
+select DESC_ENCUESTA,NVL(FEC_LIMITE,'01-May-15') as "Fecha limite"  from ADEN_CAT_ENCUESTAS;--le pone 01/May/15
+select DESC_ENCUESTA,NVL(FEC_LIMITE,'01-May-2015') as "Fecha limite"  from ADEN_CAT_ENCUESTAS;--le pone 01/May/15
+select DESC_ENCUESTA,NVL(FEC_LIMITE,0) as "Fecha limite"  from ADEN_CAT_ENCUESTAS;--manda error porq no coinciden los tipos de datos
+
+--nvl2 evalua la columna(if-else) NVL2( string1, value_if_not_null, value_if_null )
+select LAST_NAME,COMMISSION_PCT,nvl2(COMMISSION_PCT,1.0,0) as nulo from EMPLOYEES -- si es null regresa la expresion 2
+select LAST_NAME,COMMISSION_PCT,nvl2(COMMISSION_PCT,'1',0) as nulo from EMPLOYEES
+select LAST_NAME,COMMISSION_PCT,nvl2(COMMISSION_PCT,'1j','0k') as nulo from EMPLOYEES
+select LAST_NAME,COMMISSION_PCT,nvl2(COMMISSION_PCT,'hola',0) as nulo from EMPLOYEES
+select LAST_NAME,COMMISSION_PCT,nvl2(COMMISSION_PCT,0,'hola') as nulo from EMPLOYEES --no coincide 
+select DESC_ENCUESTA,NVL2(FEC_LIMITE,'01/05/2015',sysdate) as "Fecha limite"  from ADEN_CAT_ENCUESTAS; --cuando es Null FEC_LIMITE regresa la fecha de hoy sino '01/05/2015'
+select DESC_ENCUESTA,NVL2(FEC_LIMITE,'01/05/2015','hola') as "Fecha limite"  from ADEN_CAT_ENCUESTAS; --aun que no son los mismos tipos de datos no manda error
+select DESC_ENCUESTA,NVL2(FEC_LIMITE,'01/05/2015',0) as "Fecha limite"  from ADEN_CAT_ENCUESTAS; --aun que no son los mismos tipos de datos no manda error
+select  DESC_ENCUESTA,ID_TIPO_ENCUESTA,NVL2(ID_TIPO_ENCUESTA,'OTRO NUMERO',0) from ADEN_CAT_ENCUESTAS; --aunque los tipos de datos no coinciden no mmanda error
+
+--NULLIF( expr1, expr2 ) comprara 2 valores  si son iguales es null y son diferentes regresa exp 1, Exp1  no puede ser NULL
+select nullif('hola','hola') as nulo from dual
+select nullif('hola','hola1') as nulo from dual
+select  DESC_ENCUESTA,ID_TIPO_ENCUESTA,NULLIF(FEC_LIMITE, FEC_LIMITE)  from ADEN_CAT_ENCUESTAS; --regresa null porq son iguales
+select  DESC_ENCUESTA,ID_TIPO_ENCUESTA,NULLIF(FEC_LIMITE, sysdate)  from ADEN_CAT_ENCUESTAS; --regresa FEC_LIMITE porq no son iguales y si algun valor es NULL regresa NULL
+select  DESC_ENCUESTA,ID_TIPO_ENCUESTA,NULLIF(NULL, sysdate)  from ADEN_CAT_ENCUESTAS;--marca error no se permite poner null em expr1
+
+
+--COALESCE( expr1, expr2, ... expr_n )  devuelve loa primera exp de donde no es null
+select last_name,EMPLOYEE_ID,COMMISSION_PCT,MANAGER_ID, coalesce(to_char(COMMISSION_PCT),to_char(MANAGER_ID),'SIN COMISION') from EMPLOYEES
+select  DESC_ENCUESTA,ID_TIPO_ENCUESTA,COALESCE(to_char(FEC_LIMITE,'dd/mm/rr'),FROM_MAIL,to_char(ID_TIPO_ENCUESTA,'999'))  from ADEN_CAT_ENCUESTAS; --los tres tipos de expresiones deben ser del mismo tipo
+select  DESC_ENCUESTA,ID_TIPO_ENCUESTA,COALESCE(to_char(FEC_LIMITE,'dd/mm/rr'),FROM_MAIL,to_char(ID_TIPO_ENCUESTA,'999')) as comparator from ADEN_CAT_ENCUESTAS;--los tres tipos de expresiones deben ser del mismo tipo
+
+
+###CONDITIONAL EXPRESSIONS##
+IF-THEN-ELSE
+
+--case condiciones multiples  el retorno debe ser del mismo tipo de dato para todos los casos en caso contario marcara error de incompatibilidad de datos
+		--si son numericos Oracle tomara la precedencia explicita para retornar el valor.
+CASE [ expression ]
+
+   WHEN condition_1 THEN result_1
+   WHEN condition_2 THEN result_2
+   ...
+   WHEN condition_n THEN result_n
+
+   ELSE result
+
+END
+select  ID_ENCUESTA,ST_CONFIDENCIAL,DESC_ENCUESTA,
+        CASE ST_CONFIDENCIAL
+              WHEN 0 THEN 'NO ES CONFIDENCIAL'||' valor id: '||ST_CONFIDENCIAL
+              WHEN 1 THEN 'ES CONFIDENCIAL'||' valor id: '||ST_CONFIDENCIAL
+              ELSE 'DESCONOCIDO' END AS "TIPO DE ENCUESTA"
+from ADEN_CAT_ENCUESTAS;
+select  ID_ENCUESTA,ST_CONFIDENCIAL,DESC_ENCUESTA,
+        CASE ST_CONFIDENCIAL
+              WHEN 0 THEN CONCAT('NO ES CONFIDENCIAL - valor id: ',ST_CONFIDENCIAL)
+              WHEN 1 THEN 'ES CONFIDENCIAL'||' valor id: '||ST_CONFIDENCIAL
+              ELSE 'DESCONOCIDO' END AS "TIPO DE ENCUESTA"
+from ADEN_CAT_ENCUESTAS;}
+select  ID_ENCUESTA,ST_CONFIDENCIAL,DESC_ENCUESTA,
+        CASE ST_CONFIDENCIAL
+              WHEN 0 THEN CONCAT('NO ES CONFIDENCIAL - valor id: ',ST_CONFIDENCIAL)
+              WHEN 1 THEN 'ES CONFIDENCIAL'||' valor id: '||ST_CONFIDENCIAL||'-'||TO_CHAR(sysdate,'dd/mm/rrrr')
+              ELSE TO_CHAR(sysdate,'dd/mm/rrrr') END AS "TIPO DE ENCUESTA"
+from ADEN_CAT_ENCUESTAS;
+select  ID_ENCUESTA,ST_CONFIDENCIAL,DESC_ENCUESTA,
+        CASE ST_CONFIDENCIAL
+              WHEN 0 THEN CONCAT('NO ES CONFIDENCIAL - valor id: ',ST_CONFIDENCIAL)
+              WHEN 1 THEN 'ES CONFIDENCIAL'||' valor id: '||ST_CONFIDENCIAL||'-'||TO_CHAR(sysdate,'dd/mm/rrrr')
+              END AS "TIPO DE ENCUESTA"
+from ADEN_CAT_ENCUESTAS; --En este caso regresa un NULL porque no se coloco el ELSE por lo cual el valor no contempaldo devolvera NULL.
+
+
+SELECT LAST_NAME,JOB_ID,salary,
+        CASE  job_id WHEN 'IT_PROG' THEN 1.10*salary
+                      WHEN 'ST_CLERK' then 1.15*salary
+                      WHEN 'SA_REP' THEN 1.20*salary         
+        ELSE       salary end "REVISED_SALARY"
+from EMPLOYEES
+
+--DECODE( expression , search , result [, search , result]... [, default] ) si no se pone el default y no es encontrado entonces regresa null.
+SELECT LAST_NAME,JOB_ID,salary,
+        DECODE  (job_id,'IT_PROG', 1.10*salary,
+                       'ST_CLERK', 1.15*salary,
+                       'SA_REP', 1.20*salary,         
+              salary)  "REVISED_SALARY"
+from EMPLOYEES
+
+select  ID_ENCUESTA,ST_CONFIDENCIAL,DESC_ENCUESTA,
+        DECODE (ST_CONFIDENCIAL,
+                0,  CONCAT('NO ES CONFIDENCIAL - valor id: ',ST_CONFIDENCIAL),
+                1, 'ES CONFIDENCIAL'||' valor id: '||ST_CONFIDENCIAL||'-'||TO_CHAR(sysdate,'dd/mm/rrrr'),
+                   TO_CHAR(sysdate,'dd/mm/rrrr'))  AS "TIPO DE ENCUESTA"
+from ADEN_CAT_ENCUESTAS;
+
+select  ID_ENCUESTA,ST_CONFIDENCIAL,DESC_ENCUESTA,
+        DECODE (ST_CONFIDENCIAL,
+                0,  CONCAT('NO ES CONFIDENCIAL - valor id: ',ST_CONFIDENCIAL),
+                1, 'ES CONFIDENCIAL'||' valor id: '||ST_CONFIDENCIAL||'-'||TO_CHAR(sysdate,'dd/mm/rrrr')
+                  )  AS "TIPO DE ENCUESTA"
+from ADEN_CAT_ENCUESTAS;  --Puede regresar un null porque no tiene el defaul value
+
+-----------------------------------------------------------------------------------------------------------------------------
+laboratorio
+1
+select LAST_NAME||' earns '||to_char(salary,'$99,999.99')||' monthly but wants '||to_char((salary*3),'$99,999.99') as "Dream Salary" from EMPLOYEES;
+
+20
+
+select decode (JOB_ID,
+                      'AD_PRES','A',
+                      'ST_MAN','B',
+                       'IT_PROG','C',
+                        'SA_REP','D',
+                         'ST_CLERK','E',
+                          '0')
+                      as job from EMPLOYEES
+					  
+select JOB_ID ,case JOB_ID
+                when      'AD_PRES' then 'A'
+                 when     'ST_MAN' then 'B'
+                   when    'IT_PROG' then 'C'
+                   when     'SA_REP' then 'D'
+                    when     'ST_CLERK'then 'E'
+                    else        '0' END as grade
+                      from EMPLOYEES
+					  
+######################################################################################################################################
+######################################################### UNIDAD 6 REPORTING AGGREGATED DATA USING THE GROUP FUNCTIONS ###################################################################
+Objetivo 6.01
+Teoria:
+--La clausula WHERE restrinje los rows antes de agrupar el dataset.
+--la clausula HAVING restringe el data set despues de la aprupacion.
+ La division de los group functions esta dividido en 2 tipos
+ 1.-Definition of group functions: 
+ 2.-Types and sintaxis of group functions.
+ 
+ Definition of group functions: OPeran en la agregacion de informacion y retornan un solo resultado por grupo. LOs grupos usualmente van de cero o mas rows de informacion.
+ Se pueden definir con la siguiente formula: F(g1,g2,g3...)= result1,result2,result3,...
+ 
+ Un grupo de de funcion ejecuta uno por cada cluster de rows y retornan un solo valor por grupo. Estros grupos son tablas enteras o porciones de ellas usando un valor comun o atributo
+ 
+ Uno o mas grupo de funciones puede aparecer en el SELECT
+ Select group_function(column or expression)...
+ from table [where ...] [order by ...]
+Ejemplo
+Select count(*), department_id from employees group by department_id order by department_id; --trae todos los registros de la tabla empleados (incluso nullos y duplicados) y despues lo agrupo por el id del departamento
+select count(*),ID_COLABORADOR from ADEN_CAT_ENCUESTAS group by ID_COLABORADOR;--agrupa por el id del colaborador
+select count(*),FEC_LIMITE from ADEN_CAT_ENCUESTAS group by FEC_LIMITE; --agrupa por fecha y trae valores inclusive nulls
+ 
+ 
+ Typos y sintaxis de Grupo de funciones
+ 1.- COUNT: funcion que cuenta el numero de rows en un grupo:
+ Sintaxis:
+ COUNT({*|[DISTICT |ALL]] expr});
+ Tiene la siguientes formas:
+--Count(*): Invoca todo los valores en grupo inclusive nullos y dupicados seran contados
+--count(DISTINCT expr) Invoca los vlores unicos en el grupo
+--count(All expr): la palabra ALL es parte de default sintaxis  entonces count(all expr) y count(expr) son equivalentes
+--count(expr)  : trae la ocurrencias nonullas 
+La informacion que se puede usar para el count son: Date, char o varchar2 y numerico(si una expresion es nulla entonces sera ignorado a menos que utilice funciones cono VNL,NVL2 o COALESCE)
+ejemplos
+select count(NVL(FEC_LIMITE,'07/05/15')),FEC_LIMITE,ID_COLABORADOR from ADEN_CAT_ENCUESTAS group by FEC_LIMITE,ID_COLABORADOR; --convierte las fechas que sean nullas a una fecha especifica
+select count(FEC_LIMITE),FEC_LIMITE from ADEN_CAT_ENCUESTAS group by FEC_LIMITE;--aqui existian 2 fecha nullas pero el count marco 0 asi q fueron ignoradas
+
+***** PREGUNTAS DE CERTIFICACION*******
+***************************************
+1.-Group of function siempre operan en un solo grupo de rows a la vez
+2.-El grupo podra ser uno o varios grupos del dataset que han sido segmentados dentro o bien una table completa.
+3.- El grupo de funciones se ejecuta una vez por grupo
+4.-LOs rows que son nulls en los group of function son ignorados a menos que sean manejados con NVL,NVL2, o COALESCE
+
+Por ejemplo si se realiza el AVG(commission_pct) son agregados 35 registros para el calculo, pero si deseas que se tomen todos los registros entonces debes
+realizar AVG(NVL(commission_pct,0));
+
+Objetivo 6.02 IDENTIFICAR LA DISPONIBILIDAD DE LOS GRUPOS DE FUNCIONES
+Identify the available group of functions
+1.- Using the group functions
+2.-Nesting group functions.
+
+
+***** PREGUNTAS DE CERTIFICACION*******
+***************************************
+1.- Los single row functions pueden ser agrupados en cualquier nivel 1,2,3,4,...
+2.- Los group functions solo pueden ser agrupados en nivel 1,2 y no mas
+max(AVG(SUM(sysdate-fec_limite)/365.25)) Marcara ERROR
+3.- Si se hace un anidamiento de dos funciones de agrupacion es obligartorio usar el Order By
+select fec_limite ,count(*) from ADEN_CAT_ENCUESTAS; --error porque le falta el group by
+select count(*) from ADEN_CAT_ENCUESTAS; --funciona correctamente
+select max(fec_limite) ,count(*),min(ID_COLABORADOR) from ADEN_CAT_ENCUESTAS; --funciona correctamente
+select to_char(fec_limite,'day month year') ,count(*),min(ID_COLABORADOR) from ADEN_CAT_ENCUESTAS; -- falla
+select to_char(fec_limite,'day month year') ,count(*),min(ID_COLABORADOR) from ADEN_CAT_ENCUESTAS group by to_char(fec_limite,'day month year'); --funciona correctamente
+
+***** PREGUNTAS DE CERTIFICACION*******
+*********GROUP BY***********************
+1.- Un dataset es dividido en grupos usando Group by
+2.- el grouping attribute es conocido como la llave de agrupacion
+2.- El grouping attribute es usualmente es una sola columna pero pueden ser multiples columnas o una expression que no puede ser basada en  en grupo de funciones.
+4.- Solo es permitido un gruping attributes y grupo de funciones son permitidos en el SELECT y clausula Group by
+
+
+
+select (SUM(sysdate-fec_limite)/365.25) as "annos trabajados" from ADEN_CAT_ENCUESTAS;
+select AVG(SUM(sysdate-fec_limite)/365.25) as "annos trabajados" from ADEN_CAT_ENCUESTAS; --marca error pporq el anidamiento de funciones agrupadas requiere Group by
+select AVG(SUM(sysdate-fec_limite)/365.25) as "annos trabajados" from ADEN_CAT_ENCUESTAS group by fec_limite; ---es correcto
+select max(AVG(SUM(sysdate-fec_limite)/365.25)) as "annos trabajados" from ADEN_CAT_ENCUESTAS group by fec_limite; no se pude anidar mas de 2 veces
+
+--TYPE OF GROUP FUNCTIONS.
+AVG([DISTINCT | ALL] n)  calcula el promedio de n ingonando los valores nullos
+COUNT([DISTINCT] expression) cuenta el numero de rows. si se usa * cuenta todos los rows (duplicados y nullos)
+MAX([DISTINCT | ALL] expression) obtiene el valor maximo de la expression ingnorando vlores nullos
+MIN([DISTINCT | ALL] expression)obtiene el valor minimo de la expression ingnorando vlores nullos
+SUM([DISTINCT | ALL] n) Suma los valores de n ignorando los valores nullos
+--LISTAGG Ordena la informacion en cada grupo especificado en ORDER BY  y concatena los valores con una coma
+------LISTAGG (measure_column [, 'delimiter'])
+  ---------WITHIN GROUP (order_by_clause) [OVER (query_partition_clause)]
+STDDEV([DISTINCT | ALL] n)Calcula la desviacion Estandar de n ignorando valores nullos
+VARIACE([DISTINCT | ALL] n)Calcula la varianza de n ignorando los valores nullos.
+
+Los grupos de funciones tienen la siguiente estructura
+SELECT  group_function(column),...
+FROM table_name
+[WHERE condition]
+
+
+group_function([DISTICT|ALL] expr)
+DISTICT: No considera duplicados. ALL significa considera todos los valores incluyendo duplicados y nullos
+expr: puede ser cualquier tipo de dato
+Todos los grupos de funciones ingoran valores NULLOS para tratar estos valores USE NVL,NVL2, COALESCE, CASE or DECODE
+
+SELECT AVG(salary) , MAX(salary), MIN(salary), SUM(salary) FROM employees WHERE job_id LIKE '%REP%';
+
+
+Using THE MIN and MAX FUCTIONS
+You can use de MIN and MAX for numeric, Charter, and date
+
+select MIN(hire_date), MAX(hire_date) FROM employees;
+select MIN(last_name), MAX(last_name) FROM employees;
+
+
+Note: THE AVG , SUM , VARIANCE, STDDEV only for numeric. FOr MAX and MIN  no se puede usar con LOB and LONG
+
+--USING COUNT
+select COUNT(*) from employees where department_id=50; --retorna con nullos
+select count(commission_pct) from employees where department_id=50;-- retorna sin valores nullos
+--count(*) retorna todo (nullos y duplicados)
+--count(exp) retorna vlores duplicados y no nullos
+--count(DISTICT expr) retorna vlores unicos no nullos
+
+select count(DISTICT department_id) from employees; trae los valores no nulos y no duplicados
+
+GROUP FUNCTIONS AND NULL VALUES(ingnora valores nullos)
+select AVG(commission_pct) from employees;
+
+NVL forza a incluir valores nullos
+select AVG(NVL(commission_pct,0) from employees;
+
+select count(*) from ADEN_CAT_ENCUESTAS; --en este caso trajo 11 registros
+select count(FEC_LIMITE) from ADEN_CAT_ENCUESTAS; --en este caso trajo 9 registros (existian 2 registros nullos)
+select count(DISTINCT FEC_LIMITE) from ADEN_CAT_ENCUESTAS; -- en este caso trajo 11 registros (no exitian duplicados en fechas)
+select MAX(DISTINCT FEC_LIMITE) from ADEN_CAT_ENCUESTAS; 
+select MIN(DISTINCT FEC_LIMITE) from ADEN_CAT_ENCUESTAS;
+select MIN(DISTINCT FEC_LIMITE), count(*) from ADEN_CAT_ENCUESTAS;
+
+
+
+select max(salary) from employees;  desecha nullos
+select min(salary) from employees;
+select max(salary),min(salary) from employees;
+select max(salary),min(salary),sum(salary) from employees;
+select max(salary),min(salary),sum(salary),avg(salary) from employees where DEPARTMENT_ID in (50,60,90);
+
+select count(*) from EMPLOYEES
+select count(commission_pct) from EMPLOYEES --no trae nullos
+
+select count(distinct(deparment_id)) from EMPLOYEES
+select count(distinct(deparment_id)) from EMPLOYEES //no null no repetidos
+
+
+--GROUP BY  (Agrupar por alguna columna,ayuda a dividir los row de una tabla en grupos mas especificos )
+--having restriccion del group by
+SELECT column,group´_function(column)
+FROM table
+[WHERE condition]
+[GROUP BY group_by_expression]
+[ORDER BY column]
+--1.-Si agregas un grupo function en la sentencia SELECT no podras seleccionar individualmente la columna por lo tanto no podra aparecer una solo columna en el group by
+--recibira un error indicando que debes utilizar la lista de columnas.
+--2 Usando la clausula WHERE podras exluir registros y dividirlos dentro de grupos
+--3 podras sustituir una columna por una expression  en la sentencia select-.
+--4 Debes incluir la o columnas en la sentencia GROUP BY 
+--5- NO se puede utilizar alias en el GROUP BY deberas usar el nombre de la columna
+
+
+select DEPARTMENT_ID as id , max(salary) from EMPLOYEES  group by id;  --no funciona el alias
+select NVL(DEPARTMENT_ID,0) as id , max(salary) from EMPLOYEES  group by DEPARTMENT_ID; sustituye donde exista el cero
+select DEPARTMENT_ID as id , max(salary) from EMPLOYEES  group by DEPARTMENT_ID;--trae nullos
+select DEPARTMENT_ID as id ,JOB_ID as "id trabajo", max(salary) from EMPLOYEES  group by DEPARTMENT_ID; --marca error porq se agrupa por dos columnas en el select pero no se esta especificando en el GROUP
+select DEPARTMENT_ID as id ,JOB_ID as "id trabajo", max(salary) from EMPLOYEES  group by DEPARTMENT_ID,JOB_ID;
+select DEPARTMENT_ID as "id" ,JOB_ID as "id trabajo", max(salary) from EMPLOYEES where DEPARTMENT_ID=110 group by DEPARTMENT_ID,JOB_ID;
+
+--EL GROUP BY NO ES NECESARIO QUE LA COLUMNA ESTE EN LA SENTENCIA SELECT
+select AVG(salary) from employees group by department_id; 
+select round(AVG(salary),2) "PROMEDIO" from employees group by department_id;
+select TO_CHAR(round(AVG(salary),2),'$999,999.99') "PROMEDIO" from employees group by department_id;
+select department_id as "ID DEPARTAMENTO",TO_CHAR(round(AVG(salary),2),'$999,999.99') "PROMEDIO" from employees group by department_id;
+select NVL(department_id,0) as "ID DEPARTAMENTO",TO_CHAR(round(AVG(salary),2),'$999,999.99') "PROMEDIO" from employees group by department_id;--forza a q no halla nullos
+select department_id,job_id,TO_CHAR(sum(salary),'$999,999.99') SALARIO from employees group by department_id,job_id order by job_id;
+select department_id,job_id,TO_CHAR(sum(salary),'$999,999.99') SALARIO from employees where department_id>40 group by department_id,job_id order by job_id; 
+
+--cuando se utiliza Una columna o mas + COUNT(last_name)
+select department_id,count(last_name) from employees; --error
+select department_id,count(last_name) from employees group by department_id; --aca ya no marcara error.
+select  DEPARTMENT_ID,JOB_ID, max(salary) from EMPLOYEES  group by DEPARTMENT_ID,JOB_ID ; --funciona
+
+--Cuando se requieren hacer reestriciones de grupo de funciones es incorrecto usar WHERE en ese caso se utiliza HAVING
+SELECT department_id,AVG(salary) from employees where AVG(salary) >800 Group by department_id; --marca error
+SELECT department_id,AVG(salary) from employees having AVG(salary) >800 Group by department_id; --es correcto
+SELECT department_id,AVG(salary) from employees  Group by department_id having AVG(salary) >800;--es correcto
+SELECT department_id,AVG(salary) from employees  Group by department_id having AVG(salary) >10000 --es correcto
+
+
+select  max(salary) from EMPLOYEES  group by DEPARTMENT_ID ;--funciona
+select  DEPARTMENT_ID max(salary) from EMPLOYEES   --no funciona
+
+
+select  DEPARTMENT_ID,JOB_ID, max(salary) from EMPLOYEES  group by DEPARTMENT_ID,JOB_ID having max(salary)>10000 order by DEPARTMENT_ID
+select  DEPARTMENT_ID,JOB_ID, max(salary) from EMPLOYEES where  DEPARTMENT_ID in (60,90) group by DEPARTMENT_ID,JOB_ID having max(salary)>10000 order by DEPARTMENT_ID
+select  DEPARTMENT_ID,JOB_ID, max(salary) from EMPLOYEES where  DEPARTMENT_ID in (60,90) having max(salary)>10000 group by DEPARTMENT_ID,JOB_ID  order by DEPARTMENT_ID
+
+--HAVING
+SELECT column, group_function
+FROM table 
+[WHERE condition ]
+[GROUP BY codition]
+[HAVING condition]
+[ORDER BY column]
+1.- Las columnas dosn agrupadas
+2.- Las funciones de rupo son aplicadas al grupo
+3.-Se aplica condicion HAVING al grupo y se presentan los resultados
+
+select department_id,MAX(salary)
+FROM employees
+GROUP BY department_id
+HAVING MAX(salary) >10000;
+
+select department_id,AVG(salary)
+FROM employees
+GROUP BY department_id
+HAVING MAX(salary) >10000;--trae 6 registros
+
+select department_id,AVG(salary)
+FROM employees
+GROUP BY department_id
+HAVING MAX(salary) >10000; --trae 12 registros
+
+select job_id, SUM(salary) PAYRROL 
+FROM employees
+WHERE job_id NOT LIKE '%REP%'
+group by job_id
+HAVING SUM(salary) >13000
+order by SUM(salary);
+
+---NESTING GROUP FUNCTIONS (ANIDAMIENTO DE FUNCIONES DE GRUPO) cuando se realiza es obligatorio el GROUP BY
+Mostrar el maximo promedio del salario
+select max(avg(salary)) as "maximo promedio de salario" from employees;--marca error
+select max(avg(salary)) as "maximo promedio de salario" from employees group by DEPARTMENT_ID; --select correcto
+select TO_CHAR(round(max(avg(salary)),2),'$999,999.99') as "maximo promedio de salario" from employees group by DEPARTMENT_ID;
+
+toma los datos y los separa.
+select listagg(last_name,';') within group (order by hire_date)
+from employees
+
+select listagg(last_name,';') within group by DEPARTMENT_ID order by hire_date
+from employees
+group by depertment_id;
+
+string uno;
+string dos;
+String resultado;
+
+resultado = uno + dos;
+
+
+######################################################################################################################################
+##################################################UNIDAD 7 DISPLAYING DATA FROM MULTIPLE TABLES USING JOINS  ###################################################################
+
+select product_id ,product_type_id,name  from products
+UNION
+(select prd_id,prd_type_id,name from more_products
+INTERSECT
+select PRODUCT_ID,PRODUCT_TYPE_ID,NAME from product_changes)
+order by product_id  --como hacer el order by ??
+
+Types of Joins and its syntax
+--Natural join with the NATURAL JOIN clause
+--Join with the using Clause
+--Join with the ON Clause
+OUTER joins:
+	--LEFT OUTER JOIN
+	--RIGHT OUTER JOIN
+	--FULL OUTER JOIN
+
+Cross join
+###################################
+Qualifying Ambiguous Column Names
+####################################
+--Utilizar prefijpo para clarificar los nombres de las columnas cuando hay multiples tablas
+--Usar prefijos (alias) par las tablas hace tener mayor velocidad en el parseo para la BD
+--Usar alias en las tablas en lugar de tener el nombre completo de la tabla
+--El alias da una mejor ordenamiento de la tabla al tener un nombre corto
+--Tener una sentencia SQL en menor codigo ocupa menor memoria
+--Usar alias en las columnas pertine distinguir a que tabla pertence cada campo.
+
+#############
+NATURAL JOIN 
+#############
+--esta basada en todas las columnas en dos tablas que tienen el mismo nombre.
+--Selecciona los rows de dos tablas que tienen el mismo tipo de dato (hacen match en la info)
+--Si las columns tienen el mismo nombre de columna pero diferente tipo de dato marcara error.
+--no se pueden utilizar qualifier (alias en los natural joins)
+
+select region_id,country_name,region_name from regions NATURAL JOIN  COUNTRIES;
+select employee_id, last_name,department_id,department_name from employees NATURAL JOIN departmets;
+select department_id,department_name,location_id,city from departments NATURAL JOIN locations where department_id in(20,50);
+select PRODUCT_TYPE_ID ,name ,type from  products  natural join  product_types;--No trae nada porue varias columnas hacen match y no sabe por cual columna amarrar
+SELECT region_name,country_name FROM  countries NATURAL JOIN REGIONS;--Realiza el Join por medio de region_id
+SELECT region_name FROM  countries NATURAL JOIN REGIONS WHERE COUNTRY_NAME='Canada';--Realiza el Join por medio de region_id
+select country_name from COUNTRIES NATURAL JOIN REGIONS WHERe region_name='Americas';--Realiza el Join por medio de region_id
+SELECT region_name,COUNTRY_NAME,city FROM  countries NATURAL JOIN REGIONS NATURAL JOIN LOCATIONS where region_name='Americas' ;
+SELECT region_name,COUNTRY_NAME,city FROM  countries NATURAL JOIN REGIONS NATURAL JOIN LOCATIONS where region_name='Americas' group by region_name,COUNTRY_NAME,city
+--Se realizo el query en base a region_id y country_id
+
+#################
+USING Clause
+#################
+--usar la palabra USING en una columna cuando mas de una columna hacen match,
+--Cuando varias columnas hacen match pero el tipo de dato es diferente para indicar cual sera la columna join
+--La clausula NATURAL JOIN y USING son mutuamente exclusivo (no se pueden ocupar en la misma sentecnia)
+--Solo se puede usar qualifier (alias) en columnas que no sean la del USING 
+
+select PRODUCT_TYPE_ID ,name ,type from  products  join  product_types using(PRODUCT_TYPE_ID); --funciona correctamente hace match especificamente por PRODUCT_TYPE_ID
+select PRODUCT_TYPE_ID ,prod.name ,types.type from  products prod join  product_types types using(PRODUCT_TYPE_ID); --funciona correctamente
+select prod.PRODUCT_TYPE_ID ,prod.name ,types.type from  products prod join  product_types types using(PRODUCT_TYPE_ID);--marca error porq no se debe usar alias
+select PRODUCT_TYPE_ID ,prod.name ,types.type from  products prod join  product_types types using(PRODUCT_TYPE_ID) where PRODUCT_TYPE_ID in (1,2);
+select PRODUCT_TYPE_ID ,prod.name ,types.type from  products prod join  product_types types using(PRODUCT_TYPE_ID) where PRODUCT_TYPE_ID not in  (1,2);
+select PRODUCT_TYPE_ID ,prod.name ,types.type from  products prod join  product_types types using(PRODUCT_TYPE_ID) where types.type like '%ga%';
+select region_name from regions JOIN countries USING(region_id) WHERE country_name='Canada';--Realiza explicitamente con cual columna realizara el JOIN
+select region_name,COUNTRY_NAME,city from countries JOIN REGIONS USING(region_id)  JOIN LOCATIONS USING(country_id);
+select regiones.region_name,paises.COUNTRY_NAME,lugar.city from countries paises JOIN REGIONS regiones USING(region_id)  JOIN LOCATIONS lugar USING(country_id); --se utilizaron alias
+
+#############
+JOINS with ON
+#############
+
+--Utilice ON para especificar arbitrariamente o especificar condiciones para unir columnas
+--La clausula JOIN es separada de otra busqueda de condicion
+--Utilizar ON hace mas facil el entendimiento del codigo.
+
+SELECT prod.PRODUCT_ID,prod.PRODUCT_TYPE_ID,prod.NAME,types.TYPE 
+FROM products prod  JOIN product_types types
+ON prod.PRODUCT_TYPE_ID=types.PRODUCT_TYPE_ID;-- Funciona correctamente (UNE 2 tablas)
+
+
+SELECT prod.PRODUCT_ID,prod.PRODUCT_TYPE_ID,prod.NAME,types.TYPE ,more.AVAILABLE
+FROM products prod  JOIN product_types types
+ON prod.PRODUCT_TYPE_ID=types.PRODUCT_TYPE_ID
+JOIN more_products more
+ON  types.PRODUCT_TYPE_ID = more.PRD_TYPE_ID;-- Funciona correctamente (UNE 3 tablas)
+
+
+SELECT prod.PRODUCT_ID,prod.PRODUCT_TYPE_ID,prod.NAME,types.TYPE ,NVL(more.AVAILABLE,'SE DESCONOCE')
+FROM products prod  JOIN product_types types
+ON prod.PRODUCT_TYPE_ID=types.PRODUCT_TYPE_ID
+JOIN more_products more
+ON  types.PRODUCT_TYPE_ID = more.PRD_TYPE_ID;--Funciona correctamente
+
+##################################
+APLICANDO Condiciones Adicionales
+AND or WHERE
+##################################
+
+SELECT prod.PRODUCT_ID,prod.PRODUCT_TYPE_ID,prod.NAME,types.TYPE 
+FROM products prod  JOIN product_types types
+ON prod.PRODUCT_TYPE_ID=types.PRODUCT_TYPE_ID
+WHERE prod.PRODUCT_TYPE_ID<> 1;-- Funciona correctamente (UNE 2 tablas) WHERE
+
+
+SELECT prod.PRODUCT_ID,prod.PRODUCT_TYPE_ID,prod.NAME,types.TYPE ,more.AVAILABLE
+FROM products prod  JOIN product_types types
+ON prod.PRODUCT_TYPE_ID=types.PRODUCT_TYPE_ID
+JOIN more_products more
+ON  types.PRODUCT_TYPE_ID = more.PRD_TYPE_ID
+WHERE prod.PRODUCT_TYPE_ID<>; 1-- Funciona correctamente (UNE 3 tablas) WHERE
+
+SELECT prod.PRODUCT_ID,prod.PRODUCT_TYPE_ID,prod.NAME,types.TYPE ,NVL(more.AVAILABLE,'SE DESCONOCE')
+FROM products prod  JOIN product_types types
+ON prod.PRODUCT_TYPE_ID=types.PRODUCT_TYPE_ID
+JOIN more_products more
+ON  types.PRODUCT_TYPE_ID = more.PRD_TYPE_ID
+AND prod.PRODUCT_TYPE_ID<> 1;--Funciona correctamente CON AND
+
+SELECT prod.PRODUCT_ID,prod.PRODUCT_TYPE_ID,prod.NAME,types.TYPE ,NVL(more.AVAILABLE,'SE DESCONOCE')
+FROM products prod  JOIN product_types types
+ON prod.PRODUCT_TYPE_ID=types.PRODUCT_TYPE_ID
+JOIN more_products more
+ON  types.PRODUCT_TYPE_ID = more.PRD_TYPE_ID
+AND prod.PRODUCT_TYPE_ID<> 1
+WHERE prod.NAME like '%k%'; --FUNCIONA CORRECTAMENTE CON AND y WHERE
+
+SELECT prod.PRODUCT_ID,prod.PRODUCT_TYPE_ID,prod.NAME,types.TYPE ,NVL(more.AVAILABLE,'SE DESCONOCE')
+FROM products prod  JOIN product_types types
+ON prod.PRODUCT_TYPE_ID=types.PRODUCT_TYPE_ID
+JOIN more_products more
+ON  types.PRODUCT_TYPE_ID = more.PRD_TYPE_ID
+WHERE prod.NAME like '%k%'AND prod.PRODUCT_TYPE_ID<> 1; --funciona correctamente solo se cambio de posicion las clusulas
+
+####################
+SELF-JOIN
+####################
+--Son relaciones a la misma tabla
+--Se necesita los alias en las tablas para hacer diferencia entre ella misma
+
+
+SELECT worker.last_name emp, manager.last_name mgr
+FROM employees  worker JOIN employees manager
+ON(worker.manager_id=manager.employee_id);
+
+##################
+NONEQUIJOINS
+##################
+--Es cuando se necesita relacionar dos tablas que no contienen columnas para realizar los JOINs por lo cual se relaciona por los DATOS
+--Se puede ocupar la clausula BETWEEN o bien >= o <=
+
+SELECT e.last_name,e.salary,j.grade_level
+FROM employees e JOIN job_grades j
+ON e.salary
+	BETWEEN j.lowest_sal AND j.highest_sal;
+
+##################
+OUTER JOIN
+##################
+--Cuando se necesita traer informacion NO relacionada (no hace match)se utiliza LEFT|RIGHT OUTER JOIN
+--CUando se necesita traer ambas partes de la informacion FULL OUTER JOIN
+
+SELECT e.last_name,e.department_id,d.department_name
+FROM employees e LEFT OUTER JOIN departments d
+ON(e.department_id=d.department_id); --Trae todo lo que esta en la tabla employees que no esta en la tabla departamentos
+
+SELECT e.last_name,e.department_id,d.department_name
+FROM employees e RIGHT OUTER JOIN departments d
+ON(e.department_id=d.department_id); --Trae todo lo que esta en la tabla departamentos que no esta en la tabla empleados
+
+SELECT e.last_name,e.department_id,d.department_name
+FROM employees e FULL OUTER JOIN departments d
+ON(e.department_id=d.department_id); --Trae todo lo que esta en la tabla Empleados y Departamentos.
+
+#################
+CARTESIAN PRODUCTS
+#################
+--El producto cartesiano es formado cuando cuando un JOIN es ommitido
+--Cuando la condicion es invalida 
+--Cuando todos los rows de la tabla A son relacionados con todos los rows de la tabla B
+--Para formar la sentencia se utiliza la palabra reservada CROSS JOIN
+--Se omite la sentencia WHERE
+
+SELECT last_name,department_name
+FROM employees
+CROSS JOIN departments;
+
+
+
+
+--tradicional
+select reg.REGION_ID,cou.country_name,reg.region_name from COUNTRIES cou ,REGIONS reg
+where  reg.REGION_ID=cou.REGION_ID}
+
+select  employee_id, last_name, department_name  ---coincide union de dos tablas y dos columnas
+from employees natural join departments
+
+
+
+select  employee_id, last_name, department_name
+from employees emp ,departments dep
+where emp.department_id = dep_department_id
+and emp.manger_id= dep.manager_id;
+
+select  employee_id, last_name, department_name 
+from employees  join departments
+using (DEPARTMENT_ID);
+
+
+
+select  employee_id, last_name, department_name 
+from employees emp join departments dep
+on  (emp.DEPARTMENT_ID = dep.DEPARTMENT_ID);
+
+
+select  employee_id, last_name, department_name 
+from employees emp join departments dep
+on  (emp.DEPARTMENT_ID = dep.DEPARTMENT_ID)  and (emp.manager_id = dep.manager_id) ;
+
+
+union todas las tablas
+
+##### clase Sabatina 09/05/2015###
+
+using : no se debe agregar un alias, se debe colocar solo el nombre de la columna
+
+SELFT JOIN: union de dos tablas pero haciendo referencia asi misma
+select EMPLOYEE_ID,LAST_NAME,MANAGER_ID from employees;
+select emp.EMPLOYEE_ID, emp.LAST_NAME,man.LAST_NAME from employees emp join employees man on (emp.manager_id=man.EMPLOYEE_ID);
+select emp.EMPLOYEE_ID, emp.LAST_NAME,man.LAST_NAME from employees emp join employees man on (emp.manager_id=man.EMPLOYEE_ID) order by emp.EMPLOYEE_ID;
+
+NONEQUIJOINS: union de tablas pero en base a los datos de la tablas (no en base a columnas)
+select * from JOB_GRADES;
+
+select emp.EMPLOYEE_ID, emp.LAST_NAME,emp.salary,job.grade_level
+from employees emp join job_grades job
+on emp.salary between job.lowest_sal and job.highest_sal;
+
+OUTER JOIN
+--LEFT OUTER JOIN
+--RIGHT OUTER JOIN
+--FULL OUTER JOIN
+
+select employee_id, last_name,  department_id,department_name --Cuando no tienes departamento asignado se descarta
+from employees join departments
+using (department_id);
+
+
+select employee_id, last_name,  department_id,department_name--empleados que no tienen departamento
+from employees left outer join departments
+using (department_id);
+
+select employee_id, last_name,  department_id,department_name--departamentos que no tienen empleados
+from  departments left outer join  employees
+using (department_id);
+
+select employee_id, last_name,  department_id,department_name--departamentos que no tienen empleados
+from employees right outer join departments
+using (department_id);
+
+select employee_id, last_name,  department_id,department_name--trae ambos (empleados que no tienen departametos) y (departamentos que no tiene empleados)
+from employees full outer join departments
+using (department_id);
+
+--CARTESIAN PRODUCTS
+select count(*) from employees;
+select count(*) from departments;
+
+select last_name, department_name
+from employees cross join departments;
+
+select last_name, department_name
+from employees cross join departments
+cross join job_grades;
+
+###################PRACTICA 7##############
+1.-
+select LOCATIONS.LOCATION_ID,LOCATIONS.STREET_ADDRESS,LOCATIONS.CITY,LOCATIONS.STATE_PROVINCE,COUNTRIES.COUNTRY_NAME 
+from LOCATIONS natural join COUNTRIES;
+
+--2.
+select last_name,DEPARTMENT_ID,DEPARTMENT_NAME
+from employees    join departments 
+using (DEPARTMENT_ID);
+
+--3.-
+desc locations;
+select * from locations;
+select emp.last_name,emp.JOB_ID, dep.DEPARTMENT_ID,dep.DEPARTMENT_NAME
+from employees emp join departments dep
+on(emp.DEPARTMENT_ID=dep.DEPARTMENT_ID)
+join locations loc
+on(dep.LOCATION_ID=loc.LOCATION_ID)
+where loc.LOCATION_ID<>4;
+
+
+
+select emp.last_name , emp.employee_id, man.last_name , man.employee_id 
+from employees emp JOIN employees man
+on(emp.manager_id=man.employee_id)
+
+select emp.last_name , emp.employee_id, man.last_name , man.employee_id 
+from employees emp left outer JOIN employees man
+on(emp.manager_id=man.employee_id)
+
+select e.department_id,e.last_name, c.last_name
+from employees e join employees c
+on (e.department_id=c.department_id)
+where e.employee_id<>c.employee_id
+order by e.last_name
+######################################################################################################################################
+###############################################UNIDAD 8 USING SUBQUERIES TO SOLVE PROBLEMS###################################################################
+Un subquery es referenciado o descrito como un INNER query y el query que esta en la ocurrencia se llama OUTER query.
+Un subquery es un query embebido en otro SQL Statement y asu vez este statement puede ser otro query o bien un DML statement:
+
+Las partes requeridas para un subquery son:
+1.-SELECT lista
+2.-FROM clause
+Las partes opcionales son 
+1.-WHERE, GROUP BY y HAVING
+
+El anidamiento de los querys pueden estar dentro de:
+-SELECT, 
+INSERT (un subquery puese ser usado para seleccionar rows pero NUNCA en la clausula VALUES ), 
+UPDATE or DELETE.
+
+La ejecucion de un subquery es primero para que el resultado pueda ser pasado al query padre
+
+Caracteristicas:
+a)Un query puede ser anidado uno tras otro sin un limite en la practica. Pero en el caso del WHER solo soporta maximo 255 anidamientos
+b)Son usados para generar valores para una lista de un query para generar una vista en linea
+c) son usados en las siguientes partes:
+SELECT (usado co mo lista),FROM (cluasula) ,WHERE (clausula) and HAVING (clausula)
+d)cuando son usados WHERE and HAVING para single-row subqueries se pueden usar los comparadores:
+=, >, <=, <,<=, <>
+e)cuando son usados WHERE and HAVING para multiple-row subqueries se pueden usar los comparadores:
+IN, NOT IN, ANY, ALL
+
+Los subqueries estan divididos en 3 tipos:
+1.-Single-Row : Este tipo de query retorna un unico valor (row) con posibles varias columnas 
+2.-Multiple-ROW : Este tipo de query retorna varios valores (rows) con posibles varias columnas
+3.-Escalar: Este tipo de quey retorna un solo valor: Un solo row y una sola columna.
+4.-Correlated : La ejecucion de los subqueries son ejecutadas antes que el outer query (o bien en otras palabras son dependientes uno de otro)
+
+Problemas que soluciona el uso de subqueries
+1.-Selecciona rows de una tabla con una condicion que depende de datos  que un query puede solventar
+2.-Puede reemplazar complejos JOIN con subqueries
+3.- Queries pueden agregar valores de outer query's que no estan disponibles en la tabla
+
+START TRANSFORMATION: Es una extension del uso de subqueries como una alternativa de habilitar relaciones(JOINS)
+--Query tradicional
+SELECT count(quantity_sol)
+FROM sales s, products p, customers c, channels ch
+WHERE s.prod_id = p.prod_id
+AND   s.cust_id=c.cust_id
+AND   s.channel_id= ch.channel_id
+AND   p.prod_name = 'COMIC BOOK HEROES'
+AND   s.cust_city= 'Oxford'
+AND  s.channel_desc= 'Internet';
+
+--Query usando Start transformation (el reescribir el query original a eso se le llama start transformation)
+SELECT count(quantity_sol)
+FROM sales 
+WHERE prod_id IN
+	(SELECT prod_id FROM products WHER prod_name='COMIC BOOK HEROES')
+AND  cust_id IN
+	(SELECT cust_id FROM customers WHER cust_city='Oxford')
+AND  channel_id IN
+	(SELECT channel_id FROM channels WHER channel_desc='Internet');
+
+select salary from employees where last_name='Abel'
+select * from employees where salary>1100;
+select * from employees where salary>(select salary from employees where last_name='Abel');
+
+select * from employees where salary>(select salary from employees where last_name='Abel') and job_id=(select job_id from employees where last_name='King');
+
+
+select * from employees where salary in (      
+select salary from employees where employee_id in (101,102,103));
+
+ANY siempre va acompañado con un operador.
+
+ALL debe cumplir todas las compraciones
+
+
+EXISTS: consulta correlacional (dependen del query externo)
+select employee_id,salary,last_name  from employees m
+where exists
+(select employee_id from employees w
+where (w.manager_id=m.employee_id))
+
+
+select employee_id,salary,last_name  from employees m
+where not exists
+(select employee_id from employees w
+where (w.manager_id=m.employee_id))
+
+########################### PRACTICA 7 #########################################################
+1.-
+select EMPLOYEE_ID,last_name,TO_CHAR(HIRE_DATE,'dd-Mon-RR') from employees where EMPLOYEE_ID<>(select EMPLOYEE_ID from employees   where last_name  like '%King%');
+select EMPLOYEE_ID,last_name,TO_CHAR(HIRE_DATE,'dd-Mon-RR') from employees where EMPLOYEE_ID<>(select EMPLOYEE_ID from employees   where last_name  like '%&ENTER_NAME%');
+select EMPLOYEE_ID,last_name,TO_CHAR(HIRE_DATE,'dd-Mon-RR')as "HIRE_DATE" from employees where EMPLOYEE_ID<>(select EMPLOYEE_ID from employees   where last_name  like '%&ENTER_NAME%');
+
+2.-
+select employee_id, last_name, salary from employees order by salary;
+select avg(salary) from employees;
+select employee_id, last_name, salary from employees where salary>(select avg(salary) from employees) order by salary;
+
+3.-
+select employee_id, last_name from employees  where department_id iN
+select  department_id from employees where last_name like '%u%';
+select employee_id, last_name from employees  where department_id iN(select  department_id from employees where last_name like '%u%');
+
+4.-
+select last_name,department_id,job_id from employees where department_id in(
+select department_id from departments where location_id=1700;
+select last_name,department_id,job_id from employees where department_id in(select department_id from departments where location_id=1700);
+
+b)select last_name,department_id,job_id from employees where department_id in(select department_id from departments where location_id=&LOCATION_ID);
+
+5.-
+select last_name,salary from employees where manager_id =(select employee_id from employees where last_name='King');
+
+6.-
+select department_id,last_name, job_id from employees where department_id in(
+select department_id from departments where department_name='Executive'
+select department_id,last_name, job_id from employees where department_id in(select department_id from departments where department_name='Executive');
+
+7.-
+select last_name from employees where salary > any 
+select salary from employees where department_id=60;
+select last_name from employees where salary > any (select salary from employees where department_id=60)
+
+
+8.-
+select EMPLOYEE_ID,last_name, salary from employees where department_id in() and salary>
+select avg(salary) from employees; 
+select department_id from employees where last_name like '%u%';
+select EMPLOYEE_ID,last_name, salary from employees where department_id in(select department_id from employees where last_name like '%u%') and salary>(select avg(salary) from employees)
+select EMPLOYEE_ID,last_name, salary from employees where department_id in(select department_id from employees where last_name like '%u%') and salary<(select avg(salary) from employees)
+
+
+
+######################################################################################################################################
+###################################### UNIDAD 9 USING THE SET OPRERATORS #############################################################
+
+select employee_id, job_id from employees
+union
+select employee_id, job_id from Job_history
+
+select employee_id, job_id from employees
+intersect
+select employee_id, job_id from Job_history
+
+select employee_id, job_id from employees
+union all
+select employee_id, job_id from Job_history
+order by employee_id;
+
+select employee_id, job_id from employees
+minus
+select employee_id, job_id from Job_history
+order by employee_id;
+
+select employee_id, job_id from Job_history
+minus
+select employee_id, job_id from employees
+order by employee_id;
+
+select location_id,department_name "DEPARTMENT",to_char(null) "ALGO"
+from departments
+union
+select location_id,to_char(null) "DEPARTMENT", state_province "ALGO"
+from locations;
+
+*******LIBRO CERTIFICACION Y SQL ORACLE *******
+UNION ALL: Regresa todos los registros recibidos por los queries, incluyendo rows duplicados sin ordenar
+UNION	  :Regresa todos los registros no duplicados ordenados
+INTERSECT : Regresa la intereseccion de los dos queries ordenados
+MINUS	  : Regresa el resto de los rows recibidos por el segundo query pero sin ordenamiento
+
+select product_id,product_type_id,name from products; --El ordenamiento es respecto de como se fueron insertando los rows
+select prd_id,prd_type_id,name from more_products; --El ordenamiento es respecto de como se fueron insertando los rows
+select product_type_id,type  from product_types; --El ordenamiento es respecto de como se fueron insertando los rows
+
+SELECT COUNT(*) FROM  products; --12 rows
+SELECT COUNT(*) FROM  more_products; --5rows
+
+select product_id,product_type_id,name from products
+UNION ALL
+select prd_id,prd_type_id,name from more_products; --trae 17 registros incluso los repetidos (12+5=17 rows) y no ordena ningun registro
+
+select product_id,product_type_id,name from products
+UNION ALL
+select prd_id,prd_type_id,name from more_products
+order by 1;											--Ordena los elementos en base product_id y prd_id de ambas tablas
+
+----------------------------
+select product_id,product_type_id,name from products
+UNION
+select prd_id,prd_type_id,name from more_products; --trae 15 registros ordenados en base a la 1er columna de ambas tablas columna  ya que el registro Modern Science y Chemestry son eliminados porque se repiten en ambas tablas
+
+select name from products
+UNION
+select name from more_products; --trae 14 registros oredenados por name en ambas tablas y elimino(Modern Science,Chemestry y Supernova) porq ahora esta en base al name
+
+------------------------------
+
+select product_id,product_type_id,name from products
+INTERSECT
+select prd_id,prd_type_id,name from more_products; --trae solo 2 registros ya que es la coincidencia de ambas tablas ordenadas por los campos de ambos queries
+
+select name from products
+INTERSECT
+select name from more_products;--trae solo 3 registros ya que son las coincidencias de las dos tablas pro medio de name y ordenado en base a name
+
+--------------------------------
+MINUS
+select name from products
+MINUS
+select name from more_products; --trae 9 registros ya que elimina las coincidencias de la tabla producto vs more products.
+
+select name from more_products
+MINUS
+select name from products; --trae 2 registros ya que elimina los duplicados de la tabla more_products y elimina los elementos de products que no son encontrados (ordena en base al name)
+
+select product_id,product_type_id,name from products
+MINUS
+select prd_id,prd_type_id,name from more_products;--trae 10 registros  ya que para Supernova --> es null en more products
+
+select prd_id,prd_type_id,name from more_products
+MINUS
+select product_id,product_type_id,name from products; --trae 3 registros porq para Supernova trae id en products y no lo encuentra en more products
+
+select prd_id AS productId,prd_type_id "tipo de producto",name from more_products
+MINUS
+select product_id,product_type_id,name from products; respecto de los alias en las columnas es mandatorio el primer select.
+
+select prd_id ,prd_type_id ,name from more_products
+MINUS
+select product_id AS productId,product_type_id "tipo de producto",name from products; En este caso no toma encuenta el alias en columnas para mostrar ya que esta en la segundo query
+
+-----------------------------
+ORDER BY: 
+--para el order by es necesario colocarlo una sola vez al final de la sentencia.
+--No se pueden mesclar columnas de un query con otro deben ser del mismo query
+--Se pueden usar Alias en el order by pero del primer elemento restante si se utiliza el ultimo elemento marcara Error.
+
+select prd_id AS productId ,prd_type_id "tipo de producto" ,name from more_products
+MINUS
+select product_id ,product_type_id ,name from products
+ORDER BY "tipo de producto", productId; --CORRECTO
+
+select prd_id ,prd_type_id ,name from more_products
+MINUS
+select product_id AS productId,product_type_id "tipo de producto",name from products
+ORDER BY "tipo de producto"; --INCORRECTO
+
+----------------------
+COMBINATION SET OPERATORS.
+--Se pueden ejecutar mas de dos multiples set operators y la ejecucion sera de arriba hacia abajo pero esto puede ser modificado mediante el uso de parentesis
+
+select PRODUCT_ID,PRODUCT_TYPE_ID,NAME from product_changes;
+
+select product_id,product_type_id,name from products
+UNION
+select prd_id,prd_type_id,name from more_products
+INTERSECT
+select PRODUCT_ID,PRODUCT_TYPE_ID,NAME from product_changes; --un solo row
+
+select name from products
+UNION
+select name from more_products
+INTERSECT
+select NAME from product_changes; --cuatro rows
+
+(select name from products
+UNION
+select name from more_products)
+INTERSECT
+select NAME from product_changes; --cuatro rows
+
+select name from products
+UNION
+(select name from more_products
+INTERSECT
+select NAME from product_changes);--14 rows porq la ejecucion fue diferente por el uso de parentesis
+
+
+select product_id,product_type_id,name from products
+UNION
+(select prd_id,prd_type_id,name from more_products
+INTERSECT
+select PRODUCT_ID,PRODUCT_TYPE_ID,NAME from product_changes); --12 rows porque la ejecucion es diferente.
+
+
+CREATE TABLE product_types(
+	product_type_id INTEGER
+		CONSTRAINT products_types_pk PRIMARY KEY,
+	type VARCHAR2(30) NOT NULL,
+	description VARCHAR2(50)
+);
+commit;
+
+CREATE TABLE products(
+	product_id INTEGER
+		CONSTRAINT products_pk PRIMARY KEY,
+	product_type_id INTEGER
+		CONSTRAINT products_fk_product_types
+		REFERENCES product_types(product_type_id),
+	name VARCHAR2(30) NOT NULL,
+	description VARCHAR2(50),
+	price NUMBER(5,2)
+);
+commit;
+
+CREATE TABLE more_products(
+	prd_id INTEGER
+		CONSTRAINT more_products_pk PRIMARY KEY,
+	prd_type_id INTEGER
+		CONSTRAINT more_products_fk_product_types
+		REFERENCES product_types(product_type_id),
+	name VARCHAR2(30) NOT NULL,
+	available CHAR(1)
+);
+commit;
+
+
+CREATE TABLE product_changes(
+	product_id INTEGER
+		CONSTRAINT prod_changes_pk PRIMARY KEY,
+	product_type_id INTEGER
+		CONSTRAINT prod_changes_fk_product_types
+		REFERENCES product_types(product_type_id),
+	name VARCHAR2(30) NOT NULL,
+	description VARCHAR2(50),
+	price NUMBER(5,2)
+);
+commit;
+
+desc product_types;
+insert into product_types values(1,'healt','se refiere productos de la salud');
+insert into product_types values(2,'organic','se refiere productos organicos');
+insert into product_types values(3,'clothes','se refiere productos de ropa');
+insert into product_types values(4,'videos','se refiere productos de video');
+insert into product_types values(5,'music','se refiere productos de musica');
+commit;
+
+desc products;
+insert into products (PRODUCT_ID,PRODUCT_TYPE_ID,NAME) values(1,1,'Modern Science');
+insert into products (PRODUCT_ID,PRODUCT_TYPE_ID,NAME) values(2,1,'Chemestry');
+insert into products (PRODUCT_ID,PRODUCT_TYPE_ID,NAME) values(3,2,'Supernova');
+insert into products (PRODUCT_ID,PRODUCT_TYPE_ID,NAME) values(4,2,'Tank War');
+insert into products (PRODUCT_ID,PRODUCT_TYPE_ID,NAME) values(5,2,'Z Files');
+insert into products (PRODUCT_ID,PRODUCT_TYPE_ID,NAME) values(6,2,'2412: The Return');
+insert into products (PRODUCT_ID,PRODUCT_TYPE_ID,NAME) values(7,3,'Space Force 9');
+insert into products (PRODUCT_ID,PRODUCT_TYPE_ID,NAME) values(8,3,'From Another Planet');
+insert into products (PRODUCT_ID,PRODUCT_TYPE_ID,NAME) values(9,4,'Classical Music');
+insert into products (PRODUCT_ID,PRODUCT_TYPE_ID,NAME) values(10,4,'Pop 3');
+insert into products (PRODUCT_ID,PRODUCT_TYPE_ID,NAME) values(11,4,'Creative Yel');
+insert into products (PRODUCT_ID,NAME) values(12,'My Front Line');
+commit;
+
+desc more_products;
+insert into more_products (PRD_ID,PRD_TYPE_ID,NAME) values (1,1,'Modern Science');
+insert into more_products (PRD_ID,PRD_TYPE_ID,NAME) values (2,1,'Chemestry');
+insert into more_products (PRD_ID,NAME) values (3,'Supernova');
+insert into more_products (PRD_ID,PRD_TYPE_ID,NAME) values (4,2,'Lunar Landing');
+insert into more_products (PRD_ID,PRD_TYPE_ID,NAME) values (5,2,'Submarine');
+commit;
+
+desc product_changes;
+insert into product_changes (PRODUCT_ID,PRODUCT_TYPE_ID,NAME) values(1,1,'Modern Science');
+insert into product_changes (PRODUCT_ID,PRODUCT_TYPE_ID,NAME) values(2,1,'New Chemestry');
+insert into product_changes (PRODUCT_ID,PRODUCT_TYPE_ID,NAME) values(3,1,'Supernova');
+insert into product_changes (PRODUCT_ID,PRODUCT_TYPE_ID,NAME) values(13,2,'Lunar Landing');
+insert into product_changes (PRODUCT_ID,PRODUCT_TYPE_ID,NAME) values(14,2,'Submarine');
+insert into product_changes (PRODUCT_ID,PRODUCT_TYPE_ID,NAME) values(15,2,'Airplane');
+commit;
+
+######################################################################################################################################
+###################################### UNIDAD 10 DML  #############################################################
+
+
+INSET
+
+create table emp
+as select employee_id , last_name, hire_date, salary
+	from employees
+		where employee_id=100;
+
+desc emp;
+
+insert into emp(employee_id,last_name,hire_date,salary) values (101,'hugo','16/05/15',25000);
+insert into emp values (103,'juan',sysdate,to_number('$24600.37','$99999.99'));
+
+insert into emp 
+              (select employee_id,last_name,hire_date,salary from employees where employee_id<100);
+			  
+UPDATE
+              
+update emp set employee_id=105
+where last_name='Juan'
+
+update emp set employee_id=105,salary=23000
+where last_name='Juan'
+
+update emp set (employee_id,salary)=(select employee_id,salary from employees where employee_id=101) 
+where last_name='Juan'
+
+
+DELETE
+TRUNCATE --> considerado DML Elimina toda la tabla
+
+
+
+
+#####################
+
+delete from emp where employee_id>102
+delete from emp;
+
+create table emp3 as select * from employees;
+
+
+delete from emp2;
+truncate table emp3
+
+commit
+rollback
+savepoint puntos para realizar rollback
+
+asegura la consistencia de la base de datos
+
+
+blokeooo
+select * from emp;
+
+update emp set last_name='King' where employee_id=103;
+
+select * from emp for update --garantiza q otro usuario no modifique
+
+
+
+##################### PRACTICA 10 #################
+create table h_employees
+as select *
+	from employees;
+  commit;
+  
+drop table h_employees;
+commit;
+---
+create table h_employees 
+(id number(4),
+last_name varchar2(25),
+firts_name varchar2(25),
+user_id varchar2(8),
+salary number(9,2));
+commit;
+--
+desc h_employees;
+
+insert into h_employees values (1,'Patel','Ralph','rpatel',895);
+insert into h_employees values (2,'Dancs','Betty','bdancs',860);
+insert into h_employees values (3,'Biri','Ben','bbiri',1100);
+insert into h_employees values (4,'Newman','Chad','cnewman',750);
+insert into h_employees values (5,'Ropeburn','Audrey','aropebur',1550);
+commit;
+
+insert into h_employees (id,last_name,first_name,userid,salary) values (1,'Patel','Ralph','rpatel',895);
+insert into h_employees (id,last_name,first_name,userid,salary) values (2,'Dancs','Betty','bdancs',860);
+insert into h_employees (id,last_name,first_name,userid,salary) values (3,'Biri','Ben','bbiri',1100);
+insert into h_employees (id,last_name,first_name,userid,salary) values (4,'Newman','Chad','cnewman',750);
+insert into h_employees (id,last_name,first_name,userid,salary) values (5,'Ropeburn','Audrey','aropebur',1550);
+commit;
+
+
+########PRACTICA######
+insert into h_employees values (&_id,'&last_name','&first_name','&userid',&salary);
+
+select * from h_employees;
+commit;
+
+update h_employees set last_name='Drexler' where id=3;
+
+update h_employees set salary=1000 where salary<900;
+
+select * from h_employees;
+
+delete from h_employees where last_name='Dancs';
+
+select * from h_employees;
+
+commit;
+
+insert into h_employees values (&_id,'&last_name','&first_name','&userid',&salary);
+
+select * from h_employees;
+
+savepoint step_17;
+
+delete from h_employees;
+
+select * from h_employees;
+
+rollback to step_17;
+
+select * from h_employees;
+
+commit;
+
+
+######################################################################################################################################
+###################################### UNIDAD 10 Introduction to Data Definition Language  #############################################################
+
+
+
+varchar2
+char completa con blancos
+
+number(p,s) 
+
+reemplazo 
+long -->clob
+
+raw -->blob
+
+rowid  es un identificador de registros
+
+select rowid from emp;
+
+
+
+create table  t1(
+id number(10),
+last_name varchar(50),
+hire_date varchar(50),
+salary number(10,2),
+job_id varchar(10));
+
+integer --> number (38)
+varchar -->varchar2 (conversiones aotomaticas)
+
+
+
+create table  t1(
+id number(10)  ,
+last_name varchar(50) not null,
+hire_date varchar(50) not null,
+salary number(10,2),
+job_id varchar(10));
+
+
+sys + numero interno (llaves) cuando o se le da un nombre en aotomatico oracle asigna uno
+
+select * from user_constraints where table_name='Ti'
+
+
+
+create table  t1(
+id number(10) constraint pk_id primary key ,
+last_name varchar(50) constraint nn_last_name  not null,
+hire_date varchar(50) constraint un_hire_date unique,
+salary number(10,2)constraint ck_salary check(slary>0),
+job_id varchar(10));
+
+
+###a nivel columna
+create table  t1(
+id number(10) constraint pk_id primary key ,
+last_name varchar(50) constraint nn_last_name  not null,
+hire_date varchar(50) constraint un_hire_date unique,
+salary number(10,2)constraint ck_salary check(slary>0),
+job_id varchar(10) constraint fk_job_id references t2(id));
+
+create table t2(
+id integer  primary key ,
+name varchar(10)
+);
+
+###a nivel tabla
+create table  t1(
+id number(10) ,
+last_name varchar(50) constraint nn_last_name  not null,
+hire_date varchar(50) ,
+salary number(10,2),
+job_id varchar(10) 
+constraint pk_id primary key ,
+constraint un_hire_date unique(hire_date),
+constraint ck_salary check(slary>0),
+constraint fk_job_id  foreing key (job_id) references t2(id)
+);
+
+coinstrain Nombre (se utiliza para poner nombre)
+
+
+create table t3(EMP,APELLIDO,hire,salario) as
+  select employee_id,last_name,hire_date,salary from employees;
+  
+  
+  
+  ALTER TABLE T1 ADD(MAIL varchar(2));
+desc t1;
+ALTER TABLE T1 modify(MAIL varchar(20));
+
+ALTER TABLE T1 modify(MAIL varchar(20) not null);
+
+select * from t1;
+
+drop table t1;
+
+SET ON USSET
+
+desc t1;
+isert into t1 values(100,'jose','15/05/2015',200);
+alter table t1 set unused (salary,job_id);
+
+alter table t1 drop unused columns;
+
+
+#################################################################################################################################
+PL/SQL
+Procedural Language extension to SQL
+
+
+estructura basica e un PL/SQL
+
+declare
+
+begin  --obligatorio
+
+exception
+
+end;   --obligatorio
+
+bloques anonimos : no tienen nombre y no viven en la base de datos.
+bloques procedure
+blouqe function
+
+
+set serveroutput on
+declare
+  v_last_name varchar(20):='JUAN';
+
+begin
+  v_last_name := 'Jose';
+  DBMS_OUTPUT.put_line('Nombre: ' || v_last_name);
+  select last_name into v_last_name --asigna implicitamete
+  from employees where employee_id=100;
+   DBMS_OUTPUT.put_line('Nombre: ' || v_last_name);
+end;
+/
+
+set serveroutput on
+declare
+  v_last_name varchar(20):='JUAN';
+
+begin
+  DBMS_OUTPUT.put_line('Nombre: ' || v_last_name);
+  v_last_name := 'Jose';
+  DBMS_OUTPUT.put_line('Nombre: ' || v_last_name);
+  select last_name into v_last_name --asigna implicitamete
+  from employees where employee_id=100;
+   DBMS_OUTPUT.put_line('Nombre: ' || v_last_name);
+   
+    select last_name into v_last_name --asigna implicitamete
+  from employees where employee_id=101;
+   DBMS_OUTPUT.put_line('Nombre: ' || v_last_name);
+end;
+
+
+
+
+set serveroutput on
+declare
+  v_last_name varchar(20):='JUAN';
+
+begin
+  v_last_name := q'!Jose's !';
+  DBMS_OUTPUT.put_line('Nombre: ' || v_last_name);
+  
+end;
+/
+
+
+tipo compuesto : array y collections
+
+variables bin
+
+vriables q viven fuera del bloques
+
+
+set serveroutput on
+declare
+  v_last_name varchar(20) DEFAULT 'JUAN';
+
+begin
+  v_last_name := q'!Jose's !';
+  DBMS_OUTPUT.put_line('Nombre: ' || v_last_name);
+  
+end;
+/
+
+set serveroutput on
+declare
+  v_last_name employees.last_name%TYPE;
+  sal CONSTANT number:=100;
+
+begin
+select last_name into v_last_name
+  from employees
+  where employee_id=100;
+  DBMS_OUTPUT.put_line('Nombre: ' || v_last_name||sal);
+  
+end;
+/
+
+
+set serveroutput on
+declare
+  v_last_name employees.last_name%TYPE;
+  sal CONSTANT number:=100;
+  v_first varchar(3);
+  v_second v_first%TYPE;
+
+begin
+select last_name into v_last_name
+  from employees
+  where employee_id=100;
+  DBMS_OUTPUT.put_line('Nombre: ' || v_last_name||sal);
+  
+end;
+/
+
+set serveroutput on
+variable b_last_name varchar2;
+set autoprint on 
+
+begin
+select last_name into :b_last_name
+  from employees
+  where employee_id=100;
+
+  
+end;
+/
+
+set serveroutput on
+variable b_basic_percent NUMBER;
+variable b_pf_percent NUMBER;
+declare 
+v_fname varchar2(20);
+v_lname varchar2(15) DEFAULT 'FERNANDEZ';
+v_today DATE:=SYSDATE;
+v_tommorrow v_today%TYPE;
+v_fecha varchar(20);
+
+BEGIN
+:b_basic_percent:=45;
+:b_pf_percent:=12;
+ v_tommorrow:= v_today +1 ;
+ v_fecha:=to_char(v_tommorrow,'fmdd Month RRRR');
+ 
+ 
+  DBMS_OUTPUT.PUT_LINE(v_fname||' '||v_lname||' '||v_today||' '||v_tommorrow ||' '||v_fecha);
+  
+END;
+/
+print b_basic_percent
+print b_pf_percent
+print
+
+#################################################################################################################################
+UNIDAD 4
+#################
+
+
+
+#################################################################################################################################
+UNIDAD 5
+#################
+
+using pl/sql to manipulate data
+
+
+create table emp as select employee_id, last_name, hire_date, salary from employees where employee_id=100;
+
+
+drop table emp;
+select * from emp;
+
+
+merge into emp e using  employees em
+on (e.employee_id = em.employee_id)
+when matched then
+update set
+e.last_name = e.last_name,
+e.salary = em.salary
+when not matched then
+insert values(em.employee_id,em.last_name,em.hire_date,em.salary);
+
+
+CURSORES
+
+//////////////practica
+set servertoutput on
+
+declare
+ v_max_deptno number;
+
+begin
+  select max(department_id) into v_max_deptno from departments;
+  dbms_output.put_line('maximo valor en departamento: '||v_max_deptno);
+
+end;
+/
+
+select * from departments order by department_id desc;
+
+--------
+
+set servertoutput on
+
+declare
+ v_dept_name departments.department_name%TYPE := 'EDUCATION';
+ v_max_deptno number;
+ v_dept_id number;
+
+begin
+  select max(department_id) into v_max_deptno from departments;
+  dbms_output.put_line('maximo valor en departamento: '||v_max_deptno);
+ v_dept_id:=10 + v_max_deptno;
+ insert into departments (department_id,department_name,location_id)
+ values (v_dept_id,v_dept_name,null);
+ dbms_output.put_line('registros insertados: '||SQL%ROWCOUNT);
+end;
+/
+select * from departments where department_id=200;
+--------
+
+set servertoutput on
+
+declare
+ v_dept_name departments.department_name%TYPE := 'EDUCATION';
+ v_max_deptno number;
+ v_dept_id number;
+
+begin
+
+update  departments set manager_id = 100 where department_id = 200;
+dbms_output.put_line('registros modificados: '|| SQL%ROWCOUNT);
+end;
+/
+select * from departments where department_id=200;
+
+--------
+#################################################################################################################################
+UNIDAD 6
+#################
+
+
+declare
+ v_salary employees.salary%TYPE;
+
+begin
+ select salary into v_salary 
+ from employees
+ where employee_id = &emp_id;
+ 
+ if v_salary <5000 then
+ dbms_output.put_line('salario minimo');
+ elsif v_slary >5000 and v_slary <10000 then 
+  dbms_output.put_line('salario intermedio');
+ else
+ dbms_output.put_line('salario maximo');
+ end if;
+end;
+/
+
+
+set servertoutput on
+set verify off
+declare
+ v_salary employees.salary%TYPE;
+v_message varchar2(50);
+begin
+ select salary into v_salary 
+ from employees
+ where employee_id = &emp_id;
+ 
+ v_message := CASE v_salary
+                when 5000 then 'minimo'
+                when 1000 then 'maxi'
+                else 'otro'
+                end;
+  dbms_output.put_line(v_message);
+end;
+/
+
+
+set servertoutput on
+--set verify off
+declare
+ v_salary employees.salary%TYPE;
+v_message varchar2(50);
+begin
+ select salary into v_salary 
+ from employees
+ where employee_id = &emp_id;
+ 
+ v_message := CASE 
+                when v_salary< 5000 then 'minimo'
+                when v_salary> 5000 and v_salary<10000 then 'maxi'
+                else 'otro'
+                end;
+  dbms_output.put_line(v_message);
+end;
+/
+
+set servertoutput on
+--set verify off
+declare
+ v_salary employees.salary%TYPE;
+v_message varchar2(50);
+begin
+ select salary into v_salary 
+ from employees
+ where employee_id = &emp_id;
+ 
+ v_message := CASE 
+                when v_salary< 5000 then 'minimo'
+                when v_salary between 5000 and 10000 then 'maxi'
+                else 'otro'
+                end;
+  dbms_output.put_line(v_message);
+end;
+/
+
+declare
+
+  v_counter number:=1;
+begin
+
+    loop 
+    dbms_output.put_line(v_counter);
+    exit when v_counter =10;
+    v_counter := v_counter+1;
+end;
+/
+
+
+declare
+
+  v_counter number:=1;
+begin
+/*
+    loop 
+    dbms_output.put_line(v_counter);
+    exit when v_counter =10;
+    v_counter := v_counter+1;
+    */
+    for i in 1..4 loop
+      dbms_output.put_line(v_counter);
+      end loop;
+      
+      v_counter :=1;
+  while v_counter <5 loop
+   dbms_output.put_line(v_counter);
+     v_counter := v_counter+1;
+end;
+/
+
+/////////////PRACTICA
+
+create table messages
+( id_message number,
+  message varchar(50)
+  );
+  
+  
+begin 
+
+  for i in 1..10 LOOP
+    if i=6 or i =8 then
+      null;
+      else
+        insert into messages (id_message) 
+        values (i);
+    end if;
+  end loop;
+end;
+/
+
+select * from messages;
+
+
+
+declare
+  v_last_name varchar2(20);
+  v_hire_date varchar2(20);
+  v_salary varchar(20);
+
+begin
+
+  select last_name,hire_date, salary into v_last_name,v_hire_date,v_salary from employees
+  where employee_id=100;
+  
+  DBMS_OUTPUT.PUT_LINE(v_last_name||' '||v_hire_date||' '||v_salary);
+
+end;
+
+
+declare
+  TYPE t_employees is RECORD(
+  v_last_name employees.last_name%TYPE,
+  v_hire_date employees.hire_date%type,
+  v_salary employees.salary%type
+  );
+  r_employee t_employees;
+
+begin
+
+  select last_name,hire_date, salary into r_employee.v_last_name,r_employee.v_hire_date,r_employee.v_salary from employees
+  where employee_id=100;
+  
+  DBMS_OUTPUT.PUT_LINE(r_employee.v_last_name||' '||r_employee.v_hire_date||' '||r_employee.v_salary);
+
+end;
+
+declare
+  TYPE t_employees is RECORD(
+  v_last_name employees.last_name%TYPE,
+  v_hire_date employees.hire_date%type,
+  v_salary employees.salary%type
+  );
+  r_employee t_employees;
+
+begin
+
+  select last_name,hire_date, salary into r_employee from employees
+  where employee_id=100;
+  
+  DBMS_OUTPUT.PUT_LINE(r_employee.v_last_name||' '||r_employee.v_hire_date||' '||r_employee.v_salary);
+
+end;
+
+
+declare
+  TYPE t_employees is RECORD(
+  v_last_name employees.last_name%TYPE,
+  v_hire_date employees.hire_date%type,
+  v_salary employees.salary%type
+  );
+ -- r_employee t_employees;
+ r_employee employees%ROWTYPE;
+
+begin
+
+  select * into r_employee from employees
+  where employee_id=100;
+  
+  DBMS_OUTPUT.PUT_LINE(r_employee.last_name||' '||r_employee.hire_date||' '||r_employee.salary);
+
+end;
+
+
+declare
+  TYPE t_employees is RECORD(
+  v_last_name employees.last_name%TYPE,
+  v_hire_date employees.hire_date%type,
+  v_salary employees.salary%type
+  );
+ -- r_employee t_employees;
+ r_employee employees%ROWTYPE;
+
+begin
+
+  select * into r_employee from employees
+  where employee_id=100;
+  
+  DBMS_OUTPUT.PUT_LINE(r_employee.last_name||' '||r_employee.hire_date||' '||r_employee.salary);
+
+end;
+
+#################################################################################################################################
+UNIDAD 8 CURSORES
+#################
+
+
+generacion de area privada --> cursor implicito (cuando son varios registros -- no sotros debemos generar el area privada iterada por for)
+ open = ejecuta la sentencia y obten la info y coloca un puntero al primer registro.
+ 
+ set serveroutput on;
+declare
+
+ CURSOR cur_employees is 
+ select last_name, hire_date, salary
+ from employees
+ where employee_id<110;
+ 
+  v_last_name employees.last_name%type;
+  v_hire_date employees.hire_date%type;
+   v_salary employees.salary%type;
+
+begin
+
+ open cur_employees;
+ fetch cur_employees into v_last_name, v_hire_date, v_salary;
+
+ dbms_output.put_line(v_last_name||'-'|| v_hire_date||'-'|| v_salary);
+ 
+ close cur_employees;
+
+end;
+/
+///////////////////////////////////////////
+
+set serveroutput on;
+declare
+
+ CURSOR cur_employees is 
+ select last_name, hire_date, salary
+ from employees
+ where employee_id<110;
+ 
+  v_last_name employees.last_name%type;
+  v_hire_date employees.hire_date%type;
+   v_salary employees.salary%type;
+
+begin
+
+ open cur_employees;
+ 
+ loop
+    fetch cur_employees into v_last_name, v_hire_date, v_salary;
+    exit when cur_employees%NOTFOUND;
+    dbms_output.put_line(v_last_name||'-'|| v_hire_date||'-'|| v_salary);
+ 
+ end loop;
+ close cur_employees;
+
+end;
+/
+
+////////////////////////////////////
+
+set serveroutput on;
+declare
+ v_emp_id number(10) :=&valor;
+ CURSOR cur_employees is 
+ select last_name, hire_date, salary
+ from employees
+ where employee_id<v_emp_id;
+ 
+  v_last_name employees.last_name%type;
+  v_hire_date employees.hire_date%type;
+   v_salary employees.salary%type;
+
+begin
+
+ open cur_employees;
+ 
+ loop
+    fetch cur_employees into v_last_name, v_hire_date, v_salary;
+    exit when cur_employees%NOTFOUND;
+    dbms_output.put_line(v_last_name||'-'|| v_hire_date||'-'|| v_salary);
+ 
+ end loop;
+ close cur_employees;
+
+end;
+/
+/////////////////////////////////////////////////
+set serveroutput on;
+declare
+ v_emp_id number(10) :=110;
+ CURSOR cur_employees is 
+ select first_name,last_name, hire_date,salary
+ from employees
+ where employee_id<v_emp_id;
+ 
+ reg_emp cur_employees%ROWTYPE;
+
+begin
+
+ open cur_employees;
+ 
+ loop
+    fetch cur_employees into reg_emp;
+    exit when cur_employees%NOTFOUND;
+    dbms_output.put_line(reg_emp.last_name||'-'|| reg_emp.hire_date||'-'|| reg_emp.salary);
+ 
+ end loop;
+ close cur_employees;
+
+end;
+/
+//////////////////////////////////////////////////////////////
+
+set serveroutput on;
+declare
+ v_emp_id number(10) :=110;
+ CURSOR cur_employees is 
+ select first_name,last_name, hire_date,salary
+ from employees
+ where employee_id<v_emp_id;
+ 
+ --reg_emp cur_employees%ROWTYPE;
+
+begin
+
+ --open cur_employees; for lo abre en automatico
+ 
+ --loop
+ for reg_emp in cur_employees loop --solo se declara el reg_emp pero el for ya sve manejarlos
+   -- fetch cur_employees into reg_emp;  for lo declara en automatico
+   -- exit when cur_employees%NOTFOUND;
+    dbms_output.put_line(reg_emp.last_name||'-'|| reg_emp.hire_date||'-'|| reg_emp.salary);
+ end loop;
+-- end loop;
+ --close cur_employees; for lo cierra en automatico
+
+end;
+/
+//////////////////////////////////////////
+
+set serveroutput on;
+declare
+ v_emp_id number(10) :=110;
+ /*
+ CURSOR cur_employees is 
+ select first_name,last_name, hire_date,salary
+ from employees
+ where employee_id<v_emp_id;
+ */
+ --reg_emp cur_employees%ROWTYPE;
+
+begin
+
+ --open cur_employees; for lo abre en automatico
+ 
+ --loop
+ for reg_emp in (select first_name,last_name, hire_date,salary
+                from employees
+                  where employee_id<v_emp_id)  loop --solo se declara el reg_emp pero el for ya sve manejarlos
+   -- fetch cur_employees into reg_emp;  for lo declara en automatico
+   -- exit when cur_employees%NOTFOUND;
+    dbms_output.put_line(reg_emp.last_name||'-'|| reg_emp.hire_date||'-'|| reg_emp.salary);
+ end loop;
+-- end loop;
+ --close cur_employees; for lo cierra en automatico
+
+end;
+/
+
+///////////////////////////////////////////////////////////////////////
+
+set serveroutput on;
+declare
+ --v_emp_id number(10) :=110;
+ CURSOR cur_employees  (emp_id number) is 
+ select first_name,last_name, hire_date,salary
+ from employees
+ where employee_id<emp_id;
+ 
+
+begin
+
+ for reg_emp in cur_employees(110)loop  -- se le pasa el parametro
+
+    dbms_output.put_line(reg_emp.last_name||'-'|| reg_emp.hire_date||'-'|| reg_emp.salary);
+ end loop;
+ dbms_output.put_line('-------------------------------------------------');
+for reg_emp in cur_employees(120)loop  -- se le pasa el parametro
+
+    dbms_output.put_line(reg_emp.last_name||'-'|| reg_emp.hire_date||'-'|| reg_emp.salary);
+ end loop;
+
+end;
+/
+
+/////////////////////////////////////////////////////////////////////////////
+
+practica  ejercio numero 2
+set serveroutput on;
+declare
+v_deptno number :=10;
+ CURSOR c_dept_cursor   is 
+ select department_id,department_name
+ from departments
+ where department_id<100
+order by department_id;
+
+ cursor c_emp_cursor is
+ select last_name,job_id,hire_date,salary
+ from employees
+ where department_id = v_deptno and
+        employee_id <120;
+        
+  v_current_deptno  departments.department_id%type;
+   v_current_dname  departments.department_name%type;
+    v_ename  employees.job_id%type;
+    v_hiredate  employees.hire_date%type;
+     v_sal  employees.salary%type;
+
+begin
+ open c_dept_cursor;
+  loop 
+      fetch c_dept_cursor into v_current_deptno,v_current_dname;
+      exit when c_dept_cursor%NOTFOUND;
+      dbms_output.put_line(v_current_deptno||'-'||v_current_dname);
+   end loop;
+   
+   close c_dept_cursor;
+ 
+end;
+/
+
+///////
+set serveroutput on;
+declare
+v_deptno number :=10;
+ CURSOR c_dept_cursor   is 
+ select department_id,department_name
+ from departments
+ where department_id<100
+order by department_id;
+
+ cursor c_emp_cursor is
+ select last_name,job_id,hire_date,salary
+ from employees
+ where department_id = v_deptno and
+        employee_id <120;
+        
+  v_current_deptno  departments.department_id%type;
+   v_current_dname  departments.department_name%type;
+    v_ename  employees.job_id%type;
+    v_hiredate  employees.hire_date%type;
+     v_sal  employees.salary%type;
+
+begin
+ open c_dept_cursor;
+  loop 
+      fetch c_dept_cursor into v_current_deptno,v_current_dname;
+      exit when c_dept_cursor%NOTFOUND;
+      dbms_output.put_line(v_current_deptno||'-'||v_current_dname);
+      if c_emp_cursor%ISOPEN then
+          close c_emp_cursor;
+      end if;
+      open c_emp_cursor (v_current_deptno);
+      loop 
+          fetch c_emp_cursor into v_ename,v_hiredate;
+            exit when c_emp_cursor%NOTFOUND;
+             dbms_output.put_line(v_ename||'-'||v_hiredate);
+      end loop;
+      dbms_output.put_line('------------------------------------------------');
+      close c_emp_cursor;
+   end loop;
+   
+   close c_dept_cursor;
+ 
+end;
+/
+
+
+
+
+declare
+
+    type t_names is table of
+    varchar(20) index by pls_integer;
+    
+    col_name t_names;
+begin
+
+  col_name(1) := 'juan';
+  col_name(2) := 'jose';
+  
+  DBMS_OUTPUT.PUT_LINE(col_name(1)||col_name(2));
+end;
+
+#################################################################################################################################
+UNIDAD 9 exceptiones
+#################
+
+
+declare
+  v_last_name employees.last_name%TYPE;
+
+begin
+
+ select last_name into v_last_name
+ from employees
+ where employee_id<'e';
+ 
+ 
+  dbms_output.put_line(v_last_name);
+  
+  exception
+   when too_many_rows then
+   
+    dbms_output.put_line('muchos registros');
+    when no_data_found then
+    dbms_output.put_line('no hay informacion');
+    
+    when others then
+     dbms_output.put_line('errores');
+
+end;
+/
+////////////////////////////////////////////////////////////
+
+declare
+my_exception exception;
+pragma exception_init(my_exception,-1722);
+  v_last_name employees.last_name%TYPE;
+
+begin
+
+ select last_name into v_last_name
+ from employees
+ where employee_id<'e';
+ 
+ 
+  dbms_output.put_line(v_last_name);
+  
+  exception
+   when too_many_rows then
+   
+    dbms_output.put_line('muchos registros');
+    when no_data_found then
+    dbms_output.put_line('no hay informacion');
+    
+   when my_exception then
+   dbms_output.put_line('error de base de datos'||sqlcode||SQLERRM);
+    
+   -- when others then
+   --  dbms_output.put_line('otros errores');
+
+end;
+/
+/////////////////////////////////////////////////////
+
+declare
+    my_exception exception;
+    
+
+begin
+   for i in 1..10 loop
+      if i=5 then
+      
+             raise my_exception;
+      end if;
+    end loop;
+    
+    exception 
+    when my_exception then
+
+      dbms_output.put_line('mi error lanzado');
+
+end;
+/
+
+//////////////////////////////////////////////////////////
+
+set serveroutput on;
+declare
+    v_name employees.last_name%TYPE;
+    v_emp_sal  employees.salary%type := 90001;
+
+begin
+
+ select last_name into v_name
+ from employees
+ where salary> v_emp_sal;
+ 
+ insert into messages (results) values (v_name||'-'||v_emp_sal);
+ 
+ exception 
+   when no_data_found then
+      insert into messages (results) values('no employees with  a salary  of '||to_char(v_emp_sal));
+    when too_many_rows then
+      insert into messages (results) values('MORE than  one employee with  a salary of '||to_char(v_emp_sal));
+     when others then
+      insert into messages (results) values('some other errors');
+
+end;
+/
+
+
+//////////////////////////////////////////////////////////////
+
+set serveroutput on;
+declare
+    e_childrecord_exists EXCEPTION;
+     no_records EXCEPTION;
+    PRAGMA EXCEPTION_INIT (no_records,-20202);
+
+begin
+
+   dbms_output.put_line('Borrando departamento 40.......');
+   delete from departments where department_id=10;
+    if SQL%NOTFOUND then
+          raise_application_error(-20202,'no existe el registro');
+    end if;
+ 
+ exception 
+   when e_childrecord_exists then
+       dbms_output.put_line('no puede borra este departamento porq hay refrencias hacia el');
+     when no_records then
+       dbms_output.put_line('ERROR NO SE ENCONTRO INFORMACION'||SQLCODE||SQLERRM);
+    --when others then
+     --dbms_output.put_line('otros errrores');
+
+end;
+/
+
+///////////////////////////////////////////////////////////////////////////////////////
+
+create or replace procedure my_procedure(num_emp in  number) is
+ v_last_name employees.last_name%type;
+ v_salary employees.salary%type;
+
+begin
+select last_name,salary  into v_last_name,v_salary
+from employees
+where employee_id=num_emp;
+
+DBMS_OUTPUT.PUT_line(v_last_name||v_salary);
+   
+end;
+/
+////////////////////////////////////////////////////////////////////////////////
+
+create or replace procedure my_procedure(num_emp out  number) is
+ v_last_name employees.last_name%type;
+ v_salary employees.salary%type;
+
+begin
+select last_name,salary  into v_last_name,v_salary
+from employees
+where employee_id=100;
+num_emp :=v_salary;
+
+DBMS_OUTPUT.PUT_line(v_last_name||v_salary);
+   
+end;
+/
+declare
+ v_numero number(10);
+
+begin 
+   my_procedure(v_numero);
+   DBMS_OUTPUT.PUT_line(v_numero);
+
+end;
+/////////////////////////////////////////////////////////////////////////////////////////////
+create or replace procedure my_procedure(num_emp in out  number) is
+ v_last_name employees.last_name%type;
+ v_salary employees.salary%type;
+
+begin
+select last_name,salary  into v_last_name,v_salary
+from employees
+where employee_id=num_emp;
+num_emp :=v_salary;
+
+DBMS_OUTPUT.PUT_line(v_last_name||v_salary);
+   
+end;
+/
+declare
+ v_numero number(10):=100;
+
+begin 
+   my_procedure(v_numero);
+   DBMS_OUTPUT.PUT_line(v_numero);
+
+end;
+
+///////////////////////////////////////////////////////////////////////////////////
+create or replace function my_function return varchar  as
+ v_last_name employees.last_name%type;
+
+begin
+select last_name,salary  into v_last_name
+from employees
+where employee_id=100;
+
+return v_last_name;
+   
+end;
+/
+declare
+ v_last_name employees.last_name%type;
+
+begin 
+   v_last_name :=my_function;
+   DBMS_OUTPUT.PUT_line(v_last_name);
+
+end;
+/////////////////////////////////////////////////////////
+
+create or replace function my_function(num in number) return varchar  is
+ v_last_name employees.last_name%type;
+
+begin
+select last_name,salary  into v_last_name
+from employees
+where employee_id=num;
+
+return v_last_name;
+   
+end;
+/
+declare
+ v_last_name employees.last_name%type;
+
+begin 
+   v_last_name :=my_function(100);
+   DBMS_OUTPUT.PUT_line(v_last_name);
+
+end;
+
+//////////////////////////////////////////////////////
+
+
+create or replace function my_function(num in number) return varchar  is
+ v_last_name employees.last_name%type;
+
+begin
+select last_name into v_last_name
+from employees
+where employee_id=num;
+
+return v_last_name;
+   
+end;
+/
+
+
+declare
+ v_last_name employees.last_name%type;
+
+begin 
+   v_last_name :=my_function(100);
+   DBMS_OUTPUT.PUT_line(v_last_name);
+
+end;
+
+//////////////////////////////////////////////////////////////////////
+create or replace function my_function(num in number) return varchar  is
+ v_last_name employees.last_name%type;
+
+begin
+select last_name into v_last_name
+from employees
+where employee_id=num;
+
+return v_last_name;
+   
+end;
+/
+
+
+call my_function(valor);
+
+
+insert into TFD_COMMENTS values(1,'FIS',398681,'primer comentario sobrfe el hotel fis',2.5,sysdate,'0');
