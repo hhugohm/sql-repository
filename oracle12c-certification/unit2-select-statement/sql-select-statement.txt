@@ -1,0 +1,200 @@
+############################################################################
+#		2.0.1.- List the capabilities of SQL SELECT Statements				#
+############################################################################
+
+Comando DESCRIBE: Muestra la estructura de un metada de una tabla, listando sus
+columnas.
+
+Sintaxis:
+DESCRIBE <SCHEMA>.tablename;
+
+Ejemplo:
+----
+-->
+DESCRIBE employees;
+
+----
+-->
+describe emp;
+
+Nombre   Nulo     Tipo         
+-------- -------- --------------------
+EMPNON   NOT NULL NUMBER(4)    
+ENAME             VARCHAR2(20) 
+HIREDATE          DATE 
+---------------------------------------
+-->
+desc usuario
+Nombre             Nulo     Tipo         
+------------------ -------- ------------ 
+ID_USUARIO         NOT NULL NUMBER       
+USUARIO            NOT NULL VARCHAR2(50) 
+PASSWORD           NOT NULL VARCHAR2(50) 
+EMAIL              NOT NULL VARCHAR2(50) 
+CATEGORIA                   VARCHAR2(1)  
+FECHA_ALTA         NOT NULL DATE         
+FECHA_MODIFICACION NOT NULL DATE         
+STATUS             NOT NULL NUMBER(1)    
+-----------------------------------
+-->
+desc direccion;
+
+Nombre             Nulo     Tipo          
+------------------ -------- ------------- 
+ID_DIRECCION       NOT NULL NUMBER        
+ID_USUARIO         NOT NULL NUMBER        
+DIRECCION          NOT NULL VARCHAR2(100) 
+TELEFONO                    VARCHAR2(20)  
+FECHA_ALTA         NOT NULL DATE          
+FECHA_MODIDICACION NOT NULL DATE          
+STATUS             NOT NULL NUMBER(1)   
+
+-------------------------------------
+
+-->
+Nota: Si se omite el shema Oracle tomara por default el schema del usuario 
+	  conectado. Para conocer con que usuario esta conectado utiliza:
+show user
+USER es "INTRANET"
+
+----------------------------------------
+
+-->
+describe  intranet.usuario
+Nombre             Nulo     Tipo         
+------------------ -------- ------------ 
+ID_USUARIO         NOT NULL NUMBER       
+USUARIO            NOT NULL VARCHAR2(50) 
+PASSWORD           NOT NULL VARCHAR2(50) 
+EMAIL              NOT NULL VARCHAR2(50) 
+CATEGORIA                   VARCHAR2(1)  
+FECHA_ALTA         NOT NULL DATE         
+FECHA_MODIFICACION NOT NULL DATE         
+STATUS             NOT NULL NUMBER(1)  
+----------------------------------------------------
+
+-->
+describe sys.dual
+
+Nombre Nulo Tipo        
+------ ---- ----------- 
+DUMMY       VARCHAR2(1) 
+
+-------------------------------------------------------------------------------
+@@@@@@@@@@@@
+EJERCICIO: Describir la estructura de las 7 tablas del esquema RH
+
+
+-------------------------------------------------------------------------------
+@@@@@@@@@@@@
+EJERCICIO: Teniendo la siguiente tabla emp hacer los siguientes ejercicios
+
+desc emp
+
+Nombre        Nulo     Tipo         
+------------- -------- ------------ 
+EMPNON        NOT NULL NUMBER(4)    
+ENAME                  VARCHAR2(20) 
+HIREDATE               DATE         
+EDAD                   NUMBER(2)    
+SUELDO                 NUMBER(4,2)  
+TIPO_LICENCIA          CHAR(1)     
+---------------------------------------
+
+1.- insertar la siguiente informacion:
+insert into emp (EMPNON) values (1);
+
+Explique si se realiza la insercion de dicho registro:
+--Si se realiza la insercion, porque el unico valor que es not null es EMPNON
+--Los demas campos estaran como NULL a exepcion de HIREDATE ya que colocara
+  la fecha en curso
+  
+2.- insertar la siguiente informacion
+insert into emp (EMPNON,ENAME) values (2,'NOMBRE DEL EMPLEADO 1')
+
+Explique si se realiza la insercion de dicho registro:
+--NO re realizara la insercion porque la columna de nombre rebasa el numero de
+  caracteres permitidos (los cuales son 20)
+Error SQL: ORA-12899: el valor es demasiado grande para la columna 
+								"INTRANET"."EMP"."ENAME" (real: 21, máximo: 20)
+								
+3.- insertar la siguiente informacion:
+insert into emp (EMPNON,sueldo) values (2,200.12);
+--No realiza el insert porque la columna de sueldo rebasa la presicion y escala
+  ya que es un number(4,2) de los cuales 2 son para la presicion y los otros 2
+  para la escala.
+  Error SQL: ORA-01438: valor mayor que el que permite la precisión 
+  especificada para esta columna
+  
+4.- insertar la siguiente informacion:
+insert into emp (EMPNON,sueldo) values (2,200);
+
+--No realiza el insert porque la columna de sueldo rebasa la presicion.
+	Error SQL: ORA-01438: valor mayor que el que permite la precisión 
+	especificada para esta columna
+	
+5.- insertar la siguiente informacion:
+insert into emp (EMPNON,sueldo) values (2,20.3278);
+
+--Si se realizara la insercion ya que la presicion es 2 y aunque la escala es 4
+  oracle en automatico redondea y trunca la escala para poder realizar el
+  insert
+  
+  1 fila insertadas.
+  
+      EMPNON ENAME                HIREDATE       EDAD     SUELDO T
+---------- -------------------- -------- ---------- ---------- -
+         1                      25/06/15                        
+         2                      25/06/15                 20.33  
+         
+6.- insertar la siguiente informacion:
+insert into emp (EMPNON,sueldo) values (3,20.4);
+
+--Si realiza la insercion del registro
+
+    EMPNON ENAME                HIREDATE       EDAD     SUELDO T
+---------- -------------------- -------- ---------- --------------------------
+         1                      25/06/15                        
+         2                      25/06/15                 20.33  
+         3                      25/06/15                  20.4  
+         
+--------------------------------------------------------------------------------
+         
+@@@@@@@
+Ejercicio: Realizar un ejemplo de los tipos de capabilities de la sentencia
+		   SELECT STATEMENT para la tabla emp
+		   
+Projection: 
+select EMPNON,ENAME,HIREDATE from emp;
+
+Selection:
+select EMPNON,ENAME,HIREDATE from emp where edad>20;
+
+Joining:
+select EMPNON,ENAME,HIREDATE from emp, my_table where emp.EMPNON=my_table.EMPNON;
+
+-------------------------------------------------------------------------------
+TOGAF --> ARQUITECTURA
+
+
+-------------------------------------------------------------------------------
+###########################################################################
+#			2.0.2.- Execute a basic SELECT Statement 					  #
+###########################################################################
+
+
+The primitive SELECT statement:
+
+Sintaxis:
+SELECT * |{[DISTINCT] column|expression 
+[alias], …}
+FROM table;
+
+SELECT * FROM TABLE = Esta forma es una proyeccion de todas las columnas.
+* = Denota todas las columnas de la tabla.
+
+
+
+
+
+ 
