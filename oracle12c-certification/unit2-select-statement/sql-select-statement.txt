@@ -194,7 +194,56 @@ SELECT * FROM TABLE = Esta forma es una proyeccion de todas las columnas.
 * = Denota todas las columnas de la tabla.
 
 
+---------------------
+Semicolon: uso de punto y como y diagonal (; / )
 
+select * from emp
+/
+desc emp;
+
+
+-----------------------
+
+1.- Con la siguiente instruccion podra saber que tablas estan asociadas al user
+	que tiene.
+	
+SELECT table_name FROM user_tables;
+
+2.- Cuando se ejecuta el siguinte query que tipo de capabilities SELECT es:
+
+SELECT job_id,max_salary FROM JOBS;
+
+Respuesta: Es de tipo Proyeccion ya que desde que se est seleccionando columns
+      		especificas.
+      		
+3.- Respecto de la siguiente query que tipo de capabilities SELECT es:
+
+SELECT distinct deparment_id from employees;
+
+Respuesta: Es de tipo proyeccion y seleccion ya que se estan descartando tuplas
+			de registros (rows)
+			
+			Tambien es importante destacar que cuando sea un distic no 
+			descartara los valores NULL
+-->			
+select * from emp;
+    EMPNON ENAME                HIREDATE       EDAD     SUELDO T
+---------- -------------------- -------- ---------- ---------- -
+         1 hugo hidalgo         19/05/15                        
+         2 mario tavares        19/05/15                        
+         3                      26/06/15                        
+         4                      26/06/15       
+-->
+select distinct ENAME   from emp;
+ENAME              
+--------------------
+                    
+hugo hidalgo        
+mario tavares       
+
+
+     
+          			
 
 
  
