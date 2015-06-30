@@ -241,9 +241,80 @@ ENAME
 hugo hidalgo        
 mario tavares       
 
+------------------------------------------------------------------------------
+-->
+@@@@@@@
+Precedencia de operadores
 
-     
-          			
+Ejercicio para la tabla emp se tiene la siguiente informacion:
+    EMPNON ENAME                HIREDATE       EDAD     SUELDO T
+---------- -------------------- -------- ---------- ---------- -
+         1 hugo hidalgo         19/05/15                    5  
+         2 mario tavares        19/05/15                    10  
+         
+ realizar la siguiente operacion
+ 
+ select EMPNON,ENAME,HIREDATE,sueldo * 100/5+ 20 /(10-5) as NUEVO_SUELDO from emp;
+ 
+ 1.- Que resultado dara el alias NUEVO_SUELDO.
+ 
+ sueldo = 5;
+ 
+ 5 * 100/5 + 20 / (10-5)
+ 5 * 100/5 + 20 / 5
+ 500/5 + 20/5
+ 100 + 20/5
+ 100 + 4
+ 104
+ 
+ sueldo = 10;
+ 10 * 100/5 + 20 / (10-5)
+ 1000/5 + 20 / 5
+ 200 + 4
+ 204
+     EMPNON ENAME                HIREDATE                   NUEVO_SUELDO
+---------- -------------------- -------- ------------------------------
+         1 hugo hidalgo         19/05/15                       104
+         2 mario tavares        19/05/15                       204
+         
+@@@@@@@@@@@@@@@@
+Alias:
+
+De los siguiente queries marcara algun error si/no  y porque?
+1.-
+select EMPNON as EMPLEADO,ENAME,HIREDATE,sueldo * 100/5+ 20 /(10-5) as NUEVO_SUELDO from emp;
+ No marca error porque el alias de EMPLEADO es correcto
+ No marca error porque el alias sueldo es correcto
+ 
+2.-
+ select EMPNON  EMPLEADO,ENAME,HIREDATE,sueldo * 100/5+ 20 /(10-5)  NUEVO_SUELDO from emp;
+ No marca error porque el alias de EMPLEADO es correcto
+ No marca error porque el alias sueldo es correcto
+ 
+3.-
+ select EMPNON  "EMPLEADO",ENAME,HIREDATE,sueldo * 100/5+ 20 /(10-5)  'NUEVO_SUELDO' from emp;
+  No marca error porque el alias de EMPLEADO es correcto
+  SI marca error porque el alias sueldo es incorrecto
+  
+4.-
+ select EMPNON  "empleado ",ENAME,HIREDATE,sueldo * 100/5+ 20 /(10-5)  "NUEVO SUELDO" from emp;
+  No marca error porque el alias de EMPLEADO es correcto
+  No marca error porque el alias sueldo es correcto 
+  
+5.- Cual es la salida de los alias de la pregunta 4
+
+	empleado y NUEVO sueldo        			
+-------------------------------------------------------------------------------
+Concatenacion ||
+1.- Obtener el siguiente resultado final
+
+
+Numero de empleado	 Nombre
+Empleado No 1-	     Nombre: hugo hidalgo.
+Empleado No 2-	     Nombre: mario tavares.
+
+respuesta:
+ select 'Empleado No '|| EMPNON ||'-'  AS "Numero de empleado" , 'Nombre: '|| ENAME||'.' as "Nombre" from emp
 
 
  
