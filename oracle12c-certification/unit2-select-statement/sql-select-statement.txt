@@ -305,6 +305,7 @@ select EMPNON as EMPLEADO,ENAME,HIREDATE,sueldo * 100/5+ 20 /(10-5) as NUEVO_SUE
 
 	empleado y NUEVO sueldo        			
 -------------------------------------------------------------------------------
+@@@@@@@@@@@@@@@
 Concatenacion ||
 1.- Obtener el siguiente resultado final
 
@@ -315,6 +316,89 @@ Empleado No 2-	     Nombre: mario tavares.
 
 respuesta:
  select 'Empleado No '|| EMPNON ||'-'  AS "Numero de empleado" , 'Nombre: '|| ENAME||'.' as "Nombre" from emp
-
-
  
+-------------------------------------------------------------------------------
+@@@@@@@@@@@@@@@
+Tabla DUAL
+
+realizar la siguiente operacion en la tabla dual de Oracle
+365.25 * 24 *60 "SEGUNDOS EN 1 ANNO"
+
+1.- Cual es el el query y resultado de el anterior requerimiento.
+SELECT 365.25 * 24 *60 * 60 "SEGUNDOS EN 1 ANNO" FROM DUAL;
+
+    SEGUNDOS EN 1 ANNO
+---------------------------------------
+       31557600
+
+--------------------------------------------------------------------------------
+@@@@@@@@@@@@@@@
+USO de operator q
+
+Realizar una sentencia query que despliegue el siguiente contenido:
+
+COMENTARIO                    
+-------------------------------
+Este es un comentario de hugo's
+
+Respuesta:
+select q'<Este es un comentario de hugo's>' AS "COMENTARIO" FROM DUAL;
+select q'@Este es un comentario de hugo's@' AS "COMENTARIO" FROM DUAL;
+select q'!Este es un comentario de hugo's!' AS "COMENTARIO" FROM DUAL;
+------------------------------------------------------------------------------- 
+@@@@@@@@@@@@
+NULL operations
+
+1.- Teniendo el siguiente query
+select 'LA EDAD ES: '||edad||'EN ANNOS' as EDAD from emp;
+
+Si se sabe que la edad es null que mostrara.
+Respuesta:
+LA EDAD ES: EN ANNOS (ignora el valor NULL en la concatenación)
+
+2.- Teniendo el siguiente query
+select 'LA EDAD ES: '||(100/edad)||'EN ANNOS' as EDAD from emp;
+Si se sabe que la edad es null que mostrara.
+ Respuesta:
+LA EDAD ES: EN ANNOS (ignora el valor NULL en operacipones aritmeticas)
+
+3.- Teniendo el siguiente query
+select 'LA EDAD ES: '||(edad/0)||'EN ANNOS' as EDAD from emp;
+Si se sabe que la edad es null que mostrara.
+ Respuesta:
+LA EDAD ES: EN ANNOS (ignora el valor NULL en operacipones aritmeticas)
+
+4.- Teniendo el siguiente query
+select 'LA EDAD ES: '||(4/0)||'EN ANNOS' as EDAD from emp;
+Respuesta:
+ORA-01476: el divisor es igual a cero
+01476. 00000 -  "divisor is equal to zero"
+*Cause:    
+*Action:
+
+--------------------------------------------------------------------------------
+
+Escenarios:
+
+1.- Estas construyendo una expresion aritmetica que calcula los impuestos de 
+los empleados entre Salario y comision pero ambas columnas permiten NULL.
+¿Es posible convertir dichos valores NULL  a Cero para que siempre retorne un 
+un valor numerico?
+
+Respuesta: Si, pero con el manejo de funciones, pero hasta el momento con lo
+		   que conocemos no es posible.
+
+2.- Un alias provee un mecanismo para renombrar una columna o una expresion.
+¿Sobre que condiciones deberia cerrar un alias con comillas dobles?
+Respuesta: Cuando el el alias tiene mas de dos palabras, Cuando queremos que el
+           nombre del alias aparezca exactamente en la cabecera de la columna.
+
+3.-Cuando trabajamos con literales y queremos hacer uso de comillas simples y
+dentro de esa información existen tambien comillas simples, como podemos hacer
+para que no marque error.
+
+respuesta: Existen 2 caminos colocar dos veces las comillas simples o bien
+	       la utilizacion del operador q
+	       
+select 'Nombre de hugo''s :'||'otra cadena' from dual;       
+
