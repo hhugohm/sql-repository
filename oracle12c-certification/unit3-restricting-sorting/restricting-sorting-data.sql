@@ -1,10 +1,13 @@
-Unit 3 Restricting and Sorting Data.
+##############################################################################
+#				Unit 3 Restricting and Sorting Data.
+##############################################################################
 
 Objetives:
 3.01 Limit the rows retrieved by a query.
 
 @@@@@@@@@@@@@@@@@@@@@@
 Clausula WHERE
+@@@@@@@@@@@@@@@@@@@@@@
 Numeric-Base Condition
 
 1.- Teniendo lo siguiente
@@ -50,7 +53,7 @@ a) Realizar un select de la tabla emp utilizando la clausula WHERE con
 -------------------------------------------------------------------------------
 @@@@@@@@@
  Character-Based conditions
- 
+@@@@@@@@@
 1.- Ejecutar el siguiente query:
 select * from emp where ENAME='hugo hidalgo';
 Que resultado tendra el anterior query?
@@ -84,7 +87,7 @@ NOTA: Las condiciones a nivel caracter son sensitivos y van entre comilas simple
 -------------------------------------------------------------------------------
 @@@@@@@@@@
 Data-Based -Condition
-
+@@@@@@@@@
 1.- Teniendo la siguiente informaion en la base de datos:
 
 Nombre        Nulo     Tipo         
@@ -122,4 +125,104 @@ select * from emp where HIREDATE>'17-01-99';
 Nota: la fecha por default es DD-Mon-RR
       de 50 a 99 representa años(1950-1999)
       
-      
+
+-------------------------------------------------------------------------------
+@@@@@@@@
+Pattern Comparison with the LIKE OPERATOR
+@@@@@@@@
+1.- Realizar un select a la tabla emp donde en nombre del empleado comience con
+ la letra h 
+ 
+ select * from emp where ename LIKE 'h%';
+ 
+ 2.- Realizar un select a la tabla emp donde en nombre del empleado comience con
+ la letra r
+ 
+ select * from emp where ename LIKE 'r%';
+ 
+ 3.- Realizar un select a la tabla emp donde en nombre del empleado sea hugo hidalgo
+ 
+ select * from emp where ename LIKE '%hugo hidalgo%';
+ select * from emp where ename LIKE 'hugo hidalgo';
+ 
+  
+ 4.- Realizar un select a la tabla emp donde en nombre del empleado en su segunda letra
+ comience con la letra a.
+ 
+ select * from emp where ename LIKE '_a%';
+ 
+  5.- Realizar un select a la tabla emp donde en nombre del empleado contenga un 
+  _ en su nombre
+ 
+ select * from emp where ename LIKE '%\_%' ESCAPE '\';
+ 
+   6.- Realizar un select a la tabla emp donde en nombre del empleado contenga un 
+  % en su nombre utilizando $ ESCAPE
+  
+ select * from emp where ename like '%$%%' ESCAPE '$';
+ select * from emp where ename like '%\%%' ESCAPE '\';
+ 
+ -------------------------------------------------------------------------------
+ @@@@@@@@@@@@@@@
+ Set Comparison with the IN Operator
+ @@@@@@@@@@@@@@@
+ 
+ 1.- Obtener el salario de los empleados que sean 2, 5 o 10
+ 
+ select * from emp where sueldo in (2,5,10);
+ select * from emp where sueldo in (10,2,5);
+ 
+ 2.- Del anterior query, ahora realizar lo mismo usando OR
+ 
+   select * from emp where sueldo=2 OR sueldo=5 OR sueldo=10;
+   
+ 3.- Realizar un query donde se obtenga registros con numero de tipo de licencia
+ igual a 2,3 o 5
+ 
+ select * from emp where tipo_licencia in ('2','3','5');
+ select * from emp where tipo_licencia='2' OR tipo_licencia='3' OR tipo_licencia='5';
+ 
+ 4.- Realizar un query donde se obtenga registros con fecha de contratacion 
+ '11/03/73', '12/01/20' y '12/01/01'
+ 
+ select * from emp where hiredate IN ('11-MAR-73','12-JAN-20','12-JAN-01');
+ 
+ Nota: Forma default oracle 'DD-MON-RR'}
+ ------------------------------------------------------------------------------
+ @@@@@@@@@
+ Range Comparison with the BETWEEN Operartor.
+ @@@@@@@@@
+ 1.- Realizar un query donde el salario este en un rango 5 y 90 
+ 
+select * from emp where sueldo between 5 and 90;
+
+2.- Realizar el query anterior usando AND y operadores algebraicos
+
+select * from emp where sueldo>=5 AND sueldo<=90;
+
+3.- Realizar un query para saber que empleado fueron contratados desde
+el 1/Enero/1901 hasta 1/Diciembre/2001
+
+select * from emp where hiredate between '01-JAN-1901' and '01-DEC-01';
+
+4.- Realizar un query para saber que empleado(s) donde la fecha 19/abril/1977
+estan entre la fecha de contratacion y la fecha actual.
+
+select * from emp where '19-APR-77' BETWEEN hiredate   and sysdate;
+-------------------------------------------------------------------------------
+@@@@@@@@@@@@@@
+ Equality and Inequality
+@@@@@@@@@@@@@@
+
+1.- Realizar un query donde el nombre de 'hugo' sea menor o igual a la columna
+ename
+
+select * from emp where ename<='hugo'
+
+
+1.- Realizar un query donde la fecha de contratacion sea mayor a 15/febrero/1950
+ y sea menor al dia de ayer en la fecha en curso.
+ 
+ select * from emp where hiredate>='17-FEB-1950' and hiredate<=sysdate-1;
+ select * from emp where hiredate>=TO_DATE('17-FEB-1950','DD-MON-RRRR') and hiredate<=sysdate-1;
+
