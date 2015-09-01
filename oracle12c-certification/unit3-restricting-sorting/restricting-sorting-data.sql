@@ -368,3 +368,32 @@ select trim(trailing '*' from '***ESTE ES UN MENSAJE EN LA BASE DE DATOS****') f
 --***ESTE ES UN MENSAJE EN LA BASE DE DATOS
 select trim(both '*' from '***ESTE ES UN MENSAJE EN LA BASE DE DATOS****') from dual;
 --ESTE ES UN MENSAJE EN LA BASE DE DATOS
+
+@@@@@@@
+round
+@@@@@@@
+--ROUND( number [, decimal_places] )
+select round(987.98765) from dual;
+--988
+select round(987.5) from dual;
+--988
+select round(987.4989) from dual;
+--987
+select round(987.98765,0) from dual;
+--988
+select round(987.9876,1) from dual;
+--988
+select round(987.58465,1) from dual;
+--987.6
+select round(987.58465,2) from dual;
+--987.58
+select round(987.58465,3) from dual;
+--987.585
+select round(987.58465,-2) from dual;
+--1000
+select round(987.58465,-1) from dual;
+--990
+select round(11256.58465,-3) from dual;
+--11000
+select round(11254.58465,-1) from dual;
+--11250
