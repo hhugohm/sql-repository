@@ -329,3 +329,25 @@ select instr('ESTE ES UN MENSAJE EN LA BASE DE DATOS','A',-9,1) from dual;
 --27
 select instr('ESTE ES UN MENSAJE EN LA BASE DE DATOS','E',9) from dual;
 --13
+
+@@@@@@@
+lpad
+@@@@@@@
+--LPAD( string1, padded_length [, pad_string] ) espacios por default
+select lpad('ESTE ES UN MENSAJE EN LA BASE DE DATOS',50) from dual;
+--            ESTE ES UN MENSAJE EN LA BASE DE DATOS
+select lpad('ESTE ES UN MENSAJE EN LA BASE DE DATOS',50,'*') from dual;
+--************ESTE ES UN MENSAJE EN LA BASE DE DATOS
+select lpad('ESTE ES UN MENSAJE EN LA BASE DE DATOS',10,'*') from dual;
+--ESTE ES UN
+
+@@@@@@@
+rpad
+@@@@@@@
+--RPAD( string1, padded_length [, pad_string] ) espacios por default
+select rpad('ESTE ES UN MENSAJE EN LA BASE DE DATOS',50) from dual;
+--ESTE ES UN MENSAJE EN LA BASE DE DATOS            
+select rpad('ESTE ES UN MENSAJE EN LA BASE DE DATOS',50,'*') from dual;
+--ESTE ES UN MENSAJE EN LA BASE DE DATOS************
+select rpad('ESTE ES UN MENSAJE EN LA BASE DE DATOS',10,'*') from dual;
+--ESTE ES UN
