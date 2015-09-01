@@ -288,3 +288,30 @@ select '1era cadena'||'segunda cadena' from dual;
 select '1era cadena'||'-'||'segunda cadena' from dual;
 --1era cadena-segunda cadena
 
+@@@@@@@
+substr
+@@@@@@@
+--SUBSTR( string, start_position [, length ] )
+select substr('ESTE ES UN MENSAJE EN LA BASE DE DATOS') from dual;
+--ORA-00938: no hay suficientes argumentos para la función
+select substr('ESTE ES UN MENSAJE EN LA BASE DE DATOS',0) from dual;
+--ESTE ES UN MENSAJE EN LA BASE DE DATOS
+select substr('ESTE ES UN MENSAJE EN LA BASE DE DATOS',1) from dual;
+--ESTE ES UN MENSAJE EN LA BASE DE DATOS
+select substr('ESTE ES UN MENSAJE EN LA BASE DE DATOS',11) from dual;
+-- MENSAJE EN LA BASE DE DATOS
+select substr('ESTE ES UN MENSAJE EN LA BASE DE DATOS',11,0) from dual;
+--null
+select substr('ESTE ES UN MENSAJE EN LA BASE DE DATOS',11,-1) from dual;
+--null
+select substr('ESTE ES UN MENSAJE EN LA BASE DE DATOS',12,7) from dual;
+--MENSAJE
+select substr('ESTE ES UN MENSAJE EN LA BASE DE DATOS',-13,4) from dual;
+--BASE
+select substr('ESTE ES UN MENSAJE EN LA BASE DE DATOS',-39,4) from dual;
+--null
+select substr(123456789.89,-3,3) from dual;
+--.89
+select substr(to_date('01-Sep-2015','DD-Mon-RR'),-6,3)from dual;
+--/09
+
