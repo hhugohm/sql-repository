@@ -413,3 +413,33 @@ select mod(100,2.1) from dual;
 --1.3
 select mod(56.89,3.1) from dual;
 --1.9
+
+
+@@@@@@@
+trunc
+@@@@@@@
+--TRUNC( number [, decimal_places] )
+select trunc(987.98765) from dual;
+--987
+select trunc(987.5) from dual;
+--987
+select trunc(987.4989) from dual;
+--987
+select trunc(987.98765,0) from dual;
+--987
+select trunc(987.9876,1) from dual;
+--987.9
+select trunc(987.58465,1) from dual;
+--987.5
+select trunc(987.58465,2) from dual;
+--987.58
+select trunc(987.58465,3) from dual;
+--987.584
+select trunc(987.58465,-2) from dual;
+--900
+select trunc(987.58465,-1) from dual;
+--980
+select trunc(11256.58465,-3) from dual;
+--11000
+select trunc(11254.58465,-1) from dual;
+--11250
