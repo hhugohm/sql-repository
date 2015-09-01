@@ -454,3 +454,44 @@ select months_between(to_date('01-08-2015','dd-mm-rrrr'),to_date('01-09-2015','d
 -- -1
 select months_between(to_date('01-Sep-15','dd-Mon-rr'),to_date('01-Jun-2015','dd-mm-rrrr')) from dual;
 --3
+
+--MONTHS_BETWEEN( date1, date2 )
+select months_between(to_date('01-09-2015','dd-mm-rrrr'),to_date('01-08-2015','dd-mm-rrrr')) from dual;
+--1
+select months_between(to_date('01-08-2015','dd-mm-rrrr'),to_date('01-09-2015','dd-mm-rrrr')) from dual;
+-- -1
+select months_between(to_date('01-Sep-15','dd-Mon-rr'),to_date('01-Jun-2015','dd-mm-rrrr')) from dual;
+--3
+
+@@@@@@@
+ADD_MONTHS
+@@@@@@@
+--ADD_MONTHS( date1, number_months )
+select add_months(to_date('01-Sep-15','dd-Mon-rr'),4) from dual;
+--01/01/2016
+select add_months(to_date('01-Sep-15','dd-Mon-rr'),-4) from dual;
+-- 01/05/2015
+
+@@@@@@@
+LAST_DAY
+@@@@@@@
+--LAST_DAY( date )
+select last_day(to_date('01-Sep-15','dd-Mon-rr')) from dual;
+--30/09/2015
+select last_day(to_date('01-Nov-15','dd-Mon-rr')) from dual;
+--31/11/2015
+
+@@@@@@@
+next_day
+@@@@@@@
+--NEXT_DAY( date, weekday )
+select next_day(to_date('01-09-15','dd-mm-rr'),'Lunes') from dual;
+--07/09/2015
+select next_day(to_date('01-09-15','dd-mm-rr'),'Domingo') from dual;
+--06/09/2015
+
+@@@@@@@
+sysdate
+@@@@@@@
+select sysdate from dual;
+--01/09/2015 03:29:50 pm
