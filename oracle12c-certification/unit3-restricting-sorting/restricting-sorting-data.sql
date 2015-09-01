@@ -228,21 +228,63 @@ select * from emp where ename<='hugo'
  
  ******************************
  Ejercicios
+@@@@@@@
+lower
+@@@@@@@
 select lower('ESTE ES UN MENSAJE EN LA BASE DE DATOS') from dual;
 --este es un mensaje en la base de datos
+select lower(123456789.89) from dual;
+--123456789.89
+select lower(to_date('01-Sep-15','DD-Mon-YY')) from dual;
+--01/09/15
+select lower(to_date('01-Sep-2015','DD-Mon-RR'))from dual;
+--01/09/15
 
+@@@@@@@
+upper
+@@@@@@@
 select upper('este es un mensaje en la base de datos') from dual;
 --ESTE ES UN MENSAJE EN LA BASE DE DATOS
+select upper(123456789.89) from dual;
+--123456789.89
+select upper(to_date('01-Sep-15','DD-Mon-YY')) from dual;
+--01/09/15
+select upper(to_date('01-Sep-2015','DD-Mon-RR'))from dual;
+--01/09/15
 
+@@@@@@@
+initcap
+@@@@@@@
 select initcap('este es un mensaje en la base de datos') from dual;
 --Este Es Un Mensaje En La Base De Datos
+select initcap(123456789.89) from dual;
+--123456789.89
+select initcap(to_date('01-Sep-15','DD-Mon-YY')) from dual;
+--01/09/15
+select initcap(to_date('01-Sep-2015','DD-Mon-RR'))from dual;
+--01/09/15
 
+@@@@@@@
+length
+@@@@@@@
 select length('este es un mensaje en la base de datos') from dual;
 --38
+select length(123456789.89) from dual;
+--12
+select length(to_date('01-Sep-15','DD-Mon-YY')) from dual;
+--8
+select length(to_date('01-Sep-2015','DD-Mon-RR'))from dual;
+--8
 
+@@@@@@@
+concat
+@@@@@@@
 select concat('1era cadena','segunda cadena') from dual;
 --1era cadenasegunda cadena
-
 select concat(concat('1era cadena','-'),'segunda cadena') from dual;
+--1era cadena-segunda cadena
+select '1era cadena'||'segunda cadena' from dual;
+--1era cadenasegunda cadena
+select '1era cadena'||'-'||'segunda cadena' from dual;
 --1era cadena-segunda cadena
 
