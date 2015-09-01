@@ -123,7 +123,7 @@ select * from emp where HIREDATE>'17-01-99';
 -Que fecha es representada en 17-01-99 ? --> 17-01-1999
 
 Nota: la fecha por default es DD-Mon-RR
-      de 50 a 99 representa años(1950-1999)
+      de 50 a 99 representa aÃ±os(1950-1999)
       
 
 -------------------------------------------------------------------------------
@@ -225,4 +225,24 @@ select * from emp where ename<='hugo'
  
  select * from emp where hiredate>='17-FEB-1950' and hiredate<=sysdate-1;
  select * from emp where hiredate>=TO_DATE('17-FEB-1950','DD-MON-RRRR') and hiredate<=sysdate-1;
+ 
+ ******************************
+ Ejercicios
+select lower('ESTE ES UN MENSAJE EN LA BASE DE DATOS') from dual;
+--este es un mensaje en la base de datos
+
+select upper('este es un mensaje en la base de datos') from dual;
+--ESTE ES UN MENSAJE EN LA BASE DE DATOS
+
+select initcap('este es un mensaje en la base de datos') from dual;
+--Este Es Un Mensaje En La Base De Datos
+
+select length('este es un mensaje en la base de datos') from dual;
+--38
+
+select concat('1era cadena','segunda cadena') from dual;
+--1era cadenasegunda cadena
+
+select concat(concat('1era cadena','-'),'segunda cadena') from dual;
+--1era cadena-segunda cadena
 
