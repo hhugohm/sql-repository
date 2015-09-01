@@ -315,3 +315,17 @@ select substr(123456789.89,-3,3) from dual;
 select substr(to_date('01-Sep-2015','DD-Mon-RR'),-6,3)from dual;
 --/09
 
+@@@@@@@
+instr
+@@@@@@@
+--INSTR( string, substring [, start_position [,  nth_appearance ] ] )
+select instr('ESTE ES UN MENSAJE EN LA BASE DE DATOS') from dual;
+--ORA-00938: no hay suficientes argumentos para la función
+select instr('ESTE ES UN MENSAJE EN LA BASE DE DATOS','O') from dual;
+--37
+select instr('ESTE ES UN MENSAJE EN LA BASE DE DATOS','A',-9,3) from dual;
+--16
+select instr('ESTE ES UN MENSAJE EN LA BASE DE DATOS','A',-9,1) from dual;
+--27
+select instr('ESTE ES UN MENSAJE EN LA BASE DE DATOS','E',9) from dual;
+--13
