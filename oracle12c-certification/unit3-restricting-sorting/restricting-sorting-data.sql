@@ -534,3 +534,34 @@ select round(to_date('30-06-2015','dd-mm-rrrr'),'year') from dual;
 --01/01/2015
 --ene, feb,mar,abri,may,junio -->baja al primer dia de Enero del año esque se encuentre
 --jul,agos, sep, nov, oct, nov, dic--> sube al primer dia de año siguiente.
+
+
+@@@@@@@
+trunc
+@@@@@@@
+--TRUNC ( date [, format ] )
+select trunc(to_date('01-09-2015','dd-mm-rrrr')) from dual;
+--01/09/2015
+select trunc(to_date('04-09-2015','dd-mm-rrrr'),'day') from dual;
+--31/08/2015
+select trunc(to_date('11-09-2015','dd-mm-rrrr'),'day') from dual;
+--07/09/2015
+select trunc(to_date('18-09-2015','dd-mm-rrrr'),'day') from dual;
+--14/09/2015
+select trunc(to_date('27-09-2015','dd-mm-rrrr'),'day') from dual;
+--21/09/2015
+--viernes, sabado, domingo,  -->baja lunes anterior
+--martes, miercoles, jueves  -->mismo lunes
+
+
+select trunc(to_date('15-10-2015','dd-mm-rrrr'),'month') from dual;
+--01/10/2015
+select trunc(to_date('16-10-2015','dd-mm-rrrr'),'month') from dual;
+--01/10/2015
+--simepre coloca el 1er dia del mes en la fecha
+
+select trunc(to_date('01-07-2015','dd-mm-rrrr'),'year') from dual;
+--01/01/2015
+select trunc(to_date('30-06-2015','dd-mm-rrrr'),'year') from dual;
+--01/01/2015
+--simepre coloca el 1er dia de enero del año en la fecha
