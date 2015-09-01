@@ -351,3 +351,20 @@ select rpad('ESTE ES UN MENSAJE EN LA BASE DE DATOS',50,'*') from dual;
 --ESTE ES UN MENSAJE EN LA BASE DE DATOS************
 select rpad('ESTE ES UN MENSAJE EN LA BASE DE DATOS',10,'*') from dual;
 --ESTE ES UN
+
+@@@@@@@
+trim
+@@@@@@@
+--TRIM( [ [ LEADING | TRAILING | BOTH ] trim_character FROM ] string1 )
+select trim('   ESTE ES UN MENSAJE EN LA BASE DE DATOS') from dual;
+--ESTE ES UN MENSAJE EN LA BASE DE DATOS
+select trim('   ESTE ES UN MENSAJE EN LA BASE DE DATOS       ') from dual;
+--ESTE ES UN MENSAJE EN LA BASE DE DATOS
+select trim(' ' from '   ESTE ES UN MENSAJE EN LA BASE DE DATOS       ') elimina from dual;
+--ESTE ES UN MENSAJE EN LA BASE DE DATOS
+select trim(leading '*' from '***ESTE ES UN MENSAJE EN LA BASE DE DATOS*****') from dual;
+--ESTE ES UN MENSAJE EN LA BASE DE DATOS*****
+select trim(trailing '*' from '***ESTE ES UN MENSAJE EN LA BASE DE DATOS****') from dual;
+--***ESTE ES UN MENSAJE EN LA BASE DE DATOS
+select trim(both '*' from '***ESTE ES UN MENSAJE EN LA BASE DE DATOS****') from dual;
+--ESTE ES UN MENSAJE EN LA BASE DE DATOS
