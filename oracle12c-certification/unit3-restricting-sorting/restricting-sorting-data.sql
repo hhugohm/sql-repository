@@ -574,3 +574,28 @@ select replace('***ESTE ES UN MENSAJE EN LA BASE DE DATOS***','*') from dual;
 --ESTE ES UN MENSAJE EN LA BASE DE DATOS
 select replace('***ESTE ES UN MENSAJE EN LA BASE DE DATOS***','*','@') from dual;
 --@@@ESTE ES UN MENSAJE EN LA BASE DE DATOS@@@
+
+
+@@@@@@@
+nvl
+@@@@@@@
+--NVL( string1, ifnull )
+select nvl('valor 1', 'valor cuando es null') from dual;
+--valor 1
+select nvl(null, 'valor cuando es null') from dual;
+--valor cuando es null
+select nvl(substr('abc',4),'no existe la cadena') from dual;
+--no existe la cadena
+
+@@@@@@@
+nvl2
+@@@@@@@
+--NVL2( string1,ifnotnull,ifnull )
+select nvl2(1234,1,'una cadena') from dual;
+--error porque debe haber consistencia en los valores
+select nvl2(1234,1,2) from dual;
+--1
+select nvl2(null,1,2) from dual;
+--2
+select nvl2('original','not null','null') from dual;
+--not null
