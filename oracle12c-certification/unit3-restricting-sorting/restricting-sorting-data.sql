@@ -443,3 +443,14 @@ select trunc(11256.58465,-3) from dual;
 --11000
 select trunc(11254.58465,-1) from dual;
 --11250
+
+@@@@@@@
+MONTHS_BETWEEN
+@@@@@@@
+--MONTHS_BETWEEN( date1, date2 )
+select months_between(to_date('01-09-2015','dd-mm-rrrr'),to_date('01-08-2015','dd-mm-rrrr')) from dual;
+--1
+select months_between(to_date('01-08-2015','dd-mm-rrrr'),to_date('01-09-2015','dd-mm-rrrr')) from dual;
+-- -1
+select months_between(to_date('01-Sep-15','dd-Mon-rr'),to_date('01-Jun-2015','dd-mm-rrrr')) from dual;
+--3
