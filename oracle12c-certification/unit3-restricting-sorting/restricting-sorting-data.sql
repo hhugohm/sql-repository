@@ -397,3 +397,19 @@ select round(11256.58465,-3) from dual;
 --11000
 select round(11254.58465,-1) from dual;
 --11250
+
+
+@@@@@@@
+mod
+@@@@@@@
+--MOD( m, n )
+select mod(10,2) from dual;
+--0
+select mod(11,2) from dual;
+--1
+select mod(7,3) from dual;
+--1
+select mod(100,2.1) from dual;
+--1.3
+select mod(56.89,3.1) from dual;
+--1.9
