@@ -495,3 +495,42 @@ sysdate
 @@@@@@@
 select sysdate from dual;
 --01/09/2015 03:29:50 pm
+
+@@@@@@@
+ROUND
+@@@@@@@
+--ROUND( date [, format] )
+select round(to_date('01-09-2015','dd-mm-rrrr')) from dual;
+--01/09/2015
+select round(to_date('03-09-2015','dd-mm-rrrr'),'day') from dual;
+--31/08/2015
+select round(to_date('04-09-2015','dd-mm-rrrr'),'day') from dual;
+--07/09/2015
+select round(to_date('11-09-2015','dd-mm-rrrr'),'day') from dual;
+--14/09/2015
+select round(to_date('18-09-2015','dd-mm-rrrr'),'day') from dual;
+--21/09/2015
+select round(to_date('25-09-2015','dd-mm-rrrr'),'day') from dual;
+--28/09/2015
+select round(to_date('02-10-2015','dd-mm-rrrr'),'day') from dual;
+--05/10/2015
+--viernes, sabado, domingo, lunes -->  siguiente Lunes
+--martes, miercoles, jueves       -->  mismo lunes
+
+
+select round(to_date('15-10-2015','dd-mm-rrrr'),'month') from dual;
+--01/10/2015
+select round(to_date('16-10-2015','dd-mm-rrrr'),'month') from dual;
+--01/11/2015
+-- 1,2,...15 bajan ---> 16,17,...31 -->suben al dia consecuitivo
+
+select round(to_date('15-10-2015','dd-mm-rrrr'),'year') from dual;
+--01/01/2016
+select round(to_date('01-07-2015','dd-mm-rrrr'),'year') from dual;
+--01/01/2016
+select round(to_date('01-07-2015','dd-mm-rrrr'),'year') from dual;
+--01/01/2016
+select round(to_date('30-06-2015','dd-mm-rrrr'),'year') from dual;
+--01/01/2015
+--ene, feb,mar,abri,may,junio -->baja al primer dia de Enero del año esque se encuentre
+--jul,agos, sep, nov, oct, nov, dic--> sube al primer dia de año siguiente.
