@@ -565,3 +565,12 @@ select trunc(to_date('01-07-2015','dd-mm-rrrr'),'year') from dual;
 select trunc(to_date('30-06-2015','dd-mm-rrrr'),'year') from dual;
 --01/01/2015
 --simepre coloca el 1er dia de enero del año en la fecha
+
+@@@@@@@
+replace
+@@@@@@@
+--REPLACE( string1, string_to_replace [, replacement_string] )
+select replace('***ESTE ES UN MENSAJE EN LA BASE DE DATOS***','*') from dual;
+--ESTE ES UN MENSAJE EN LA BASE DE DATOS
+select replace('***ESTE ES UN MENSAJE EN LA BASE DE DATOS***','*','@') from dual;
+--@@@ESTE ES UN MENSAJE EN LA BASE DE DATOS@@@
