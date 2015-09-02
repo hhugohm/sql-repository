@@ -614,3 +614,19 @@ select nullif(to_date('02-09-2015'),to_date('02-Sep-15','dd-Mon-rr')) from dual;
 --null
 select nullif(to_date('03-09-2015'),to_date('02-Sep-15','dd-Mon-rr')) from dual;
 --03/09/2015
+
+@@@@@@@
+coalesce
+@@@@@@@
+--COALESCE( expr1, expr2, ... expr_n )
+--The COALESCE function will compare each value, one by one
+select coalesce('valor 1','valor 2',2) from dual;
+--Error Ora-00932 tipos de datos inconsistentes
+select coalesce('valor 1','valor 2','valor 3') from dual;
+--valor 1
+select coalesce(null,null,'valor 3') from dual;
+--valor 3
+select coalesce(null,null,null) from dual;
+--null
+select coalesce(null,to_date('03-09-2015'),null) from dual;
+--03/09/2015
