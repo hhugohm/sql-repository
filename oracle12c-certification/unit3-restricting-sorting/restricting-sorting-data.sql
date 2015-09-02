@@ -599,3 +599,18 @@ select nvl2(null,1,2) from dual;
 --2
 select nvl2('original','not null','null') from dual;
 --not null
+
+@@@@@@@
+nullif
+@@@@@@@
+--NULLIF( ifunequal, expr2 )
+-- if ifunequal = expr2 -->null
+-- if  ifunequal <> expr2 -->ifunequal
+select nullif('cadena 1','cadena 2') from dual;
+--cadena 1
+select nullif('cadena 1','cadena 1') from dual;
+--null
+select nullif(to_date('02-09-2015'),to_date('02-Sep-15','dd-Mon-rr')) from dual;
+--null
+select nullif(to_date('03-09-2015'),to_date('02-Sep-15','dd-Mon-rr')) from dual;
+--03/09/2015
