@@ -630,3 +630,21 @@ select coalesce(null,null,null) from dual;
 --null
 select coalesce(null,to_date('03-09-2015'),null) from dual;
 --03/09/2015
+
+@@@@@@@
+decode
+@@@@@@@
+--DECODE( expression , search , result [, search , result]... [, default] )
+select decode(to_date('03-09-2015'),null,null,
+                                    to_date('02-Sep-15','dd-Mon-rr'),sysdate,
+                                                                            to_date('01-01-1900')) from dual;
+--01/01/00
+select decode(to_date('03-09-2015'),null,null,
+                                    to_date('03-Sep-15','dd-Mon-rr'),sysdate,
+                                                                            to_date('01-01-1900')) from dual;
+--sysdate
+select decode(to_date('03-09-2015'),to_date('03-09-2015'),to_date('30-09-2015'),
+                                    to_date('03-Sep-15','dd-Mon-rr'),sysdate,
+                                                                            to_date('01-01-1900')) from dual;
+--30/09/2015
+
