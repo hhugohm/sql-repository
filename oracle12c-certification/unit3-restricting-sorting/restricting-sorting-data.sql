@@ -648,3 +648,33 @@ select decode(to_date('03-09-2015'),to_date('03-09-2015'),to_date('30-09-2015'),
                                                                             to_date('01-01-1900')) from dual;
 --30/09/2015
 
+@@@@@@@
+case
+@@@@@@@
+--CASE [ expression ]
+
+   --WHEN condition_1 THEN result_1
+   --WHEN condition_2 THEN result_2
+  -- ...
+  -- WHEN condition_n THEN result_n
+
+  -- ELSE result
+
+--END
+
+select length('mi cadena'),
+case length('mi cadena')
+    when 8 then 'mi cadena tiene longitud es de 8'
+    when 9 then 'mi cadena tiene longitud ed de 9'
+    else 'la cadena tine longitud mayor a 9'
+end
+from dual;
+
+select sysdate,
+case sysdate
+    when to_date('01-09-2015','fmdd-mm-rrrr') then 'la fecha es: '||to_date('01-09-2015','fmdd-mm-rrrr')
+    when to_date('02-09-2015','fmdd-mm-rrrr') then 'la fecha es: '||to_date('02-09-2015','fmdd-mm-rrrr')
+    when to_date('03-09-2015','fmdd-mm-rrrr') then 'la fecha es: '||to_date('03-09-2015','fmdd-mm-rrrr')
+    else 'la fecha es: '||sysdate
+end
+from dual;
