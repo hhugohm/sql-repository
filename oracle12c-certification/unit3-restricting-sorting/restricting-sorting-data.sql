@@ -707,3 +707,23 @@ select 'hoy: '||to_char(sysdate,'dd-mm-rr')||' siendo las '||to_char(sysdate,'FM
 --hoy: 03-09-15 siendo las 4:30 PM hr
 select 'hoy: '||to_char(to_date('03/09/15','fxdd/mm/rr'))||' siendo las '||to_char(sysdate,'fmHH12:MI am')||' hr' from dual;
 --hoy: 03/09/15 siendo las 4:32 PM hr
+
+@@@@@@@
+to_number
+@@@@@@@
+select to_number('$1,210.73', '$9,999.00') from dual;
+--1210.73
+select to_number('MXN1,210.73', 'fmc9,999.00') from dual;
+--1210.73
+select to_number('$1,210.73', 'fmL9,999.00') from dual;
+--1210.73
+
+@@@@@@@
+to_date
+@@@@@@@
+SELECT to_date('2010-Ago-09 02:00:01 PM' , 'yyyy-Mon-dd HH:MI:SS AM') "date" FROM dual;
+--09/08/2010 02:00:01 p.m.
+SELECT to_date('03/09/15' , 'fxdd/mm/rr')|| ' date' fecha FROM dual;
+--03/09/15 date
+SELECT to_date('030915' , 'fxddmmrr')|| ' date' fecha FROM dual;
+--03/09/15 date
