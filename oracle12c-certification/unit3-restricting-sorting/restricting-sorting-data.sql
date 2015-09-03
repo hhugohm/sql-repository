@@ -678,3 +678,20 @@ case sysdate
     else 'la fecha es: '||sysdate
 end
 from dual;
+
+@@@@@@@
+to_char
+@@@@@@@
+--TO_CHAR( value [, format_mask] [, nls_language] )
+select to_char(1210.73, '$9,999.0') from dual;--coloca el simbolo de moneda y un decimal
+--$1,210.7
+select to_char(1210.73, '$9,999.00') from dual;--coloca el simbolo de moneda y dos deci
+--$1,210.7
+select to_char(1210.73, 'fm$9,999.00') from dual;--elimina los espacios lading trailing
+--$1,210.7
+select to_char(1210.73, 'fmc9,999.00') from dual;--coloca el tipo de moneda
+--MXN1,210.73
+select to_char(1210.73, 'fmL9999.00') from dual;--coloca el simbolo de moneda
+--$1210.73
+select TO_CHAR(0012345.6700, 'FM99999.99')from dual;--elimina los espacios lading trailing
+--12345.67
