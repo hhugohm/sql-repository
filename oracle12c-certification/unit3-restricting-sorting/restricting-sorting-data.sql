@@ -693,5 +693,17 @@ select to_char(1210.73, 'fmc9,999.00') from dual;--coloca el tipo de moneda
 --MXN1,210.73
 select to_char(1210.73, 'fmL9999.00') from dual;--coloca el simbolo de moneda
 --$1210.73
-select TO_CHAR(0012345.6700, 'FM99999.99')from dual;--elimina los espacios lading trailing
+select TO_CHAR(0012345.6700, 'FM99999.99') from dual;--elimina los espacios lading trailing
 --12345.67
+select to_char(sysdate)||' es la fecha de hoy' from dual;
+--03/09/15 es la fecha de hoy
+select 'La fehca de hoy es ' || to_char(sysdate,'fxdd/Month/rrrr') from dual;
+--La fehca de hoy es 03/Septiembre/2015
+select 'hoy: '||to_char(sysdate,'ddth-mm-rr') from dual;
+--hoy: 03rd-09-15
+select 'hoy: '||to_char(sysdate,'dd-mm-rr')||' siendo las '||to_char(sysdate,'HH24:MI')||' hr' from dual;
+--hoy: 03-09-15 siendo las 16:26 hr
+select 'hoy: '||to_char(sysdate,'dd-mm-rr')||' siendo las '||to_char(sysdate,'FMHH12:MI AM')||' hr' from dual;
+--hoy: 03-09-15 siendo las 4:30 PM hr
+select 'hoy: '||to_char(to_date('03/09/15','fxdd/mm/rr'))||' siendo las '||to_char(sysdate,'fmHH12:MI am')||' hr' from dual;
+--hoy: 03/09/15 siendo las 4:32 PM hr
