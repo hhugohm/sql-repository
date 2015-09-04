@@ -727,3 +727,117 @@ SELECT to_date('03/09/15' , 'fxdd/mm/rr')|| ' date' fecha FROM dual;
 --03/09/15 date
 SELECT to_date('030915' , 'fxddmmrr')|| ' date' fecha FROM dual;
 --03/09/15 date
+
+
+############################################################################## 
+#         Unit 6 Reporting Aggregated Data Using the Group Functions.
+############################################################################## 
+
+Los Group or aggregate function operan con multiples rows y regresan in solo 
+resultado por grupo, estos grupos por lo general son de 0 a mas.
+AVG, SUM, MIN, MAX y COUNT
+
+La clausula WHERE restrinje rows en un dataset antes de ser agrupados mientras
+que la clausula HAVING hace la restriccion despues de la agrupacion. 
+
+F(g1,g2, g3...gn) = result1, result2, result3, ... resultn
+
+Uno o mas group functions pueden aparecer en la sentencia SELECT:
+
+SELECT group_fuction(column or expression), ....
+FROM table [WHERE ...] [ORDER BY..]
+
+
+la sentencia count se ejecutara segun el numero de grupos encontrados, para asi dar un solo resultado por grupo.
+
+@@@@@@@
+count : cuenta el numero de rows en un grupo.
+@@@@@@@
+
+COUNT({*|[DISTICT|ALL] expr});
+1.-COUNT(*): incluye valores nullos o duplicados
+2.-COUNT(DISTINCT expr): solo valores unicos no incluye los valores null.
+3.-COUNT(ALL expr): equivalente a COUNT(expr) no incluye los valores null.
+4.-COUNT(expr): equivalente a COUNT(ALL expr) no incluye los valores null.
+
+una expr: NUMBER,DATE, CHAR o VARCHAR2.
+Si la expresion es NULL sera ignorada a manos que utilice funciones NVL, NVL2 o COALESCE
+
+SELECT count(*), department_id
+FROM employees
+GROUP BY department_id,
+ORDER BY department_id;
+
+@@@@@@@
+avg: Esta funcion calcula el promedio de una columna numerica o una expresion numerica.
+@@@@@@@
+
+AVG([DISTINCT|ALL] expr);
+
+1.-AVG(DISTINCT expr): Solo toma en cuenta los valores unicos y es dividido entre los valores unicos tambien.
+2.-AVG(ALL expr): Agrega los valores notnull y los divide entre la suma de los notnull
+3.-AVG(expr):  Agrega los valores notnull y los divide entre los notnull
+
+
+@@@@@@@
+sum: regresa el total de la suma de los notnull de una columna o expresion numerica.
+@@@@@@@
+
+SUM([DISTINCT|ALL] expr);
+
+1.- SUM(DISTICT expr): Realiza la suma de valores unicos y diferentes de nulos por cada grupo
+2.- SUM all expr): Suma los valores unicos y duplicados ignorando los nullos
+3.- SUM(expr) :Suma los valores unicos y duplicados ignorando los nullos
+
+@@@@@@@
+max and min: regresa el maximo o minimo valor de un conjunto de grupo
+@@@@@@@
+
+MAX([DISTINCT|ALL] expr);
+MIN([DISTINCT|ALL] expr);
+
+1.- MAX(DISTINCT expr); MIN(DISTINCT expr); : evaluan el valor mayoy y meno de duplicados e ignora los nulls
+2.- MAX(ALL expr); MIN(ALL expr); : evaluan el valor mayoy y meno de duplicados e ignora los nulls
+3.- MAX(expr); MIN(expr); : evaluan el valor mayoy y meno de duplicados e ignora los nulls
+
+NUMBER, DATE, CHAR o VARCHAR2
+
+@@@@@@@
+stddev and variance
+@@@@@@@
+
+
+ejemplos:
+select * from tbl_watchlist;
+desc tbl_watchlist;
+
+select count(*) from tbl_watchlist; --cuenta todos los registros(duplicados, nullos y notnulls)
+--246614
+select sum(2) from tbl_watchlist; --suma cada registro 2 veces por cada row encontrada
+--493228
+select count(*), nomcomp,razonsoc from tbl_watchlist group by nomcomp,razonsoc order by nomcomp;
+--realiza el conteo por grupo nombre y razon social
+select count(razonsoc) from tbl_watchlist; --cuenta los todo menos notnull
+--11115
+select count(ALL razonsoc) from tbl_watchlist; --cuenta todo menos notnull
+--11115
+select count(DISTINCT razonsoc) from tbl_watchlist; --cuenta los unicos
+--8595
+select count(nvl(razonsoc,' ')) from tbl_watchlist; --cuenta todos y los nullos los pasa a un espacio para que sean tomados en cuenta
+--246614
+select count(nvl2(razonsoc,razonsoc,' ')) from tbl_watchlist;
+--246614
+
+
+select avg(stat) from  tbl_watchlist;
+--0.883790052470663
+select sum(stat)/count(stat) from  tbl_watchlist;
+--0.883790052470663
+select sum(id_file) from tbl_watchlist;
+
+
+select max(DISTINCT nomcomp)  from tbl_watchlist;
+--ZYNTHYA BORBOA DE ZAMBADA
+select min(DISTINCT nomcomp)  from tbl_watchlist;
+--007 GARCIA CARRILLO
+
