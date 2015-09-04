@@ -838,8 +838,24 @@ select sum(id_file) from tbl_watchlist;
 
 select max(DISTINCT nomcomp)  from tbl_watchlist;
 --ZYNTHYA BORBOA DE ZAMBADA
+select max(DISTINCT LAST_UPDATE)  from tbl_watchlist;
+--28/08/2015 01:34:31 p.m.
 select min(DISTINCT nomcomp)  from tbl_watchlist;
 --007 GARCIA CARRILLO
+select min(DISTINCT LAST_UPDATE)  from tbl_watchlist;
+--25/08/2015 04:27:36 p.m.
+select to_char(min(DISTINCT LAST_UPDATE),'fmDd/Month/RRRR')  from tbl_watchlist;
+--25/Agosto/2015
+
+select sum(variance(stat)) from  tbl_watchlist;
+--0.10270561208759
+select variance(nvl(stat,0)) from  tbl_watchlist;
+--0.10270561208759
+select stddev(stat) from  tbl_watchlist;
+--0.32047716312959
+select sum(variance(stat)) from  tbl_watchlist;
+--[Error] Execution (457: 12): ORA-00978: función de grupo anidada sin GROUP BY
+select sum(variance(stat)) from  tbl_watchlist  group by stat;
 
 El anidamiento de Grupo de funciomes solo es posible en 2 niveles.
 G1(G2(group_item))= result --> Es MANDATORIO usar Clausula WHERE
