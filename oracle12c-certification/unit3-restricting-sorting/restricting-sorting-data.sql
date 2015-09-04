@@ -841,3 +841,10 @@ select max(DISTINCT nomcomp)  from tbl_watchlist;
 select min(DISTINCT nomcomp)  from tbl_watchlist;
 --007 GARCIA CARRILLO
 
+El anidamiento de Grupo de funciomes solo es posible en 2 niveles.
+G1(G2(group_item))= result --> Es MANDATORIO usar Clausula WHERE
+G1(G2(G3(group_item)))=NO ES PERMITIDO
+
+@@@@@@@
+group by: Agrupacion de datos en donde una tabla al menos tiene una columna y cero o mas rows con informacion
+@@@@@@@
