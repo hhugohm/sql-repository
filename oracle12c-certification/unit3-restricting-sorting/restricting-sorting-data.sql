@@ -864,3 +864,12 @@ G1(G2(G3(group_item)))=NO ES PERMITIDO
 @@@@@@@
 group by: Agrupacion de datos en donde una tabla al menos tiene una columna y cero o mas rows con informacion
 @@@@@@@
+
+select count(*), max(nomcomp) from tbl_watchlist group by nombre;
+
+
+--select count(*), nomcomp,razonsoc from tbl_watchlist group by nomcomp,razonsoc order by nomcomp;
+select count(*),nomcomp, nvl(razonsoc,' ') razon from tbl_watchlist group by nomcomp,razonsoc;
+
+
+select count(*) "contador" , lista from tbl_watchlist  group by lista  having count(*) >23 order by 1
