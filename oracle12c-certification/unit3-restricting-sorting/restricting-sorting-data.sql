@@ -866,10 +866,39 @@ group by: Agrupacion de datos en donde una tabla al menos tiene una columna y ce
 @@@@@@@
 
 select count(*), max(nomcomp) from tbl_watchlist group by nombre;
-
+--32	MIKE UY
+--52	PAUL WOLFOWITZ
+--1	EFREIN GONZALEZ
+--1	ANTWAN JOHSON
+--1	SEENORAIN SEENARAIN
 
 --select count(*), nomcomp,razonsoc from tbl_watchlist group by nomcomp,razonsoc order by nomcomp;
 select count(*),nomcomp, nvl(razonsoc,' ') razon from tbl_watchlist group by nomcomp,razonsoc;
-
+--2	STEPHEN CRAIG CAMPBELL	 
+--1	ALBERTO HUGO BUCIO	 
+--1	SQUEAKY BROWN	 
+--1	FAT BOY CHAMBERLIN	 
+--1	ROBERT L SCHREETER	 
+--1	MUSA JAMAL BROWN	 
+--1	FREDY FLACO ESPANA	 
 
 select count(*) "contador" , lista from tbl_watchlist  group by lista  having count(*) >23 order by 1
+--24	SSEU
+--72	ICE
+--79	ATF
+--136	PIS
+--241	LMW
+--242	ONUTAL
+--251	bis
+--253	pgr
+--405	UKMW
+--568	BID
+--575	ONUAQ
+--628	CBI
+--706	PGJ
+--856	BM
+
+select count(*) "contador" , lista from tbl_watchlist where lista in('SSEU','ICE','ATF') group by lista  having count(*) >23 order by;
+--24	SSEU
+--72	ICE
+--79	ATF
