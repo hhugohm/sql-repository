@@ -12,7 +12,7 @@ Los tres pilares de la teoria relacional son:
 Las tecnicas ocupadas para realizar los joins son:
 1.- equijoin
 2.- nonequijoin
-3.-     selftjoin: Asociar rows con otras rows de la misma tabla.
+3.- selftjoin: Asociar rows con otras rows de la misma tabla.
 
 inner join: Cuando se realiza la asociacion por medio de un match entre tabla source y target. 
 			Donde el valor de la columna que hace match en la tabla source aparece de igualmente en la tabla target.
