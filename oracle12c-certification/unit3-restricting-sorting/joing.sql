@@ -105,11 +105,18 @@ where bitacora.id_bitacora=dtl.id_bitacora and  bitacora.id_subj_sys=dtl.id_subj
 bitacora.id_subj_sys=1073014 and trunc(bitacora.date_trans)=to_date('10-09-15')
 order by id;
 
+select e.employee_id, e.last_name, j.start_date,e.hire_date, j.end_date, j.job_id previous_job, e.job_id current_job
+from job_history j
+join employee e
+on (j.start_date=e.hire_date)
+
 --union de tres tablas / oracle standar
 select bitacora.id_bitacora id , dtl.id_subj_sys person ,wlista.nomcomp,bitacora.id_sistema,dtl.level_coincidence
 from tbl_watchlist_bitacora bitacora,tbl_watchlist_bitacora_dtl  dtl, tbl_watchlist wlista
 where bitacora.id_bitacora=dtl.id_bitacora and  bitacora.id_subj_sys=dtl.id_subj_sys and dtl.id_subj_wl= wlista.id_subj_wl and
 bitacora.id_subj_sys=1073014 and trunc(bitacora.date_trans)=to_date('10-09-15')
 order by id;
+
+
 
 (55) 11427711 --> Sandra
