@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Configurando jndi
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/clinica" />
+	</bean>
+	 -->
+	
+	
+    <!-- Configurando datasource
+    	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@10.192.249.35:1521:THEFRONTDOOR" />
+		<property name="username" value="SYSTEM" />
+		<property name="password" value="Tfd12345" />
+	</bean>
+	 -->
+	
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@172.27.4.141:1521:dorms" />
+		<property name="username" value="intranet" />
+		<property name="password" value="intranet10" />
+	</bean>
+
+		
+		<!-- 
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@10.192.249.35:1521:BDTFD" />
+		<property name="username" value="SYSTEM" />
+		<property name="password" value="Oscarin1" />
+	</bean>
+	 -->
+	 
+	<bean id="dataSourceServer" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 
+		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+		<property name="url" value="jdbc:sqlserver://10.154.101.2:1433;databaseName=TSWDATASP4_CLIENTCUSTOM" />
+		<!--  
+		<property name="url" value="jdbc:sqlserver://10.154.101.2:1433/TSWDATASP4_CLIENTCUSTOM"/>
+		-->
+		<property name="username" value="interfaces"/>
+		<property name="password" value="favc00"/>
+		
+	</bean>
+    
+
+
+</beans>
