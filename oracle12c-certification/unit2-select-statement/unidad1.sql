@@ -9,3 +9,5 @@ select employee_id, first_name ||' '|| last_name as complete_name,
        from employees;
        
 select * from employees;
+
+select distinct * from employees;
