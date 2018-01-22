@@ -1,2 +1,10 @@
+<<<<<<< HEAD
 Este archivo contiene datos importantes para el desarrollo del proyecto
 Se agrega estilo de letra al proyecto
+=======
+Se agrega titulo a la pagina
+
+Este archivo contiene datos importantes para el desarrollo del proyecto
+Se agrega imagen al proyecto
+Se agrega otro comentario
+>>>>>>> develop
